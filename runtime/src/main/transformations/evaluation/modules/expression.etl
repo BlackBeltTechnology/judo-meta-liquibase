@@ -1,0 +1,202 @@
+import "../../../operations/expression/_importExpression.eol";
+
+@cached
+operation EVAL!NavigationNode getScope() : EVAL!NavigationNode {
+    return navigationNodes.selectOne(n | n.navigation = self);
+}
+
+@cached
+operation EVAL!FilteringNode getScope() : EVAL!NavigationNode {
+    return navigationNodes.selectOne(n | n.filtering.contains(self));
+}
+
+@cached
+operation EVAL!OrderingNode getScope() : EVAL!NavigationNode {
+    return navigationNodes.selectOne(n | n.ordering.contains(self));
+}
+
+@cached
+operation EVAL!WindowingNode getScope() : EVAL!NavigationNode {
+    return navigationNodes.selectOne(n | n.windowing.contains(self));
+}
+
+/*@cached
+operation EXPR!Expression getEvaluationTree() : EVAL!NavigationNode {
+    return navigationNodes.selectOne(n | n.expression == self.getBaseExpression());
+} */
+
+pre {
+    var navigationNodes = new Set;
+}
+
+post {
+    /*for (e in getStandaloneExpressions()) {
+        var tree = e.getEvaluationTree();
+        if (tree.isDefined()) {
+            tree.baseExpression = e.toString();
+        }
+    }*/
+}
+
+rule ImmutableCollectionToNavigationNode 
+    transform s : EXPR!ImmutableCollection 
+    to t : EVAL!NavigationNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    navigationNodes.add(t);
+}
+
+rule InstanceToNavigationNode 
+    transform s : EXPR!Instance 
+    to t : EVAL!NavigationNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    navigationNodes.add(t);
+}
+
+@greedy
+rule AttributeSelectorToProjectionNode
+    transform s : EXPR!AttributeSelector
+    to t : EVAL!ProjectionNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    var input = s.getOperands().first();
+    
+    if (input.size().isDefined()) {
+        var ti = input.equivalent();
+        if (ti.isKindOf(EVAL!NavigationNode)) {
+            ti.projections.add(t);
+        } else if (ti.isDefined()) {
+            ti.getScope().projections.add(t);
+        } else if (input.isKindOf(EXPR!VariableReference)) {
+            if (input.variable.isDefined()) {
+                input.variable.equivalent().projections.add(t);
+            } else {
+                input.println("No variable is defined IN PROJECTION: ");
+            }
+        } else {
+            input.toString().println("No equivalent in PROJECTION is defined for: ");
+        }
+    } else {
+        throw "Invalid operands of expression: " + s.toString();
+    }
+}
+
+@greedy
+rule NavigationExpressionToNavigationNode 
+    transform s : EXPR!NavigationExpression 
+    to t : EVAL!NavigationNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    var input = s.getOperands().first();
+    
+    if (input.isDefined()) {
+        var ti = input.equivalent();
+        if (ti.isKindOf(EVAL!NavigationNode)) {
+            ti.navigation = t;
+        } else if (ti.isDefined()) {
+            ti.getScope().navigation = t;
+        } else if (input.isKindOf(EXPR!VariableReference)) {
+            if (input.variable.isDefined()) {
+                input.variable.equivalent().navigation = t;
+            } else {
+                input.println("No variable is defined in NAVIGATION: ");
+            }
+        } else {
+            input.toString().println("No equivalent in NAVIGATION is defined for: ");
+        }
+    }
+    
+    navigationNodes.add(t);
+}
+
+@greedy
+rule FilteringExpressionToFilteringNode 
+    transform s : EXPR!FilteringExpression
+    to t : EVAL!FilteringNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    var input = s.getOperands().first();
+    
+    if (input.isDefined()) {
+        var ti = input.equivalent();
+        if (ti.isKindOf(EVAL!NavigationNode)) {
+            ti.filtering.add(t);
+        } else if (ti.isDefined()) {
+            ti.getScope().filtering.add(t);
+        } else if (input.isKindOf(EXPR!VariableReference)) {
+            if (input.variable.isDefined()) {
+                input.variable.equivalent().filtering.add(t);
+            } else {
+                input.println("No variable is defined in NAVIGATION: ");
+            }
+        } else {
+            input.toString().println("No equivalent in FILTERING is defined for: ");
+        }
+    } else {
+        throw "Invalid operands of expression: " + s.toString();
+    }
+}
+
+@greedy
+rule SortExpressionToOrderingNode 
+    transform s : EXPR!SortExpression
+    to t : EVAL!OrderingNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    var input = s.getOperands().first();
+    
+    if (input.isDefined()) {
+        var ti = input.equivalent();
+        if (ti.isKindOf(EVAL!NavigationNode)) {
+            ti.ordering.add(t);
+        } else if (ti.isDefined()) {
+            ti.getScope().ordering.add(t);
+        } else if (input.isKindOf(EXPR!VariableReference)) {
+            if (input.variable.isDefined()) {
+                input.variable.equivalent().ordering.add(t);
+            } else {
+                input.println("No variable is defined in ORDERING: ");
+            }
+        } else {
+            input.toString().println("No equivalent in ORDERING is defined for: ");
+        }
+    } else {
+        throw "Invalid operands of expression: " + s.toString();
+    }
+}
+
+@greedy
+rule WindowingExpressionToWindowingNode 
+    transform s : EXPR!WindowingExpression
+    to t : EVAL!WindowingNode {
+    t.expression = s;
+    t.description = s.toString();
+    
+    var input = s.getOperands().first();
+    
+    if (input.isDefined()) {
+        var ti = input.equivalent();
+        if (ti.isKindOf(EVAL!NavigationNode)) {
+            ti.windowing.add(t);
+        } else if (ti.isDefined()) {
+            ti.getScope().windowing.add(t);
+        } else if (input.isKindOf(EXPR!VariableReference)) {
+            if (input.variable.isDefined()) {
+                input.variable.equivalent().windowing.add(t);
+            } else {
+                input.println("No variable is defined in WINDOWING: ");
+            }
+        } else {
+            input.toString().println("No equivalent in WINDOWING is defined for: ");
+        }
+    } else {
+        throw "Invalid operands of expression: " + s.toString();
+    }
+}

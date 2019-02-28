@@ -1,0 +1,4 @@
+# judo-meta-liquibase
+
+Liquibase changeset XML XSD based ECore metamodel
+

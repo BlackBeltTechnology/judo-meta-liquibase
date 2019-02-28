@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>hu.blackbelt.judo.meta</groupId>
+        <artifactId>judo-meta-liquibase-parent</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    
+    <artifactId>judo-meta-liquibase-runtime</artifactId>
+    <packaging>bundle</packaging>
+    
+    <name>JUDO liquibase metamodel runtime</name>
+    <description>Judo Architecture Specific Liquibase Metamodel runtime</description>
+    
+    <build>
+        <plugins>
+            <!-- Creating Judo bundle -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <obrRepository>NONE</obrRepository>
+                    <instructions>
+                        <Import-Package>
+                            !lombok, *
+                        </Import-Package>
+                        <Export-Package>
+                            meta/liquibase;version=${project.version},
+                            hu.blackbelt.judo.meta.liquibase.*;version=${project.version}
+                        </Export-Package>
+                        <Include-Resource>
+                            {maven-resources},
+                            meta/liquibase=../model/model,
+                            judo/liquibase/operations=src/main/operations,
+                            judo/liquibase/validations=src/main/validations
+                        </Include-Resource>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>hu.blackbelt.judo.meta</groupId>
+            <artifactId>judo-meta-liquibase-model</artifactId>
+        </dependency>
+    </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>test-liquibases</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>hu.blackbelt.epsilon</groupId>
+                        <artifactId>epsilon-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>epsilon-validate</id>
+                                <goals>
+                                    <goal>executeConfiguration</goal>
+                                </goals>
+                                <configuration>
+                                    <configurationArtifacts>
+                                        <configurationArtifact>src/test/**/*.xml</configurationArtifact>
+                                    </configurationArtifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

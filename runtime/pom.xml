@@ -29,7 +29,9 @@
                     <obrRepository>NONE</obrRepository>
                     <instructions>
                         <Import-Package>
-                            !lombok, *
+                            !lombok,
+                            org.osgi.framework;version="[1.8,2.0)",
+                            *
                         </Import-Package>
                         <Export-Package>
                             meta/liquibase;version=${project.version},

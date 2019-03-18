@@ -14,7 +14,7 @@
     <packaging>eclipse-repository</packaging>
     
     <name>JUDO liquibase metamodel eclipse update site</name>
-    <description>Judo Architecture Specific Expression Update Site</description>
+    <description>Judo Architecture Specific Liquibase Update Site</description>
     
     <profiles>
         <profile>

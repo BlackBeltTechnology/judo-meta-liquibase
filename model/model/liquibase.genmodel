@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/model/src-genmodel" modelPluginID="judo-meta-liquibase-model"
+    modelName="Liquibase" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>liquibase.ecore</foreignModel>
+  <genPackages prefix="Liquibase" basePackage="hu.blackbelt.judo.meta" resource="XML"
+      disposableProviderFactory="true" loadInitialization="true" dataTypeConverters="true"
+      extensibleProviderFactory="true" childCreationExtenders="true" fileExtensions="changelog.xml"
+      ecorePackage="liquibase.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="liquibase.ecore#//FkCascadeActionOptions">
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//FkCascadeActionOptions/CASCADE"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//FkCascadeActionOptions/SETNULL"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//FkCascadeActionOptions/SETDEFAULT"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//FkCascadeActionOptions/RESTRICT"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//FkCascadeActionOptions/NOACTION"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="liquibase.ecore#//ObjectQuotingStrategy">
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//ObjectQuotingStrategy/LEGACY"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//ObjectQuotingStrategy/QUOTEALLOBJECTS"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//ObjectQuotingStrategy/QUOTEONLYRESERVEDWORDS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="liquibase.ecore#//OnChangeLogPreconditionErrorOrFail">
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeLogPreconditionErrorOrFail/HALT"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeLogPreconditionErrorOrFail/WARN"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="liquibase.ecore#//OnChangeLogPreconditionOnSqlOutput">
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeLogPreconditionOnSqlOutput/TEST"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeLogPreconditionOnSqlOutput/FAIL"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeLogPreconditionOnSqlOutput/IGNORE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="liquibase.ecore#//OnChangeSetPreconditionErrorOrFail">
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeSetPreconditionErrorOrFail/HALT"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeSetPreconditionErrorOrFail/WARN"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeSetPreconditionErrorOrFail/CONTINUE"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeSetPreconditionErrorOrFail/MARKRAN"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="liquibase.ecore#//OnChangeSetValidationFail">
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeSetValidationFail/HALT"/>
+      <genEnumLiterals ecoreEnumLiteral="liquibase.ecore#//OnChangeSetValidationFail/MARKRAN"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="liquibase.ecore#//BooleanExp"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//BooleanExpMember0"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//BooleanExpMember0Object"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//BooleanExpMember1"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//FkCascadeActionOptionsObject"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//IntegerExp"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//IntegerExpMember0"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//IntegerExpMember1"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//ObjectQuotingStrategyObject"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//OnChangeLogPreconditionErrorOrFailObject"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//OnChangeLogPreconditionOnSqlOutputObject"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//OnChangeSetPreconditionErrorOrFailObject"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//OnChangeSetValidationFailObject"/>
+    <genDataTypes ecoreDataType="liquibase.ecore#//PropertyExpression"/>
+    <genClasses ecoreClass="liquibase.ecore#//AddAutoIncrement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/columnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/incrementBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/startWith"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddAutoIncrement/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddColumn">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//AddColumn/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddColumn/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddColumn/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddColumn/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddColumnDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddColumnDef/afterColumn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddColumnDef/beforeColumn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddColumnDef/position"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddDefaultValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/columnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/defaultValueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/defaultValueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/defaultValueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/defaultValueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/defaultValueSequenceNext"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddDefaultValue/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddForeignKeyConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/baseColumnNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/baseTableCatalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/baseTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/baseTableSchemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/constraintName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/deferrable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/deleteCascade"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/initiallyDeferred"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/onDelete"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/onUpdate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/referencedColumnNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/referencedTableCatalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/referencedTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/referencedTableSchemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddForeignKeyConstraint/referencesUniqueColumn"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddLookupTable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/constraintName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/existingColumnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/existingTableCatalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/existingTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/existingTableSchemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/newColumnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/newColumnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/newTableCatalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/newTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddLookupTable/newTableSchemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddNotNullConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddNotNullConstraint/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddNotNullConstraint/columnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddNotNullConstraint/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddNotNullConstraint/defaultNullValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddNotNullConstraint/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddNotNullConstraint/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddPrimaryKey">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddPrimaryKey/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddPrimaryKey/columnNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddPrimaryKey/constraintName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddPrimaryKey/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddPrimaryKey/tableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddPrimaryKey/tablespace"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AddUniqueConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/columnNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/constraintName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/deferrable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/disabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/initiallyDeferred"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/tableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AddUniqueConstraint/tablespace"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//AlterSequence">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/incrementBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/ordered"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/sequenceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//AlterSequence/startValue"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//And">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/and"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/or"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/not"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/dbms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/runningAs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/changeSetExecuted"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/tableExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/columnExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/sequenceExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/foreignKeyConstraintExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/indexExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/primaryKeyExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/viewExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/tableIsEmpty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/rowCount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/sqlCheck"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/changeLogPropertyDefined"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/expectedQuotingStrategy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//And/customPrecondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//And/any"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Append">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Append/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//BaseColumn">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//BaseColumn/constraints"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/autoIncrement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValueSequenceCurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/defaultValueSequenceNext"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/incrementBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/remarks"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/startWith"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueBlobFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueClobFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueSequenceCurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//BaseColumn/valueSequenceNext"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ChangeLogPropertyDefined">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeLogPropertyDefined/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeLogPropertyDefined/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ChangeSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/validCheckSum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/preConditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/tagDatabase"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/comment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/createTable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropTable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/createView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/renameView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/insert"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addColumn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/sql"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/createProcedure"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropProcedure"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/sqlFile"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/renameTable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/renameColumn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropColumn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/mergeColumns"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/modifyDataType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/createSequence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/alterSequence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropSequence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/createIndex"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropIndex"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addNotNullConstraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropNotNullConstraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addForeignKeyConstraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropForeignKeyConstraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropAllForeignKeyConstraints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addPrimaryKey"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropPrimaryKey"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addLookupTable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addAutoIncrement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addDefaultValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropDefaultValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/addUniqueConstraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/dropUniqueConstraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/customChange"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/update"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/delete"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/loadData"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/loadUpdateData"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/executeCommand"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/stop"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/rollback"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/any"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ChangeSet/modifySql"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/dbms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/failOnError"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/logicalFilePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/objectQuotingStrategy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/onValidationFail"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/runAlways"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/runInTransaction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/runOnChange"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSet/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ChangeSetExecuted">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSetExecuted/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSetExecuted/changeLogFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ChangeSetExecuted/id"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Column">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Column/constraints"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/autoIncrement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValueSequenceCurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/defaultValueSequenceNext"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/incrementBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/remarks"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/startWith"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueBlobFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueClobFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueSequenceCurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Column/valueSequenceNext"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ColumnExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ColumnExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ColumnExists/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ColumnExists/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ColumnExists/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Constraints">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/checkConstraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/deferrable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/deleteCascade"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/foreignKeyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/initiallyDeferred"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/nullable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/primaryKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/primaryKeyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/primaryKeyTablespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/referencedColumnNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/referencedTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/references"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/unique"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Constraints/uniqueConstraintName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CreateIndex">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//CreateIndex/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/associatedWith"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/indexName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/tableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/tablespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateIndex/unique"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CreateProcedure">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/comment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/dbms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/procedureName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/relativeToChangelogFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateProcedure/schemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CreateSequence">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/cycle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/incrementBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/ordered"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/sequenceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateSequence/startValue"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CreateTable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//CreateTable/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateTable/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateTable/remarks"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateTable/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateTable/tableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateTable/tablespace"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CreateView">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateView/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateView/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateView/replaceIfExists"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateView/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CreateView/viewName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CustomChange">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//CustomChange/param"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomChange/class"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomChange/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CustomChangeParam">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomChangeParam/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomChangeParam/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomChangeParam/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CustomPrecondition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//CustomPrecondition/param"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomPrecondition/className"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//CustomPreconditionParamType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomPreconditionParamType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//CustomPreconditionParamType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//databaseChangeLog">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//databaseChangeLog/property"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//databaseChangeLog/preConditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//databaseChangeLog/changeSet"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//databaseChangeLog/include"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//databaseChangeLog/includeAll"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//databaseChangeLog/logicalFilePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//databaseChangeLog/objectQuotingStrategy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//databaseChangeLog/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DataColumn">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/defaultValueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/defaultValueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/defaultValueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/defaultValueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/header"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DataColumn/type"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Dbms">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Dbms/type"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Delete">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Delete/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Delete/where"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Delete/whereParams"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Delete/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Delete/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Delete/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropAllForeignKeyConstraints">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropAllForeignKeyConstraints/baseTableCatalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropAllForeignKeyConstraints/baseTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropAllForeignKeyConstraints/baseTableSchemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropColumn">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropColumn/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropColumn/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropColumn/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropColumn/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropDefaultValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropDefaultValue/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropDefaultValue/columnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropDefaultValue/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropDefaultValue/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropDefaultValue/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropForeignKeyConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropForeignKeyConstraint/baseTableCatalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropForeignKeyConstraint/baseTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropForeignKeyConstraint/baseTableSchemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropForeignKeyConstraint/constraintName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropIndex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropIndex/associatedWith"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropIndex/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropIndex/indexName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropIndex/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropIndex/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropNotNullConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropNotNullConstraint/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropNotNullConstraint/columnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropNotNullConstraint/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropNotNullConstraint/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropNotNullConstraint/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropPrimaryKey">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropPrimaryKey/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropPrimaryKey/constraintName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropPrimaryKey/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropPrimaryKey/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropProcedure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropProcedure/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropProcedure/procedureName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropProcedure/schemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropSequence">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/incrementBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/ordered"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/sequenceName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropSequence/startValue"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropTable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropTable/cascadeConstraints"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropTable/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropTable/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropTable/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropUniqueConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropUniqueConstraint/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropUniqueConstraint/constraintName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropUniqueConstraint/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropUniqueConstraint/tableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropUniqueConstraint/uniqueColumns"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//DropView">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropView/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropView/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//DropView/viewName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ExecuteCommand">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ExecuteCommand/arg"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ExecuteCommand/executable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ExecuteCommand/os"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ExecuteCommandArg">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ExecuteCommandArg/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ExpectedQuotingStrategy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ExpectedQuotingStrategy/strategy"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ForeignKeyConstraintExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ForeignKeyConstraintExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ForeignKeyConstraintExists/foreignKeyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ForeignKeyConstraintExists/foreignKeyTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ForeignKeyConstraintExists/schemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Include">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Include/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Include/relativeToChangelogFile"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Include/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//IncludeAll">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IncludeAll/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IncludeAll/relativeToChangelogFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IncludeAll/resourceFilter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//IncludeAll/anyAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//IndexExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IndexExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IndexExists/columnNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IndexExists/indexName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IndexExists/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//IndexExists/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Insert">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Insert/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Insert/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Insert/dbms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Insert/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Insert/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//LoadData">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//LoadData/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/quotchar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/separator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadData/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//LoadUpdateData">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//LoadUpdateData/column"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/primaryKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/quotchar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/separator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//LoadUpdateData/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//MergeColumns">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/column1Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/column2Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/finalColumnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/finalColumnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/joinString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//MergeColumns/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ModifyDataType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifyDataType/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifyDataType/columnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifyDataType/newDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifyDataType/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifyDataType/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ModifySql">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ModifySql/replace"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ModifySql/regExpReplace"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ModifySql/prepend"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//ModifySql/append"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifySql/applyToRollback"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifySql/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ModifySql/dbms"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Not">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/and"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/or"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/not"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/dbms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/runningAs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/changeSetExecuted"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/tableExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/columnExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/sequenceExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/foreignKeyConstraintExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/indexExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/primaryKeyExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/viewExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/tableIsEmpty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/rowCount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/sqlCheck"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/changeLogPropertyDefined"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/expectedQuotingStrategy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Not/customPrecondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Not/any"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Or">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/and"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/or"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/not"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/dbms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/runningAs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/changeSetExecuted"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/tableExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/columnExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/sequenceExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/foreignKeyConstraintExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/indexExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/primaryKeyExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/viewExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/tableIsEmpty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/rowCount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/sqlCheck"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/changeLogPropertyDefined"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/expectedQuotingStrategy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//Or/customPrecondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Or/any"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Param">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/valueBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/valueComputed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/valueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/valueNumeric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/valueSequenceCurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Param/valueSequenceNext"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//PreConditions">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/and"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/or"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/not"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/dbms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/runningAs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/changeSetExecuted"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/tableExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/columnExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/sequenceExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/foreignKeyConstraintExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/indexExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/primaryKeyExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/viewExists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/tableIsEmpty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/rowCount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/sqlCheck"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/changeLogPropertyDefined"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/expectedQuotingStrategy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference liquibase.ecore#//PreConditions/customPrecondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//PreConditions/any"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PreConditions/onError"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PreConditions/onErrorMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PreConditions/onFail"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PreConditions/onFailMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PreConditions/onSqlOutput"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Prepend">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Prepend/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//PrimaryKeyExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PrimaryKeyExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PrimaryKeyExists/primaryKeyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PrimaryKeyExists/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//PrimaryKeyExists/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Property/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Property/dbms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Property/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Property/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Property/value"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//RegExpReplace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RegExpReplace/replace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RegExpReplace/with"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//RenameColumn">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/columnDataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/newColumnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/oldColumnName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/remarks"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameColumn/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//RenameTable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameTable/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameTable/newTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameTable/oldTableName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameTable/schemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//RenameView">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameView/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameView/newViewName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameView/oldViewName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RenameView/schemaName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Replace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Replace/replace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Replace/with"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Rollback">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Rollback/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Rollback/comment"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/createTable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropTable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/createView"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/renameView"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropView"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/insert"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addColumn"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/sql"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/createProcedure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropProcedure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/sqlFile"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/renameTable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/renameColumn"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropColumn"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/mergeColumns"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/modifyDataType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/createSequence"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/alterSequence"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropSequence"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/createIndex"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropIndex"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addNotNullConstraint"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropNotNullConstraint"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addForeignKeyConstraint"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropForeignKeyConstraint"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropAllForeignKeyConstraints"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addPrimaryKey"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropPrimaryKey"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addLookupTable"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addAutoIncrement"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addDefaultValue"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropDefaultValue"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/addUniqueConstraint"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/dropUniqueConstraint"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/customChange"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/update"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/delete"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/loadData"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/loadUpdateData"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/executeCommand"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/stop"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Rollback/rollback"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Rollback/any"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Rollback/changeSetAuthor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Rollback/changeSetId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Rollback/changeSetPath"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//RowCount">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RowCount/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RowCount/expectedRows"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RowCount/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RowCount/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//RunningAs">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//RunningAs/username"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//SequenceExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SequenceExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SequenceExists/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SequenceExists/sequenceName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Sql">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Sql/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Sql/comment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Sql/dbms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Sql/endDelimiter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Sql/splitStatements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Sql/stripComments"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//SqlCheck">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlCheck/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlCheck/expectedResult"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//SqlFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/dbms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/encoding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/endDelimiter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/relativeToChangelogFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/splitStatements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//SqlFile/stripComments"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Stop">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Stop/mixed"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//TableExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TableExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TableExists/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TableExists/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//TableIsEmpty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TableIsEmpty/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TableIsEmpty/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TableIsEmpty/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//TagDatabase">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//TagDatabase/tag"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//Update">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//Update/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Update/column"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Update/where"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//Update/whereParams"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Update/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Update/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//Update/tableName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ValidCheckSum">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//ValidCheckSum/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ValidCheckSum/comment"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//ViewExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ViewExists/catalogName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ViewExists/schemaName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute liquibase.ecore#//ViewExists/viewName"/>
+    </genClasses>
+    <genClasses ecoreClass="liquibase.ecore#//WhereParams">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute liquibase.ecore#//WhereParams/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference liquibase.ecore#//WhereParams/param"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

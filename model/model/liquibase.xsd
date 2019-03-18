@@ -6,8 +6,14 @@
 	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
 	elementFormDefault="qualified"
 	ecore:name="liquibase"
-	ecore:package="liquibase">
-
+	ecore:package="liquibase"
+	ecore:nsPrefix=""
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  
+  <!-- 
+  <xsd:import namespace="http://www.liquibase.org/xml/ns/dbchangelog" schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"/>
+  -->
   <xsd:element name="databaseChangeLog" type="databaseChangeLog" ecore:ignore="true">
 	<xsd:unique name="UniqueNamesIndocument">
       <xsd:selector xpath="./*"/>
@@ -229,6 +235,8 @@
 
 	<!-- Attributes for changeSet -->
 	<xsd:attributeGroup name="changeLogAttributes">
+<!-- 		<xsd:attribute name="xmlns:xsi" type="xsd:string" default="http://www.w3.org/2001/XMLSchema-instance"/>
+		<xsd:attribute name="xsi:schemaLocation" type="xsd:string" default="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd"/> -->
 		<xsd:attribute name="logicalFilePath" type="xsd:string" />
         <xsd:attribute name="objectQuotingStrategy" type="objectQuotingStrategy" default="LEGACY" />
 	</xsd:attributeGroup>

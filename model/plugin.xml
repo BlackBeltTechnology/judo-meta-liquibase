@@ -8,15 +8,16 @@
  $Id$
 -->
 <plugin>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated liquibase.xsd -->
+      <!-- @generated liquibase -->
       <package
             uri="http://www.liquibase.org/xml/ns/dbchangelog"
             class="hu.blackbelt.judo.meta.liquibase.LiquibasePackage"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated liquibase.xsd -->
+      <!-- @generated liquibase -->
       <parser
             type="changelog.xml"
             class="hu.blackbelt.judo.meta.liquibase.util.LiquibaseResourceFactoryImpl"/>

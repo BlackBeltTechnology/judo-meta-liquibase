@@ -14,7 +14,7 @@
     <packaging>eclipse-plugin</packaging>
     
     <name>JUDO liquibase metamodel eclipse source generator</name>
-    <description>Judo Architecture Specific Expression Metamodel Source Generator</description>
+    <description>Judo Architecture Specific Liquibase Metamodel Source Generator</description>
     
     
     <build>
@@ -46,7 +46,7 @@
                 <version>${tycho-version}</version>
                 <configuration>
                     <!-- linebreaks not permitted in this arg line -->
-                    <appArgLine>-data target/workspace -application org.eclipse.emf.codegen.ecore.Generator -projects ${basedir}/.. -model ${basedir}/../model/model/liquibase.xsd.genmodel ../model</appArgLine>
+                    <appArgLine>-data target/workspace -application org.eclipse.emf.codegen.ecore.Generator -projects ${basedir}/.. -model ${basedir}/../model/model/liquibase.genmodel ../model</appArgLine>
                     <dependencies>
                         <dependency>
                             <artifactId>org.eclipse.emf.codegen.ecore</artifactId>
@@ -71,7 +71,7 @@
                     </execution>
                 </executions>
             </plugin>
-			<!-- Ignore 
+            <!--
             <plugin>
                 <groupId>org.fornax.toolsupport</groupId>
                 <artifactId>fornax-oaw-m2-plugin</artifactId>
@@ -79,7 +79,7 @@
                     <workflowDescriptor>src/workflows/GenerateBuilder.mwe2</workflowDescriptor>
                 </configuration>
             </plugin>
-            -->
+             -->
         </plugins>
     </build>
 </project>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="liquibase" nsURI="http://www.liquibase.org/xml/ns/dbchangelog"
-    nsPrefix="dbchangelog">
+    nsPrefix="">
   <eClassifiers xsi:type="ecore:EClass" name="AddAutoIncrement">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="addAutoIncrement"/>
@@ -820,7 +820,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations>
-        <details key="appinfo" value="&#xA;                    &lt;xsd:documentation>&#xA;                        Used with valueClobFile to specify file encoding explicitly.&#xA;                    &lt;/xsd:documentation>&#xA;                "/>
+        <details key="appinfo" value="&#xA;                      &#xA;  &lt;xsd:documentation>&#xA;                        Used with valueClobFile to specify file encoding explicitly.&#xA;                    &lt;/xsd:documentation>&#xA;                  &#xA;"/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -916,7 +916,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="BooleanExp" instanceClassName="java.lang.Object">
     <eAnnotations>
-      <details key="appinfo" value="&#xA;                &lt;xsd:documentation>Extension to standard XSD boolean type to allow ${} parameters&lt;/xsd:documentation>&#xA;            "/>
+      <details key="appinfo" value="&#xA;                  &#xA;  &lt;xsd:documentation>Extension to standard XSD boolean type to allow ${} parameters&lt;/xsd:documentation>&#xA;              &#xA;"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="booleanExp"/>
@@ -976,7 +976,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="preConditions" eType="#//PreConditions"
         containment="true" resolveProxies="false">
       <eAnnotations>
-        <details key="appinfo" value="&#xA;                                       &lt;xsd:documentation>onChangeLogPreconditionOnSqlOutput determines what should happen when evaluating this precondition in updateSQL mode.  TEST: Run precondition, FAIL: Fail precondition, IGNORE: Skip precondition check [DEFAULT]&lt;/xsd:documentation>&#xA;                                   "/>
+        <details key="appinfo" value="&#xA;                                         &#xA;  &lt;xsd:documentation>onChangeLogPreconditionOnSqlOutput determines what should happen when evaluating this precondition in updateSQL mode.  TEST: Run precondition, FAIL: Fail precondition, IGNORE: Skip precondition check [DEFAULT]&lt;/xsd:documentation>&#xA;                                     &#xA;"/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1532,7 +1532,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations>
-        <details key="appinfo" value="&#xA;                    &lt;xsd:documentation>&#xA;                        Used with valueClobFile to specify file encoding explicitly.&#xA;                    &lt;/xsd:documentation>&#xA;                "/>
+        <details key="appinfo" value="&#xA;                      &#xA;  &lt;xsd:documentation>&#xA;                        Used with valueClobFile to specify file encoding explicitly.&#xA;                    &lt;/xsd:documentation>&#xA;                  &#xA;"/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -2941,7 +2941,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="IntegerExp" instanceClassName="java.lang.Object">
     <eAnnotations>
-      <details key="appinfo" value="&#xA;                &lt;xsd:documentation>Extension to standard XSD integer type to allow ${} parameters&lt;/xsd:documentation>&#xA;            "/>
+      <details key="appinfo" value="&#xA;                  &#xA;  &lt;xsd:documentation>Extension to standard XSD integer type to allow ${} parameters&lt;/xsd:documentation>&#xA;              &#xA;"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="integerExp"/>

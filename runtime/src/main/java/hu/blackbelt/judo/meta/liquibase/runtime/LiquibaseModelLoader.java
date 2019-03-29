@@ -65,7 +65,7 @@ public class LiquibaseModelLoader {
                 .version(version)
                 .uri(uri)
                 .checksum(checksum)
-                .resource(resource);
+                .resourceSet(resourceSet);
 
         if (checksum != null) {
             b.checksum(checksum);

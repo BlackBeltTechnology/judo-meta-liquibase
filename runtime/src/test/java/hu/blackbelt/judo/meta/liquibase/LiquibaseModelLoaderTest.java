@@ -16,12 +16,12 @@ class LiquibaseModelLoaderTest {
 
     @Test
     void loadLiquibaseModel() throws IOException {
-        LiquibaseModel psmModel = LiquibaseModelLoader.loadLiquibaseModel(
+        LiquibaseModel liquibaseModel = LiquibaseModelLoader.loadLiquibaseModel(
                 URI.createURI(new File(srcDir(), "test/models/example.changelog.xml").getAbsolutePath()),
                 "test",
                 "1.0.0");
 
-        for (Iterator<EObject> i = psmModel.getResource().getAllContents(); i.hasNext(); ) {
+        for (Iterator<EObject> i = liquibaseModel.getResourceSet().getResource(liquibaseModel.getUri(), false).getAllContents(); i.hasNext(); ) {
             log.info(i.next().toString());
         }
     }

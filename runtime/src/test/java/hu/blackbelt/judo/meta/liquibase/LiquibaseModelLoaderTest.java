@@ -21,9 +21,12 @@ class LiquibaseModelLoaderTest {
                 "test",
                 "1.0.0");
 
+
         for (Iterator<EObject> i = liquibaseModel.getResourceSet().getResource(liquibaseModel.getUri(), false).getAllContents(); i.hasNext(); ) {
             log.info(i.next().toString());
         }
+
+        LiquibaseModelLoader.saveLiquibaseModel(liquibaseModel);
     }
 
     public File srcDir(){

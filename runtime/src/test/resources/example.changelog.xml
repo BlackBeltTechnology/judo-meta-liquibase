@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog">
+  <changeSet author="bob" id="1">
+    <createTable tableName="department">
+      <column name="id" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+      <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+      <column defaultValueBoolean="true" name="active" type="boolean"/>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

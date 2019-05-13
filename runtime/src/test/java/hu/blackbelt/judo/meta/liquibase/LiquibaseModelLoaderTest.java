@@ -3,7 +3,6 @@ package hu.blackbelt.judo.meta.liquibase;
 import hu.blackbelt.epsilon.runtime.execution.impl.NioFilesystemnRelativePathURIHandlerImpl;
 import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel;
 import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModelLoader;
-import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseNamespaceFixUriHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -24,8 +23,7 @@ class LiquibaseModelLoaderTest {
 
     @Test
     void loadLiquibaseModel() throws IOException {
-        URIHandler uriHandler = new LiquibaseNamespaceFixUriHandler(
-                new NioFilesystemnRelativePathURIHandlerImpl("urn", FileSystems.getDefault(), targetDir().getAbsolutePath()));
+        URIHandler uriHandler = new NioFilesystemnRelativePathURIHandlerImpl("urn", FileSystems.getDefault(), targetDir().getAbsolutePath());
 
         ResourceSet liquibaseResourceSet = createLiquibaseResourceSet(uriHandler);
         LiquibaseModel liquibaseModel = LiquibaseModelLoader.loadLiquibaseModel(liquibaseResourceSet,

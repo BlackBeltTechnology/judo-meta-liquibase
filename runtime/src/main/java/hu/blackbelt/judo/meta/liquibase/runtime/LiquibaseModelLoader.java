@@ -72,7 +72,7 @@ public class LiquibaseModelLoader {
         registerLiquibaseMetamodel(resourceSet);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(ResourceFactoryRegistryImpl.DEFAULT_EXTENSION, getLiquibaseFactory());
         if (uriHandler != null) {
-            resourceSet.getURIConverter().getURIHandlers().add(0, uriHandler);
+            resourceSet.getURIConverter().getURIHandlers().add(0, new LiquibaseNamespaceFixUriHandler(uriHandler));
         }
         return resourceSet;
     }

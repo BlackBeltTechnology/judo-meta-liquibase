@@ -54,9 +54,7 @@
         </profile>
     </profiles>
     
-    
     <pluginGroups>
         <pluginGroup>com.amashchenko.maven.plugin</pluginGroup>
     </pluginGroups>
-    
 </settings>

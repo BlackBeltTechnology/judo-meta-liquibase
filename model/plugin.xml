@@ -8,12 +8,44 @@
  $Id$
 -->
 <plugin>
+    <extension
+            point="org.eclipse.epsilon.evl.emf.validation">
+        <constraintsBinding
+                constraints="validations/liquibase-plugin-validation.evl"
+                modelName="LIQUIBASE"
+                namespaceURI="http://www.liquibase.org/xml/ns/dbchangelog">
+            <!-- All packages have to register
+            <additionalNamespaceURI
+                    namespaceURI="http://www.liquibase.org/xml/ns/dbchangelog/subpackage">
+            </additionalNamespaceURI>
+            -->
+        </constraintsBinding>
+    </extension>
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+                class="org.eclipse.epsilon.evl.emf.validation.EvlMarkerResolutionGenerator"
+                markerType="org.eclipse.emf.ecore.diagnostic">
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+                class="org.eclipse.epsilon.evl.emf.validation.EvlMarkerResolutionGenerator"
+                markerType="org.eclipse.emf.ecoretools.diagram.diagnostic">
+        </markerResolutionGenerator>
+    </extension>
+    <extension
+            point="org.eclipse.epsilon.common.dt.tool">
+        <tool
+                class="hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseUtils"
+                defaultName="liquibaseUtils"/>
+    </extension>
+
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated liquibase -->
       <package
             uri="http://www.liquibase.org/xml/ns/dbchangelog"
-            class="hu.blackbelt.judo.meta.liquibase.LiquibasePackage"/>
+            class="hu.blackbelt.judo.meta.liquibase.LiquibasePackage"
+            genModel="model/liquibase.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">

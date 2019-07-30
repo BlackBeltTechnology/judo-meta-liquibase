@@ -102,7 +102,7 @@
                     <target>
                         <artifact>
                             <groupId>hu.blackbelt.judo.meta</groupId>
-                            <artifactId>hu.blackbelt.judo.meta.rdbms.targetdefinition</artifactId>
+                            <artifactId>hu.blackbelt.judo.meta.liquibase.targetdefinition</artifactId>
                             <version>${project.version}</version>
                         </artifact>
                     </target>

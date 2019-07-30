@@ -4,7 +4,7 @@
     
     <parent>
         <groupId>hu.blackbelt.judo.meta</groupId>
-        <artifactId>hu.blackbelt.judo.meta.rdbms</artifactId>
+        <artifactId>hu.blackbelt.judo.meta.liquibase</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>

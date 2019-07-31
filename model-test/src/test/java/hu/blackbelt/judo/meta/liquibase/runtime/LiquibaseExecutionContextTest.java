@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport.liquibaseModelResourceSupportBuilder;
 import static hu.blackbelt.judo.meta.liquibase.util.builder.LiquibaseBuilders.*;
 
-class ExecutionContextTest {
+class LiquibaseExecutionContextTest {
 
     @Test
     @DisplayName("Create Liquibase model with builder pattern")

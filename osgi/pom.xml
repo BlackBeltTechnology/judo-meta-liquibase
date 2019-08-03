@@ -30,7 +30,6 @@
 							*
 						</Import-Package>
 						<Export-Package>
-                            meta/${mdoelName};version=${project.version},
                             hu.blackbelt.judo.meta.liquibase*;version=${project.version},
                         </Export-Package>
 						<Include-Resource>{maven-resources},meta/liquibase=../model/model</Include-Resource>

@@ -11,17 +11,16 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  com.google.guava,
- hu.blackbelt.judo.meta.liquibase.model,
  org.junit.platform.commons,
  org.junit.platform.engine,
  org.junit.platform.launcher,
  org.junit.platform.runner,
  org.junit.platform.suite.api,
  hu.blackbelt.epsilon.runtime.execution,
- org.hamcrest.core;bundle-version="1.3.0"
+ hu.blackbelt.judo.meta.liquibase.model
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: hu.blackbelt.judo.meta.liquibase.model.test
+Export-Package: hu.blackbelt.judo.meta.liquibase.runtime
 Import-Package: org.junit.jupiter.api;version="5.0.0",
  org.junit.jupiter.api.function;version="5.0.0",
  org.slf4j;version="1.7.2"
-Export-Package: hu.blackbelt.judo.meta.liquibase.runtime

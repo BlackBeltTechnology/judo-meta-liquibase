@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Optional;
 
-import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.LoadArguments.loadArgumentsBuilder;
+import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.LoadArguments.liquibaseLoadArgumentsBuilder;
+import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.SaveArguments.liquibaseSaveArgumentsBuilder;
 
 public class LiquibaseModelLoaderTest {
 
@@ -26,17 +26,16 @@ public class LiquibaseModelLoaderTest {
     void loadLiquibaseModel() throws IOException {
         ResourceSet liquibaseResourceSet = LiquibaseModelResourceSupport.createLiquibaseResourceSet();
 
-        LiquibaseModel liquibaseModel = LiquibaseModel.loadLiquibaseModel(loadArgumentsBuilder()
-                .uriHandler(Optional.of(new LiquibaseNamespaceFixUriHandler(new FileURIHandlerImpl())))
-                .resourceSet(Optional.of(liquibaseResourceSet))
+        LiquibaseModel liquibaseModel = LiquibaseModel.loadLiquibaseModel(liquibaseLoadArgumentsBuilder()
+                .uriHandler(new LiquibaseNamespaceFixUriHandler(new FileURIHandlerImpl()))
+                .resourceSet(liquibaseResourceSet)
                 .uri(URI.createFileURI(new File("src/test/model/test.liquibase").getAbsolutePath()))
-                .name("test")
-                .build());
+                .name("test"));
 
         for (Iterator<EObject> i = liquibaseModel.getResourceSet().getResource(liquibaseModel.getUri(), false).getAllContents(); i.hasNext(); ) {
             log.info(i.next().toString());
         }
 
-        liquibaseModel.saveLiquibaseModel(LiquibaseModel.SaveArguments.saveArgumentsBuilder().file(Optional.of(new File("target/test-classes/test_out.liquibase"))).build());
+        liquibaseModel.saveLiquibaseModel(liquibaseSaveArgumentsBuilder().file(new File("target/test-classes/test_out.liquibase")));
     }
 }

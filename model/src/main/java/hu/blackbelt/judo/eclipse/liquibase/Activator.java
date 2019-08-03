@@ -1,4 +1,4 @@
-package hu.blackbelt.judo.meta.liquibase.runtime;
+package hu.blackbelt.judo.eclipse.liquibase;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

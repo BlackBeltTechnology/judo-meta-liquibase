@@ -25,6 +25,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
+import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.LoadArguments.liquibaseLoadArgumentsBuilder;
+import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.loadLiquibaseModel;
+
 @Component(immediate = true)
 @Slf4j
 public class LiquibaseModelBundleTracker {
@@ -82,16 +85,13 @@ public class LiquibaseModelBundleTracker {
                         if (versionRange.includes(bundleContext.getBundle().getVersion())) {
                             // Unpack model
                             try {
-                                        LiquibaseModel liquibaseModel = LiquibaseModel.loadLiquibaseModel(
-                                        LiquibaseModel.LoadArguments.loadArgumentsBuilder()
-                                                .uriHandler(Optional.of(new BundleURIHandler("urn", "", trackedBundle)))
-                                                .uri(URI.createURI(params.get("file")))
-                                                .name(params.get(LiquibaseModel.NAME))
-                                                .version(Optional.of(trackedBundle.getVersion().toString()))
-                                                .checksum(Optional.ofNullable(params.get(LiquibaseModel.CHECKSUM)))
-                                                .acceptedMetaVersionRange(Optional.of(versionRange.toString()))
-                                                .build()
-                                );
+                                LiquibaseModel liquibaseModel = loadLiquibaseModel(liquibaseLoadArgumentsBuilder()
+                                        .uriHandler(new BundleURIHandler(trackedBundle.getSymbolicName(), "", trackedBundle))
+                                        .uri(URI.createURI(trackedBundle.getSymbolicName() + ":" + params.get("file")))
+                                        .name(params.get(LiquibaseModel.NAME))
+                                        .version(trackedBundle.getVersion().toString())
+                                        .checksum(Optional.ofNullable(params.get(LiquibaseModel.CHECKSUM)).orElse("notset"))
+                                        .acceptedMetaVersionRange(Optional.of(versionRange.toString()).orElse("[0,99)")));
 
                                 log.info("Registering Liquibase model: " + liquibaseModel);
 

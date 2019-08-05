@@ -1,0 +1,5 @@
+import "liquibase.evl";
+
+pre {
+  var liquibaseUtils = new Native("hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseUtils")(LIQUIBASE.resource.resourceSet, false);
+}

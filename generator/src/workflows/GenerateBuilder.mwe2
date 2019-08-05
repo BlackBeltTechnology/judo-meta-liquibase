@@ -1,8 +1,0 @@
-module GeneratorBuilder
-
-Workflow {
- component = hu.blackbelt.emfbuildergenerator.EMFBuilderGenerator {
-  ecoreURI = "platform:/resource/judo-meta-liquibase-model/model/liquibase.ecore"
-  genModelUri = "platform:/resource/judo-meta-liquibase-model/model/liquibase.genmodel"       
- }
-}

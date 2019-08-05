@@ -101,8 +101,9 @@ public class LiquibaseModelBundleTracker {
 
                             } catch (IOException e) {
                                 log.error("Could not load Liquibase model: " + params.get(LiquibaseModel.NAME) + " from bundle: " + trackedBundle.getBundleId());
-                            }
-                        }
+                            } catch (LiquibaseModel.LiquibaseValidationException e) {
+                                log.error("Could not load Liquibase model: " + params.get(LiquibaseModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
+                            }                        }
                     }
                 }
             }

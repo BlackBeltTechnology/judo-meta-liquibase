@@ -17,12 +17,11 @@ class LiquibaseExecutionContextTest {
     @DisplayName("Create Liquibase model with builder pattern")
     void testLiquibaseReflectiveCreated() throws Exception {
 
-
         String createdSourceModelName = "urn:liquibase.judo-meta-liquibase";
 
-        LiquibaseModelResourceSupport liquibaseModelSupport = liquibaseModelResourceSupportBuilder().build();
-        Resource liquibaseResource = liquibaseModelSupport.getResourceSet().createResource(
-                URI.createFileURI(createdSourceModelName));
+        LiquibaseModelResourceSupport liquibaseModelSupport = liquibaseModelResourceSupportBuilder()
+                .uri(URI.createFileURI(createdSourceModelName))
+                .build();
 
         // Build model here
     }

@@ -23,19 +23,27 @@ public class LiquibaseModelLoaderTest {
 	
     @Test
     @DisplayName("Load Liquibase Model")
-    void loadLiquibaseModel() throws IOException {
-        ResourceSet liquibaseResourceSet = LiquibaseModelResourceSupport.createLiquibaseResourceSet();
-
+    void loadLiquibaseModel() throws IOException, LiquibaseModel.LiquibaseValidationException {
         LiquibaseModel liquibaseModel = LiquibaseModel.loadLiquibaseModel(liquibaseLoadArgumentsBuilder()
                 .uriHandler(new LiquibaseNamespaceFixUriHandler(new FileURIHandlerImpl()))
-                .resourceSet(liquibaseResourceSet)
                 .uri(URI.createFileURI(new File("src/test/model/test.liquibase").getAbsolutePath()))
                 .name("test"));
 
-        for (Iterator<EObject> i = liquibaseModel.getResourceSet().getResource(liquibaseModel.getUri(), false).getAllContents(); i.hasNext(); ) {
+        for (Iterator<EObject> i = liquibaseModel.getResource().getAllContents(); i.hasNext(); ) {
             log.info(i.next().toString());
         }
 
-        liquibaseModel.saveLiquibaseModel(liquibaseSaveArgumentsBuilder().file(new File("target/test-classes/test_out.liquibase")));
+        liquibaseModel.saveLiquibaseModel(liquibaseSaveArgumentsBuilder()
+                .file(new File("target/test-classes/test_out.liquibase")));
+
+        // TODO: make it work
+        /*
+        // Executing on HSQLDB
+        Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "");
+        Database liquibaseDb = new HsqlDatabase();
+        liquibaseDb.setConnection(new HsqlConnection(connection));
+        Liquibase liquibase = new Liquibase(new File(targetDir(), this.liquibaseModel.getName() + ".changelog.xml").getAbsolutePath(), new FileSystemResourceAccessor(), liquibaseDb);
+        liquibase.update("full,1.0.0");
+        */
     }
 }

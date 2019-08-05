@@ -38,9 +38,11 @@ public class LiquibaseValidationTest {
     @BeforeEach
     void setUp() {
 
-        liquibaseModelSupport = liquibaseModelResourceSupportBuilder().build();
-        liquibaseResource = liquibaseModelSupport.getResourceSet().createResource(
-                URI.createFileURI(createdSourceModelName));
+        liquibaseModelSupport = liquibaseModelResourceSupportBuilder()
+                .uri(URI.createURI(createdSourceModelName))
+                .build();
+
+        liquibaseResource = liquibaseModelSupport.getResource();
 
         Log log = new Slf4jLog();
 

@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.junit.platform.runner,
  org.junit.platform.suite.api,
  hu.blackbelt.epsilon.runtime.execution,
- hu.blackbelt.judo.meta.liquibase.model
+ hu.blackbelt.judo.meta.liquibase.model,
+ org.hamcrest.core;bundle-version="1.3.0"
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: hu.blackbelt.judo.meta.liquibase.model.test
 Export-Package: hu.blackbelt.judo.meta.liquibase.runtime

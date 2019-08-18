@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde?><target includeMode="feature" name="hu.blackbelt.judo.meta.liquibase.target" sequenceNumber="1558342632">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<target includeMode="feature" name="hu.blackbelt.judo.meta.liquibase.target" sequenceNumber="1558342632">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <repository location="http://download.eclipse.org/releases/2019-03"/>
@@ -11,6 +13,7 @@
 	    <unit id="org.eclipse.equinox.sdk.feature.group" version="3.17.0.v20190305-2225"/>
 	    <unit id="org.eclipse.e4.core.tools.feature.source.feature.group" version="4.11.0.v20190215-0401"/>
 	    <unit id="org.eclipse.sdk.feature.group" version="4.11.0.v20190307-0943"/>
+	    <unit id="org.eclipse.jdt.feature.group" version="3.17.0.v20190307-0500"/>
     </location>
 	  <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		  <unit id="org.eclipse.epsilon.core.dt.feature.feature.group" version="1.5.1.201809302027"/>

@@ -28,24 +28,7 @@ public class LiquibaseNamespaceFixUriHandler extends URIHandlerImpl {
 
     @Override
     public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException {
-        return new ByteArrayOutputStream() {
-            @Override
-            public void close() throws IOException {
-                super.close();
-
-                // Copy byte buffer
-                OutputStream outputStream = parentUriHandler.createOutputStream(uri, options);
-
-                try {
-                    InputStream inputStream = transformXmlDocumentWithXslt(new ByteArrayInputStream(toByteArray()));
-                    ByteStreams.copy(inputStream, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (TransformerException e) {
-                    throw new IOException("Could not transform XML stream", e);
-                }
-            }
-        };
+        return fixUriOutputStream(parentUriHandler.createOutputStream(uri, options));
     }
 
     @Override
@@ -100,15 +83,31 @@ public class LiquibaseNamespaceFixUriHandler extends URIHandlerImpl {
                     "\n"+
                     "</xsl:stylesheet>";
 
-    private static InputStream transformXmlDocumentWithXslt(InputStream xmlDocument) throws TransformerException {
+    private static void transformXmlDocumentWithXslt(InputStream xmlDocument, OutputStream outputStream) throws TransformerException {
         TransformerFactory tFactory = TransformerFactory.newInstance();
         Transformer transformer = null;
         transformer = tFactory.newTransformer(new StreamSource(new StringReader(LIQUIBASE_FIX_NS_XSLT)));
         StreamSource xmlSource = new StreamSource(xmlDocument);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        transformer.transform(xmlSource, new StreamResult(baos));
-        return new ByteArrayInputStream(baos.toByteArray());
+        transformer.transform(xmlSource, new StreamResult(outputStream));
     }
 
 
+    public static OutputStream fixUriOutputStream(final OutputStream outputStream) {
+        return new ByteArrayOutputStream() {
+            @Override
+            public void flush() throws IOException {
+                try {
+                    if (toByteArray().length > 0) {
+                        transformXmlDocumentWithXslt(new ByteArrayInputStream(toByteArray()), outputStream);
+                        outputStream.flush();
+                        reset();
+                    }
+                } catch (TransformerException e) {
+                    throw new IOException("Could not transform XML stream", e);
+                }
+                super.flush();
+            }
+        };
+
+    }
 }

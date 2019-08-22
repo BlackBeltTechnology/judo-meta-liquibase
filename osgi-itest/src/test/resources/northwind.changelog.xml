@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_ORDER" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Order" tableName="T_ENTTS_ORDER">
+      <column name="ID" remarks="demo.entities.Order#id" type="UUID"/>
+      <column name="C_CUSTMR_ID" remarks="demo.entities.Order#customer" type="UUID"/>
+      <column name="C_SHPPR_ID" remarks="demo.entities.Order#shipper" type="UUID"/>
+      <column name="C_EMPLY_ID" remarks="demo.entities.Order#employee" type="UUID"/>
+      <column name="C_SHPNM" remarks="demo.entities.Order#shipName" type="VARCHAR(255)"/>
+      <column name="C_FRGHT" remarks="demo.entities.Order#freight" type="DOUBLE"/>
+      <column name="C_ORDRDT" remarks="demo.entities.Order#orderDate" type="TIMESTAMP"/>
+      <column name="C_RERDDT" remarks="demo.entities.Order#requiredDate" type="TIMESTAMP"/>
+      <column name="C_SHPDDT" remarks="demo.entities.Order#shippedDate" type="TIMESTAMP"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_ORDER"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_INRNOR" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.InternationalOrder" tableName="T_ENTTS_INRNOR">
+      <column name="ID" remarks="demo.entities.InternationalOrder#id" type="UUID"/>
+      <column name="C_CUTDSN" remarks="demo.entities.InternationalOrder#customsDescription" type="VARCHAR(255)"/>
+      <column name="C_EXCSTX" remarks="demo.entities.InternationalOrder#exciseTax" type="DOUBLE"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_INRNOR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_PRDCT" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Product" tableName="T_ENTTS_PRDCT">
+      <column name="ID" remarks="demo.entities.Product#id" type="UUID"/>
+      <column name="C_CATGRY_ID" remarks="demo.entities.Product#category" type="UUID"/>
+      <column name="C_SUPPLR_ID" remarks="demo.entities.Product#supplier" type="UUID"/>
+      <column name="C_STORE_ID" remarks="demo.entities.Product#store" type="UUID"/>
+      <column name="C_PRCTNM" remarks="demo.entities.Product#productName" type="VARCHAR(255)"/>
+      <column name="C_QUNPRT" remarks="demo.entities.Product#quantityPerUnit" type="INTEGER"/>
+      <column name="C_UNTPRC" remarks="demo.entities.Product#unitPrice" type="DOUBLE"/>
+      <column name="C_UNSISK" remarks="demo.entities.Product#unitsInStock" type="INTEGER"/>
+      <column name="C_UNSOOR" remarks="demo.entities.Product#unitsOnOrder" type="INTEGER"/>
+      <column name="C_RERRLL" remarks="demo.entities.Product#reorderLevel" type="INTEGER"/>
+      <column name="C_WEIGHT" remarks="demo.entities.Product#weight" type="DOUBLE"/>
+      <column name="C_DISCND" remarks="demo.entities.Product#discounted" type="BOOLEAN"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_PRDCT"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_CUSTMR" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Customer" tableName="T_ENTTS_CUSTMR">
+      <column name="ID" remarks="demo.entities.Customer#id" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_CUSTMR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_COMPNY" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Company" tableName="T_ENTTS_COMPNY">
+      <column name="ID" remarks="demo.entities.Company#id" type="UUID"/>
+      <column name="C_COMNYM" remarks="demo.entities.Company#companyName" type="VARCHAR(255)"/>
+      <column name="C_CONCTM" remarks="demo.entities.Company#contactName" type="VARCHAR(255)"/>
+      <column name="C_COTTTL" remarks="demo.entities.Company#contactTitle" type="VARCHAR(255)"/>
+      <column name="C_PHONE" remarks="demo.entities.Company#phone" type="VARCHAR(255)"/>
+      <column name="C_FAX" remarks="demo.entities.Company#fax" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_COMPNY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_SHPPR" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Shipper" tableName="T_ENTTS_SHPPR">
+      <column name="ID" remarks="demo.entities.Shipper#id" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_SHPPR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_CATGRY" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Category" tableName="T_ENTTS_CATGRY">
+      <column name="ID" remarks="demo.entities.Category#id" type="UUID"/>
+      <column name="C_CATRYM" remarks="demo.entities.Category#categoryName" type="VARCHAR(255)"/>
+      <column name="C_DESRPN" remarks="demo.entities.Category#description" type="VARCHAR(255)"/>
+      <column name="C_PICTR" remarks="demo.entities.Category#picture" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_CATGRY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_ORDRDL" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.OrderDetail" tableName="T_ENTTS_ORDRDL">
+      <column name="ID" remarks="demo.entities.OrderDetail#id" type="UUID"/>
+      <column name="C_PRDCT_ID" remarks="demo.entities.OrderDetail#product" type="UUID"/>
+      <column name="C_ENTTS_ORDER_ORDDTS_ID" remarks="demo.entities.OrderDetail" type="UUID"/>
+      <column name="C_UNTPRC" remarks="demo.entities.OrderDetail#unitPrice" type="DOUBLE"/>
+      <column name="C_QUNTTY" remarks="demo.entities.OrderDetail#quantity" type="INTEGER"/>
+      <column name="C_DISCNT" remarks="demo.entities.OrderDetail#discount" type="DOUBLE"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_ORDRDL"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_SUPPLR" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Supplier" tableName="T_ENTTS_SUPPLR">
+      <column name="ID" remarks="demo.entities.Supplier#id" type="UUID"/>
+      <column name="C_HOMPG" remarks="demo.entities.Supplier#homePage" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_SUPPLR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_PERSON" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Person" tableName="T_ENTTS_PERSON">
+      <column name="ID" remarks="demo.entities.Person#id" type="UUID"/>
+      <column name="C_LASTNM" remarks="demo.entities.Person#lastName" type="VARCHAR(255)"/>
+      <column name="C_FISTNM" remarks="demo.entities.Person#firstName" type="VARCHAR(255)"/>
+      <column name="C_TITLE" remarks="demo.entities.Person#title" type="INTEGER"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_PERSON"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_EMPLY" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Employee" tableName="T_ENTTS_EMPLY">
+      <column name="ID" remarks="demo.entities.Employee#id" type="UUID"/>
+      <column name="C_CATGRY_ID" remarks="demo.entities.Employee#category" type="UUID"/>
+      <column name="C_REPRTT_ID" remarks="demo.entities.Employee#reportsTo" type="UUID"/>
+      <column name="C_TERRTY_ID" remarks="demo.entities.Employee#territory" type="UUID"/>
+      <column name="C_TITOCY" remarks="demo.entities.Employee#titleOfCourtesy" type="VARCHAR(255)"/>
+      <column name="C_HOMPHN" remarks="demo.entities.Employee#homePhone" type="VARCHAR(255)"/>
+      <column name="C_EXTNSN" remarks="demo.entities.Employee#extension" type="VARCHAR(255)"/>
+      <column name="C_NOTES" remarks="demo.entities.Employee#notes" type="VARCHAR(255)"/>
+      <column name="C_PHTPTH" remarks="demo.entities.Employee#photoPath" type="VARCHAR(255)"/>
+      <column name="C_PHOTO" remarks="demo.entities.Employee#photo" type="UUID"/>
+      <column name="C_BITHDT" remarks="demo.entities.Employee#birthDate" type="DATE"/>
+      <column name="C_HIRDT" remarks="demo.entities.Employee#hireDate" type="DATE"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_EMPLY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_TERRTY" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Territory" tableName="T_ENTTS_TERRTY">
+      <column name="ID" remarks="demo.entities.Territory#id" type="UUID"/>
+      <column name="C_SHPPR_ID" remarks="demo.entities.Territory#shipper" type="UUID"/>
+      <column name="C_REGION_ID" remarks="demo.entities.Territory#region" type="UUID"/>
+      <column name="C_TETDSN" remarks="demo.entities.Territory#territoryDescription" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_TERRTY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_REGION" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Region" tableName="T_ENTTS_REGION">
+      <column name="ID" remarks="demo.entities.Region#id" type="UUID"/>
+      <column name="C_REGDSN" remarks="demo.entities.Region#regionDescription" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_REGION"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_ONLORR" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.OnlineOrder" tableName="T_ENTTS_ONLORR">
+      <column name="ID" remarks="demo.entities.OnlineOrder#id" type="UUID"/>
+      <column name="C_WESPUL" remarks="demo.entities.OnlineOrder#webshopUrl" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_ONLORR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_ONNRNR" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.OnlineInternationalOrder" tableName="T_ENTTS_ONNRNR">
+      <column name="ID" remarks="demo.entities.OnlineInternationalOrder#id" type="UUID"/>
+      <column name="C_ONTRNR" remarks="demo.entities.OnlineInternationalOrder#onlineTrackingNumber" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_ONNRNR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_CITY" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.City" tableName="T_ENTTS_CITY">
+      <column name="ID" remarks="demo.entities.City#id" type="UUID"/>
+      <column name="C_NAME" remarks="demo.entities.City#name" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_CITY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_ADDRSS" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Address" tableName="T_ENTTS_ADDRSS">
+      <column name="ID" remarks="demo.entities.Address#id" type="UUID"/>
+      <column name="C_CITY_ID" remarks="demo.entities.Address#city" type="UUID"/>
+      <column name="C_ENTTS_CUSTMR_ADDRSS_ID" remarks="demo.entities.Address" type="UUID"/>
+      <column name="C_ENTTS_EMPLY_ADDRSS_ID" remarks="demo.entities.Address" type="UUID"/>
+      <column name="C_ADDRSS" remarks="demo.entities.Address#address" type="VARCHAR(255)"/>
+      <column name="C_REGION" remarks="demo.entities.Address#region" type="VARCHAR(255)"/>
+      <column name="C_POTLCD" remarks="demo.entities.Address#postalCode" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_ADDRSS"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_INDVDL" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Individual" tableName="T_ENTTS_INDVDL">
+      <column name="ID" remarks="demo.entities.Individual#id" type="UUID"/>
+      <column name="C_PHONE" remarks="demo.entities.Individual#phone" type="VARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_INDVDL"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_INNTAS" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.InternationalAddress" tableName="T_ENTTS_INNTAS">
+      <column name="ID" remarks="demo.entities.InternationalAddress#id" type="UUID"/>
+      <column name="C_ENTTS_ORDER_SHPADS_ID" remarks="demo.entities.InternationalAddress" type="UUID"/>
+      <column name="C_CONTRY" remarks="demo.entities.InternationalAddress#country" type="INTEGER"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_INNTAS"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_PAMTLT" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.PaymentList" tableName="T_ENTTS_PAMTLT">
+      <column name="ID" remarks="demo.entities.PaymentList#id" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_PAMTLT"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_MALGLT" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.MailingList" tableName="T_ENTTS_MALGLT">
+      <column name="ID" remarks="demo.entities.MailingList#id" type="UUID"/>
+      <column name="C_PERSON_ID" remarks="demo.entities.MailingList#person" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_MALGLT"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_STORE" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Store" tableName="T_ENTTS_STORE">
+      <column name="ID" remarks="demo.entities.Store#id" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_STORE"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTS_RDT_ACPS_ENTS_COPN_MCTS" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.Company#manufacturedProducts_demo.entities.Product#manufacturers" tableName="T_ENTS_RDT_ACPS_ENTS_COPN_MCTS">
+      <column name="ID" remarks="demo.entities.Company#manufacturedProducts_demo.entities.Product#manufacturers#id" type="UUID"/>
+      <column name="C_MANFTS_ID" remarks="demo.entities.Product#manufacturers" type="UUID"/>
+      <column name="C_MACTPS_ID" remarks="demo.entities.Company#manufacturedProducts" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTS_RDT_ACPS_ENTS_COPN_MCTS"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="full and 1.0.0" dbms="hsqldb" id="create-table-T_ENTTS_EMPLY_EMPLYS" logicalFilePath="create-tables">
+    <createTable remarks="demo.entities.PaymentList#employees_demo.entities.Employee" tableName="T_ENTTS_EMPLY_EMPLYS">
+      <column name="ID" remarks="demo.entities.PaymentList#employees_demo.entities.Employee#id" type="UUID"/>
+      <column name="C_EMPLYS_ID" remarks="demo.entities.PaymentList#employees" type="UUID"/>
+      <column name="EMPLYS_T_ENTTS_PAMTLT_ID" remarks="demo.entities.PaymentList@demo.entities.PaymentList#employees" type="UUID"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" tableName="T_ENTTS_EMPLY_EMPLYS"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_ORDER" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_CUSTMR_ID" baseTableName="T_ENTTS_ORDER" constraintName="FK_ENTTS_ORDER_CUSTMR" referencedColumnNames="ID" referencedTableName="T_ENTTS_CUSTMR"/>
+    <addForeignKeyConstraint baseColumnNames="C_SHPPR_ID" baseTableName="T_ENTTS_ORDER" constraintName="FK_ENTTS_ORDER_SHPPR" referencedColumnNames="ID" referencedTableName="T_ENTTS_SHPPR"/>
+    <addForeignKeyConstraint baseColumnNames="C_EMPLY_ID" baseTableName="T_ENTTS_ORDER" constraintName="FK_ENTTS_ORDER_EMPLY" referencedColumnNames="ID" referencedTableName="T_ENTTS_EMPLY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_PRDCT" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_CATGRY_ID" baseTableName="T_ENTTS_PRDCT" constraintName="FK_ENTTS_PRDCT_CATGRY" referencedColumnNames="ID" referencedTableName="T_ENTTS_CATGRY"/>
+    <addForeignKeyConstraint baseColumnNames="C_SUPPLR_ID" baseTableName="T_ENTTS_PRDCT" constraintName="FK_ENTTS_PRDCT_SUPPLR" referencedColumnNames="ID" referencedTableName="T_ENTTS_SUPPLR"/>
+    <addForeignKeyConstraint baseColumnNames="C_STORE_ID" baseTableName="T_ENTTS_PRDCT" constraintName="FK_ENTTS_PRDCT_STORE" referencedColumnNames="ID" referencedTableName="T_ENTTS_STORE"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_ORDRDL" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_PRDCT_ID" baseTableName="T_ENTTS_ORDRDL" constraintName="FK_ENTTS_ORDRDL_PRDCT" referencedColumnNames="ID" referencedTableName="T_ENTTS_PRDCT"/>
+    <addForeignKeyConstraint baseColumnNames="C_ENTTS_ORDER_ORDDTS_ID" baseTableName="T_ENTTS_ORDRDL" constraintName="FK_INV_ENTTS_ORDER_ORDDTS" referencedColumnNames="ID" referencedTableName="T_ENTTS_ORDER"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_EMPLY" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_CATGRY_ID" baseTableName="T_ENTTS_EMPLY" constraintName="FK_ENTTS_EMPLY_CATGRY" referencedColumnNames="ID" referencedTableName="T_ENTTS_CATGRY"/>
+    <addForeignKeyConstraint baseColumnNames="C_REPRTT_ID" baseTableName="T_ENTTS_EMPLY" constraintName="FK_ENTTS_EMPLY_REPRTT" referencedColumnNames="ID" referencedTableName="T_ENTTS_EMPLY"/>
+    <addForeignKeyConstraint baseColumnNames="C_TERRTY_ID" baseTableName="T_ENTTS_EMPLY" constraintName="FK_ENTTS_EMPLY_TERRTY" referencedColumnNames="ID" referencedTableName="T_ENTTS_TERRTY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_TERRTY" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_SHPPR_ID" baseTableName="T_ENTTS_TERRTY" constraintName="FK_ENTTS_TERRTY_SHPPR" referencedColumnNames="ID" referencedTableName="T_ENTTS_SHPPR"/>
+    <addForeignKeyConstraint baseColumnNames="C_REGION_ID" baseTableName="T_ENTTS_TERRTY" constraintName="FK_ENTTS_TERRTY_REGION" referencedColumnNames="ID" referencedTableName="T_ENTTS_REGION"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_ADDRSS" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_CITY_ID" baseTableName="T_ENTTS_ADDRSS" constraintName="FK_ENTTS_ADDRSS_CITY" referencedColumnNames="ID" referencedTableName="T_ENTTS_CITY"/>
+    <addForeignKeyConstraint baseColumnNames="C_ENTTS_CUSTMR_ADDRSS_ID" baseTableName="T_ENTTS_ADDRSS" constraintName="FK_INV_ENTTS_CUSTMR_ADDRSS" referencedColumnNames="ID" referencedTableName="T_ENTTS_CUSTMR"/>
+    <addForeignKeyConstraint baseColumnNames="C_ENTTS_EMPLY_ADDRSS_ID" baseTableName="T_ENTTS_ADDRSS" constraintName="FK_INV_ENTTS_EMPLY_ADDRSS" referencedColumnNames="ID" referencedTableName="T_ENTTS_EMPLY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_INNTAS" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_ENTTS_ORDER_SHPADS_ID" baseTableName="T_ENTTS_INNTAS" constraintName="FK_INV_ENTTS_ORDER_SHPADS" referencedColumnNames="ID" referencedTableName="T_ENTTS_ORDER"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_MALGLT" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_PERSON_ID" baseTableName="T_ENTTS_MALGLT" constraintName="FK_ENTTS_MALGLT_PERSON" referencedColumnNames="ID" referencedTableName="T_ENTTS_PERSON"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTS_RDT_ACPS_ENTS_COPN_MCTS" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_MANFTS_ID" baseTableName="T_ENTS_RDT_ACPS_ENTS_COPN_MCTS" constraintName="FK_ENTTS_PRDCT_MANFTS" referencedColumnNames="ID" referencedTableName="T_ENTTS_COMPNY"/>
+    <addForeignKeyConstraint baseColumnNames="C_MACTPS_ID" baseTableName="T_ENTS_RDT_ACPS_ENTS_COPN_MCTS" constraintName="FK_ENTTS_COMPNY_MACTPS" referencedColumnNames="ID" referencedTableName="T_ENTTS_PRDCT"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="create-foreignkeys-T_ENTTS_EMPLY_EMPLYS" logicalFilePath="create-foreignkeys">
+    <addForeignKeyConstraint baseColumnNames="C_EMPLYS_ID" baseTableName="T_ENTTS_EMPLY_EMPLYS" constraintName="FK_ENTTS_PAMTLT_EMPLYS" referencedColumnNames="ID" referencedTableName="T_ENTTS_EMPLY"/>
+    <addForeignKeyConstraint baseColumnNames="EMPLYS_T_ENTTS_PAMTLT_ID" baseTableName="T_ENTTS_EMPLY_EMPLYS" constraintName="FK_ENTTS_EMPLY_EMPLYS" referencedColumnNames="ID" referencedTableName="T_ENTTS_PAMTLT"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_INRNOR" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_CUTDSN" tableName="T_ENTTS_INRNOR"/>
+    <addNotNullConstraint columnDataType="DOUBLE" columnName="C_EXCSTX" tableName="T_ENTTS_INRNOR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_PRDCT" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_PRCTNM" tableName="T_ENTTS_PRDCT"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_COMPNY" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_COMNYM" tableName="T_ENTTS_COMPNY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_CATGRY" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_CATRYM" tableName="T_ENTTS_CATGRY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_ORDRDL" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="DOUBLE" columnName="C_UNTPRC" tableName="T_ENTTS_ORDRDL"/>
+    <addNotNullConstraint columnDataType="INTEGER" columnName="C_QUNTTY" tableName="T_ENTTS_ORDRDL"/>
+    <addNotNullConstraint columnDataType="DOUBLE" columnName="C_DISCNT" tableName="T_ENTTS_ORDRDL"/>
+    <addNotNullConstraint columnDataType="UUID" columnName="C_PRDCT_ID" tableName="T_ENTTS_ORDRDL"/>
+    <addNotNullConstraint columnDataType="UUID" columnName="C_ENTTS_ORDER_ORDDTS_ID" tableName="T_ENTTS_ORDRDL"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_PERSON" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_LASTNM" tableName="T_ENTTS_PERSON"/>
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_FISTNM" tableName="T_ENTTS_PERSON"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_TERRTY" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_TETDSN" tableName="T_ENTTS_TERRTY"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_REGION" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_REGDSN" tableName="T_ENTTS_REGION"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_ONLORR" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_WESPUL" tableName="T_ENTTS_ONLORR"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_ADDRSS" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_ADDRSS" tableName="T_ENTTS_ADDRSS"/>
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="C_POTLCD" tableName="T_ENTTS_ADDRSS"/>
+    <addNotNullConstraint columnDataType="UUID" columnName="C_CITY_ID" tableName="T_ENTTS_ADDRSS"/>
+  </changeSet>
+  <changeSet author="tatami-rdbms2liquibase" context="1.0.0" dbms="hsqldb" id="add-not-null-T_ENTTS_EMPLY_EMPLYS" logicalFilePath="add-not-null">
+    <addNotNullConstraint columnDataType="UUID" columnName="C_EMPLYS_ID" tableName="T_ENTTS_EMPLY_EMPLYS"/>
+  </changeSet>
+</databaseChangeLog>

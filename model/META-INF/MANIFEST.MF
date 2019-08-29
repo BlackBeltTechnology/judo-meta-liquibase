@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.epsilon.evl.emf.validation,
  org.eclipse.ui.ide,
- com.google.guava;bundle-version="21.0.0"
+ com.google.guava;bundle-version="21.0.0",
+ hu.blackbelt.epsilon.runtime.execution,
+ org.eclipse.epsilon.common
 Export-Package: hu.blackbelt.judo.meta.liquibase,
  hu.blackbelt.judo.meta.liquibase.impl,
  hu.blackbelt.judo.meta.liquibase.runtime,

@@ -1,5 +1,7 @@
 package hu.blackbelt.judo.meta.liquibase.osgi.itest;
 
+import hu.blackbelt.epsilon.runtime.execution.impl.StringBuilderLogger;
+import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseEpsilonValidator;
 import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 import java.io.*;
 
 import static hu.blackbelt.judo.meta.liquibase.osgi.itest.LiquibaseKarafFeatureProvider.*;
+import static org.junit.Assert.assertFalse;
 import static org.ops4j.pax.exam.CoreOptions.*;
 import static org.ops4j.pax.exam.OptionUtils.combine;
 import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
@@ -69,6 +72,16 @@ public class LiquibaseModelLoadITest {
     }
 
     @Test
-    public void testModelLoaded() {
+    public void testModelValidation() {
+        StringBuilderLogger logger = new StringBuilderLogger(StringBuilderLogger.LogLevel.DEBUG);
+        try {
+            LiquibaseEpsilonValidator.validateLiquibase(logger,
+                    liquibaseModel,
+                    LiquibaseEpsilonValidator.calculateLiquibaseValidationScriptURI());
+
+        } catch (Exception e) {
+            log.log(LogService.LOG_ERROR, logger.getBuffer());
+            assertFalse(true);
+        }
     }
 }

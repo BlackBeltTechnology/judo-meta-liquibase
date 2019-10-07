@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
 import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import hu.blackbelt.epsilon.runtime.execution.exceptions.EvlScriptExecutionException;
 import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
 import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseUtils;
 import hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport;
@@ -27,11 +28,15 @@ import static hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSup
 
 public class LiquibaseValidationTest {
 
-    private static final Logger log = LoggerFactory.getLogger(LiquibaseValidationTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(LiquibaseValidationTest.class);
     private final String createdSourceModelName = "urn:Liquibase.model";
     private Resource liquibaseResource;
     private ExecutionContext executionContext;
     LiquibaseModelResourceSupport liquibaseModelSupport;
+    
+    private LiquibaseModel liquibaseModel; 
+    
+    Log log = new Slf4jLog();
 
     private LiquibaseUtils liquibaseUtils;
 
@@ -41,25 +46,11 @@ public class LiquibaseValidationTest {
         liquibaseModelSupport = liquibaseModelResourceSupportBuilder()
                 .uri(URI.createURI(createdSourceModelName))
                 .build();
-
-        liquibaseResource = liquibaseModelSupport.getResource();
-
-        Log log = new Slf4jLog();
-
-        liquibaseUtils = new LiquibaseUtils(liquibaseResource.getResourceSet(), false);
-
-        // Execution context
-        executionContext = executionContextBuilder()
-                .log(log)
-                .resourceSet(liquibaseModelSupport.getResourceSet())
-                .metaModels(ImmutableList.of())
-                .modelContexts(ImmutableList.of(
-                        wrappedEmfModelContextBuilder()
-                                .log(log)
-                                .name("LIQUIBASE")
-                                .resource(liquibaseResource)
-                                .build()))
-                .injectContexts(ImmutableMap.of("liquibaseUtils", liquibaseUtils))
+        
+        liquibaseModel = LiquibaseModel.buildLiquibaseModel()
+        		.asmModelResourceSupport(liquibaseModelSupport)
+                .uri(URI.createURI(createdSourceModelName))
+                .name("test")
                 .build();
     }
 
@@ -69,24 +60,22 @@ public class LiquibaseValidationTest {
         liquibaseResource = null;
     }
 
-    @Test
-    public void test() throws Exception {
-        runEpsilon(ImmutableList.of(), null);
-    }
-
-    private void runEpsilon(Collection<String> expectedErrors, Collection<String> expectedWarnings) throws Exception {
-        // run the model / metadata loading
-        executionContext.load();
-
-        // Transformation script
-        executionContext.executeProgram(
-                evlExecutionContextBuilder()
-                        .source(new File("../model/src/main/epsilon/validations/liquibase.evl").toURI())
-                        .expectedErrors(expectedErrors)
-                        .expectedWarnings(expectedWarnings)
-                        .build());
-
-        executionContext.commit();
-        executionContext.close();
+    private void runEpsilon (Collection<String> expectedErrors, Collection<String> expectedWarnings) throws Exception {
+        try {
+            LiquibaseEpsilonValidator.validateAsm(log,
+                    liquibaseModel,
+                    LiquibaseEpsilonValidator.calculateLiquibaseValidationScriptURI(),
+                    expectedErrors,
+                    expectedWarnings);
+        } catch (EvlScriptExecutionException ex) {
+            logger.error("EVL failed", ex);
+            logger.error("\u001B[31m - expected errors: {}\u001B[0m", expectedErrors);
+            logger.error("\u001B[31m - unexpected errors: {}\u001B[0m", ex.getUnexpectedErrors());
+            logger.error("\u001B[31m - errors not found: {}\u001B[0m", ex.getErrorsNotFound());
+            logger.error("\u001B[33m - expected warnings: {}\u001B[0m", expectedWarnings);
+            logger.error("\u001B[33m - unexpected warnings: {}\u001B[0m", ex.getUnexpectedWarnings());
+            logger.error("\u001B[33m - warnings not found: {}\u001B[0m", ex.getWarningsNotFound());
+            throw ex;
+        }
     }
 }

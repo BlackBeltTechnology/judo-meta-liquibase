@@ -19,14 +19,14 @@ import hu.blackbelt.epsilon.runtime.execution.exceptions.ScriptExecutionExceptio
 
 public class LiquibaseEpsilonValidator {
 	
-	public static void validateRdbms(Log log,
+	public static void validateLiquibase(Log log,
             LiquibaseModel rdbmsModel,
             URI scriptRoot) throws ScriptExecutionException, URISyntaxException
 	{
-		validateRdbms(log, rdbmsModel, scriptRoot, emptyList(), emptyList());
+		validateLiquibase(log, rdbmsModel, scriptRoot, emptyList(), emptyList());
 	}
 	
-	public static void validateRdbms(Log log,
+	public static void validateLiquibase(Log log,
 			LiquibaseModel liquibaseModel,
             URI scriptRoot,
             Collection<String> expectedErrors,
@@ -43,7 +43,7 @@ public class LiquibaseEpsilonValidator {
                                 .validateModel(false)
                                 .resource(liquibaseModel.getResource())
                                 .build()))
-                .injectContexts(singletonMap("liquibaseUtils", new LiquibaseUtils(liquibaseModel.getResource())))
+                .injectContexts(singletonMap("asmUtils", new LiquibaseUtils(liquibaseModel.getResourceSet())))
                 .build();
 		
 		 try {

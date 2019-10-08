@@ -66,7 +66,6 @@ public class LiquibaseModelLoadITest {
                         new FileInputStream(new File(testTargetDir(getClass()).getAbsolutePath(),  "northwind.changelog.xml")))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-liquibase" )
-                //set( Constants.IMPORT_PACKAGE, "meta/psm;version=\"" + getConfiguration(META_PSM_IMPORT_RANGE) +"\"")
                 .set( "Liquibase-Models", "file=model/" + DEMO + ".judo-meta-liquibase;version=1.0.0;name=" + DEMO + ";checksum=notset;meta-version-range=\"[1.0.0,2)\"")
                 .build( withBnd());
     }

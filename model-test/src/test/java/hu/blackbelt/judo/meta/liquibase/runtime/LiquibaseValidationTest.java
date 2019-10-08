@@ -30,15 +30,12 @@ public class LiquibaseValidationTest {
 
     private static final Logger logger = LoggerFactory.getLogger(LiquibaseValidationTest.class);
     private final String createdSourceModelName = "urn:Liquibase.model";
-    private Resource liquibaseResource;
-    private ExecutionContext executionContext;
+
     LiquibaseModelResourceSupport liquibaseModelSupport;
     
     private LiquibaseModel liquibaseModel; 
     
     Log log = new Slf4jLog();
-
-    private LiquibaseUtils liquibaseUtils;
 
     @BeforeEach
     void setUp() {
@@ -48,21 +45,15 @@ public class LiquibaseValidationTest {
                 .build();
         
         liquibaseModel = LiquibaseModel.buildLiquibaseModel()
-        		.asmModelResourceSupport(liquibaseModelSupport)
+        		.liquibaseModelResourceSupport(liquibaseModelSupport)
                 .uri(URI.createURI(createdSourceModelName))
                 .name("test")
                 .build();
     }
 
-    @AfterEach
-    void tearDown() {
-        executionContext = null;
-        liquibaseResource = null;
-    }
-
     private void runEpsilon (Collection<String> expectedErrors, Collection<String> expectedWarnings) throws Exception {
         try {
-            LiquibaseEpsilonValidator.validateAsm(log,
+            LiquibaseEpsilonValidator.validateLiquibase(log,
                     liquibaseModel,
                     LiquibaseEpsilonValidator.calculateLiquibaseValidationScriptURI(),
                     expectedErrors,

@@ -274,6 +274,23 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.tatami</groupId>
+            <artifactId>judo-tatami-psm2asm</artifactId>
+            <version>${judo-tatami-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.tatami</groupId>
+            <artifactId>judo-tatami-asm2rdbms</artifactId>
+            <version>${judo-tatami-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.tatami</groupId>
+            <artifactId>judo-tatami-rdbms2liquibase</artifactId>
+            <version>${judo-tatami-version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -285,6 +302,60 @@
         </testResources>
 
         <plugins>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-full-demo</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>hu.blackbelt.model.northwind.Demo</mainClass>
+                            <arguments>
+                                <argument>${basedir}/target/test-classes/northwind-psm.model</argument>
+                            </arguments>
+                            <includeProjectDependencies>true</includeProjectDependencies>
+                            <includePluginDependencies>true</includePluginDependencies>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>hu.blackbelt.model</groupId>
+                        <artifactId>hu.blackbelt.model.northwind.model</artifactId>
+                        <version>${northwind-model-version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>hu.blackbelt.judo.tatami</groupId>
+                <artifactId>judo-tatami-workflow-maven-plugin</artifactId>
+                <version>${judo-tatami-version}</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>psm-default-workflow</goal>
+                        </goals>
+                        <configuration>
+                            <psmModelDest>${basedir}/target/test-classes/northwind-psm.model</psmModelDest>
+                            <destination>${basedir}/target/test-classes</destination>
+                            <modelName>northwind</modelName>
+                            <ignorePsm2Measure>true</ignorePsm2Measure>
+                            <ignoreAsm2sdk>true</ignoreAsm2sdk>
+                            <ignoreAsm2jaxrsapi>true</ignoreAsm2jaxrsapi>
+                            <ignoreAsm2Openapi>true</ignoreAsm2Openapi>
+                            <dialectList>hsqldb</dialectList>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

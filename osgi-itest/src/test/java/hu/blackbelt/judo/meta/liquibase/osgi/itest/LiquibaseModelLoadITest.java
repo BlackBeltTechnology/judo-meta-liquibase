@@ -60,7 +60,7 @@ public class LiquibaseModelLoadITest {
     private InputStream getLiquibaseModelBundle() throws FileNotFoundException {
         return bundle()
                 .add( "model/" + DEMO + ".judo-meta-liquibase",
-                        new FileInputStream(new File(testTargetDir(getClass()).getAbsolutePath(),  "northwind.changelog.xml")))
+                        new FileInputStream(new File(testTargetDir(getClass()).getAbsolutePath(),  "northwind-liquibase_hsqldb.changelog.xml")))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-liquibase" )
                 //set( Constants.IMPORT_PACKAGE, "meta/psm;version=\"" + getConfiguration(META_PSM_IMPORT_RANGE) +"\"")

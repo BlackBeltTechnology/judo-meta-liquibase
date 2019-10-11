@@ -67,6 +67,8 @@
 		<emf-genmodel-generator-version>1.0.0.develop_00023</emf-genmodel-generator-version>
 		<judo-genmodel-generator-version>1.0.0.develop_00017</judo-genmodel-generator-version>
 
+		<northwind-model-version>1.0.0.develop_00145</northwind-model-version>
+		<judo-tatami-version>1.0.0.1570583960_51893cf42f62d747b951ec198803cdc3ca03d7fc_develop</judo-tatami-version>
 
 		<!-- Xtend / Xcore -->
 		<emf-version>2.18.0</emf-version>

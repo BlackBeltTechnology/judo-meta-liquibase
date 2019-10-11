@@ -1,6 +1,7 @@
 package hu.blackbelt.judo.meta.liquibase.runtime;
 
 import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import hu.blackbelt.epsilon.runtime.execution.exceptions.EvlScriptExecutionException;
 import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
 import hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport;
 import org.eclipse.emf.common.util.URI;

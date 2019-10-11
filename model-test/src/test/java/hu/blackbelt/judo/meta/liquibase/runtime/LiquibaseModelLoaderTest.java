@@ -26,7 +26,7 @@ public class LiquibaseModelLoaderTest {
     void loadLiquibaseModel() throws IOException, LiquibaseModel.LiquibaseValidationException {
         LiquibaseModel liquibaseModel = LiquibaseModel.loadLiquibaseModel(liquibaseLoadArgumentsBuilder()
                 .uriHandler(new LiquibaseNamespaceFixUriHandler(new FileURIHandlerImpl()))
-                .uri(URI.createFileURI(new File("src/test/model/test.liquibase").getAbsolutePath()))
+                .uri(URI.createFileURI(new File("target/test-classes/model/northwind-liquibase_hsqldb.changelog.xml").getAbsolutePath()))
                 .name("test"));
 
         for (Iterator<EObject> i = liquibaseModel.getResource().getAllContents(); i.hasNext(); ) {
@@ -34,7 +34,7 @@ public class LiquibaseModelLoaderTest {
         }
 
         liquibaseModel.saveLiquibaseModel(liquibaseSaveArgumentsBuilder()
-                .file(new File("target/test-classes/test_out.liquibase")));
+                .file(new File("target/test-classes/northwind-liquibase_hsqldb_saved.changelog.xml")));
 
         // TODO: make it work
         /*

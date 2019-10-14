@@ -3,6 +3,7 @@
   <semanticResources>liquibase.ecore</semanticResources>
   <semanticResources>http://www.eclipse.org/emf/2003/XMLType</semanticResources>
   <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
+  <semanticResources>../src-gen/hu/blackbelt/judo/meta/liquibase/impl/liquibase.ecore</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" uid="_bx6UYKgXEemnkNbPfYat5A">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
   </ownedViews>

@@ -68,8 +68,8 @@
 		<emf-genmodel-generator-version>1.0.0.20191105_182930_676cf43_develop</emf-genmodel-generator-version>
 		<judo-genmodel-generator-version>1.0.0.20191105_183255_7673428_develop</judo-genmodel-generator-version>
 
-		<northwind-model-version>1.0.0.20191022_140717_d575fe8_develop</northwind-model-version>
-		<judo-tatami-version>1.0.0.20191030_074248_38f4447_develop</judo-tatami-version>
+                <northwind-model-version>1.0.0.20191016_131856_82fa597_develop</northwind-model-version>
+		<judo-tatami-version>1.0.0.1570583960_51893cf42f62d747b951ec198803cdc3ca03d7fc_develop</judo-tatami-version>
 
 		<!-- Xtend / Xcore -->
 		<emf-version>2.18.0</emf-version>

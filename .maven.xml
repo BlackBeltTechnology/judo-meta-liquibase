@@ -42,7 +42,7 @@
     
     <profiles>
         <profile>
-            <id>ossrh</id>
+            <id>gpg</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -52,9 +52,23 @@
                 <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
             </properties>
         </profile>
+       
+        <profile>
+            <id>ossrh</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>ossrh-snapshots</id>
+                    <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>never</updatePolicy>
+                        <checksumPolicy>fail</checksumPolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
     </profiles>
-    
-    <pluginGroups>
-        <pluginGroup>com.amashchenko.maven.plugin</pluginGroup>
-    </pluginGroups>
 </settings>

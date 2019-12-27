@@ -71,7 +71,7 @@
         <judo-meta-psm-version>1.0.0.20191222_195936_f876179_develop</judo-meta-psm-version>
         <judo-meta-psm-import-range>[1.0,1.1)</judo-meta-psm-import-range>
 
-        <judo-tatami-version>1.0.0.20191220_231251_0a8918e_develop</judo-tatami-version>
+        <judo-tatami-maven-plugin-version>1.0.0.20191223_003443_c2b5ba2_develop</judo-tatami-maven-plugin-version>
 
 		<!-- Xtend / Xcore -->
 		<emf-version>2.18.0</emf-version>

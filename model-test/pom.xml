@@ -35,23 +35,6 @@
 			<version>${epsilon-version}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>hu.blackbelt.judo.tatami</groupId>
-			<artifactId>judo-tatami-psm2asm</artifactId>
-			<version>${judo-tatami-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>hu.blackbelt.judo.tatami</groupId>
-			<artifactId>judo-tatami-asm2rdbms</artifactId>
-			<version>${judo-tatami-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>hu.blackbelt.judo.tatami</groupId>
-			<artifactId>judo-tatami-rdbms2liquibase</artifactId>
-			<version>${judo-tatami-version}</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -88,7 +71,7 @@
 			<plugin>
 				<groupId>hu.blackbelt.judo.tatami</groupId>
 				<artifactId>judo-tatami-workflow-maven-plugin</artifactId>
-				<version>${judo-tatami-version}</version>
+				<version>${judo-tatami-maven-plugin-version}</version>
 				<executions>
 					<execution>
 						<phase>compile</phase>

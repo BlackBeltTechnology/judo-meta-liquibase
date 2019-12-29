@@ -915,9 +915,8 @@
                 </plugins>
             </build>
         </profile>
-        
         <profile>
-            <id>release-p2-blackbelt</id>
+            <id>release-p2-judong</id>
             <build>
                 <plugins>
                     <plugin>

@@ -67,7 +67,7 @@
 		<emf-genmodel-generator-version>1.0.0</emf-genmodel-generator-version>
 		<judo-genmodel-generator-version>1.0.0.20200213_091429_17e20f6_develop</judo-genmodel-generator-version>
 
-        <judo-meta-psm-version>1.0.0.20200224_221736_6e65a30_develop</judo-meta-psm-version>
+        <judo-meta-psm-version>1.0.0.20200304_090459_235347d_develop</judo-meta-psm-version>
         <judo-meta-psm-import-range>[1.0,1.1)</judo-meta-psm-import-range>
 
         <judo-tatami-maven-plugin-version>1.0.0.20200303_135340_0b09b0e4_plugin</judo-tatami-maven-plugin-version>

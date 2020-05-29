@@ -1,19 +1,14 @@
 package hu.blackbelt.judo.meta.liquibase.runtime;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.ECollections;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.common.util.UniqueEList;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import hu.blackbelt.judo.meta.liquibase.ChangeSet;
+import hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 public class LiquibaseUtils {
 
@@ -23,6 +18,13 @@ public class LiquibaseUtils {
 
     private ResourceSet resourceSet;
 
+    private LiquibaseModelResourceSupport liquibaseModelResourceSupport;
+
+
+    //////////////////////////////////////////////////
+    ////////////////// CONSTRUCTOR ///////////////////
+    //////////////////////////////////////////////////
+
     public LiquibaseUtils(final ResourceSet resourceSet) {
         this(resourceSet, false);
     }
@@ -31,10 +33,47 @@ public class LiquibaseUtils {
         this.resourceSet = resourceSet;
         this.failOnError = failOnError;
 
-        // TODO: Processes here
+        liquibaseModelResourceSupport = LiquibaseModelResourceSupport.liquibaseModelResourceSupportBuilder()
+                .resourceSet(resourceSet)
+                .build();
     }
+
+    //////////////////////////////////////////////////
+    ///////////////// OTHER METHODS //////////////////
+    //////////////////////////////////////////////////
 
     public void setFailOnError(final boolean failOnError) {
         this.failOnError = failOnError;
     }
+
+    //////////////////////////////////////////////////
+    ////////////////// CHANGE SETS ///////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Get all ChangeSet
+     *
+     * @return all ChangeSet is exists
+     */
+    public Optional<EList<ChangeSet>> getChangeSets() {
+        EList<ChangeSet> changeSets = new BasicEList<>();
+        liquibaseModelResourceSupport.getStreamOfLiquibaseChangeSet().forEach(changeSets::add);
+        return !changeSets.isEmpty()
+                ? Optional.of(changeSets)
+                : Optional.empty();
+    }
+
+    /**
+     * Get a certain ChangeSet
+     *
+     * @param changeSetId ChangeSet to search for
+     * @return Certain ChangeSet if exists
+     */
+    public Optional<ChangeSet> getChangeSet(String changeSetId) {
+        return getChangeSets().isPresent()
+                ? getChangeSets().get().stream().filter(e -> changeSetId.equals(e.getId())).findFirst()
+                : Optional.empty();
+    }
+
+
 }

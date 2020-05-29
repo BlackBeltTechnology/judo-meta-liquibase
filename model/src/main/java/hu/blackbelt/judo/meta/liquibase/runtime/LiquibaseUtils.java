@@ -1,6 +1,7 @@
 package hu.blackbelt.judo.meta.liquibase.runtime;
 
 import hu.blackbelt.judo.meta.liquibase.ChangeSet;
+import hu.blackbelt.judo.meta.liquibase.CreateTable;
 import hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -69,9 +70,42 @@ public class LiquibaseUtils {
      * @param changeSetId ChangeSet to search for
      * @return Certain ChangeSet if exists
      */
-    public Optional<ChangeSet> getChangeSet(String changeSetId) {
+    public Optional<ChangeSet> getChangeSet(final String changeSetId) {
         return getChangeSets().isPresent()
                 ? getChangeSets().get().stream().filter(e -> changeSetId.equals(e.getId())).findFirst()
+                : Optional.empty();
+    }
+
+    //////////////////////////////////////////////////
+    ////////////////// CREATE TABLE //////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Get all CreateTable in certain ChangeSet
+     *
+     * @param changeSetId ChangeSet's id to search in
+     * @return All CreateTable in given ChangeSet if exists
+     */
+    public Optional<EList<CreateTable>> getCreateTables(final String changeSetId) {
+        EList<CreateTable> createTables = new BasicEList<>();
+        if (!getChangeSet(changeSetId).isPresent())
+            return Optional.empty();
+        createTables.addAll(getChangeSet(changeSetId).get().getCreateTable());
+        return !createTables.isEmpty()
+                ? Optional.of(createTables)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain CreateTable in certain ChangeSet
+     *
+     * @param changeSetId ChangeSet's id to search in
+     * @param tableName   CreateTable's tableName to search for
+     * @return certain CreateTable in given ChangeSet if exists
+     */
+    public Optional<CreateTable> getCreateTable(final String changeSetId, final String tableName) {
+        return getCreateTables(changeSetId).isPresent()
+                ? getCreateTables(changeSetId).get().stream().filter(e -> tableName.equals(e.getTableName())).findFirst()
                 : Optional.empty();
     }
 

@@ -1,6 +1,7 @@
 package hu.blackbelt.judo.meta.liquibase.runtime;
 
 import hu.blackbelt.judo.meta.liquibase.ChangeSet;
+import hu.blackbelt.judo.meta.liquibase.Column;
 import hu.blackbelt.judo.meta.liquibase.CreateTable;
 import hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport;
 import org.eclipse.emf.common.util.BasicEList;
@@ -87,10 +88,9 @@ public class LiquibaseUtils {
      * @return All CreateTable in given ChangeSet if exists
      */
     public Optional<EList<CreateTable>> getCreateTables(final String changeSetId) {
-        EList<CreateTable> createTables = new BasicEList<>();
         if (!getChangeSet(changeSetId).isPresent())
             return Optional.empty();
-        createTables.addAll(getChangeSet(changeSetId).get().getCreateTable());
+        EList<CreateTable> createTables = new BasicEList<>(getChangeSet(changeSetId).get().getCreateTable());
         return !createTables.isEmpty()
                 ? Optional.of(createTables)
                 : Optional.empty();
@@ -109,5 +109,38 @@ public class LiquibaseUtils {
                 : Optional.empty();
     }
 
+    //////////////////////////////////////////////////
+    //////////////////// COLUMNS /////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Get all Columns in certain ChangeSet's CreateTable
+     *
+     * @param changeSetId ChangeSet's id to search CreateTable in
+     * @param tableName   CreateTable's name to search in
+     * @return all Columns in given ChangeSet's CreateTable
+     */
+    public Optional<EList<Column>> getColumns(final String changeSetId, final String tableName) {
+        if (!getCreateTable(changeSetId, tableName).isPresent())
+            return Optional.empty();
+        EList<Column> columns = new BasicEList<>(getCreateTable(changeSetId, tableName).get().getColumn());
+        return !columns.isEmpty()
+                ? Optional.of(columns)
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain Column in certain ChangeSet's CreateTable
+     *
+     * @param changeSetId ChangeSet's id to search CreateTable in
+     * @param tableName   CreateTable's name to search in
+     * @param column      Column's name to search for
+     * @return certain Columns in given ChangeSet's CreateTable
+     */
+    public Optional<Column> getColumn(final String changeSetId, final String tableName, final String column) {
+        return getColumns(changeSetId, tableName).isPresent()
+                ? getColumns(changeSetId, tableName).get().stream().filter(e -> column.equals(e.getName())).findFirst()
+                : Optional.empty();
+    }
 
 }

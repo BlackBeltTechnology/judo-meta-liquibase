@@ -1,5 +1,6 @@
 package hu.blackbelt.judo.meta.liquibase.runtime;
 
+import hu.blackbelt.judo.meta.liquibase.AddPrimaryKey;
 import hu.blackbelt.judo.meta.liquibase.ChangeSet;
 import hu.blackbelt.judo.meta.liquibase.Column;
 import hu.blackbelt.judo.meta.liquibase.CreateTable;
@@ -88,11 +89,8 @@ public class LiquibaseUtils {
      * @return All CreateTable in given ChangeSet if exists
      */
     public Optional<EList<CreateTable>> getCreateTables(final String changeSetId) {
-        if (!getChangeSet(changeSetId).isPresent())
-            return Optional.empty();
-        EList<CreateTable> createTables = new BasicEList<>(getChangeSet(changeSetId).get().getCreateTable());
-        return !createTables.isEmpty()
-                ? Optional.of(createTables)
+        return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getCreateTable().isEmpty()
+                ? Optional.of(getChangeSet(changeSetId).get().getCreateTable())
                 : Optional.empty();
     }
 
@@ -140,6 +138,34 @@ public class LiquibaseUtils {
     public Optional<Column> getColumn(final String changeSetId, final String tableName, final String column) {
         return getColumns(changeSetId, tableName).isPresent()
                 ? getColumns(changeSetId, tableName).get().stream().filter(e -> column.equals(e.getName())).findFirst()
+                : Optional.empty();
+    }
+    //////////////////////////////////////////////////
+    ////////////////// PRIMARY KEYS //////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Get all CreateTable in certain ChangeSet
+     *
+     * @param changeSetId ChangeSet's id to search in
+     * @return All CreateTable in given ChangeSet if exists
+     */
+    public Optional<EList<AddPrimaryKey>> getAddPrimaryKeys(final String changeSetId) {
+        return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddPrimaryKey().isEmpty()
+                ? Optional.of(getChangeSet(changeSetId).get().getAddPrimaryKey())
+                : Optional.empty();
+    }
+
+    /**
+     * Get certain CreateTable in certain ChangeSet
+     *
+     * @param changeSetId ChangeSet's id to search in
+     * @param tableName   CreateTable's tableName to search for
+     * @return certain CreateTable in given ChangeSet if exists
+     */
+    public Optional<AddPrimaryKey> getAddPrimaryKey(final String changeSetId, final String tableName) {
+        return getAddPrimaryKeys(changeSetId).isPresent()
+                ? getAddPrimaryKeys(changeSetId).get().stream().filter(e -> tableName.equals(e.getTableName())).findFirst()
                 : Optional.empty();
     }
 

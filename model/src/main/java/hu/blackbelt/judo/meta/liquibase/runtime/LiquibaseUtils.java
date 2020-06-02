@@ -47,6 +47,14 @@ public class LiquibaseUtils {
     }
 
     //////////////////////////////////////////////////
+    ////////////// DATA BASE CHANGE LOG //////////////
+    //////////////////////////////////////////////////
+
+    public Optional<databaseChangeLog> getDatabaseChangeLog() {
+        return liquibaseModelResourceSupport.getStreamOfLiquibasedatabaseChangeLog().findFirst();
+    }
+
+    //////////////////////////////////////////////////
     ////////////////// CHANGE SETS ///////////////////
     //////////////////////////////////////////////////
 
@@ -56,12 +64,11 @@ public class LiquibaseUtils {
      * @return all ChangeSet is exists
      */
     public Optional<EList<ChangeSet>> getChangeSets() {
-        // TODO: test
         EList<ChangeSet> changeSets = new BasicEList<>();
         liquibaseModelResourceSupport.getStreamOfLiquibaseChangeSet().forEach(changeSets::add);
         return !changeSets.isEmpty()
-                ? Optional.of(changeSets)
-                : Optional.empty();
+               ? Optional.of(changeSets)
+               : Optional.empty();
     }
 
     /**
@@ -71,10 +78,9 @@ public class LiquibaseUtils {
      * @return Certain ChangeSet if exists
      */
     public Optional<ChangeSet> getChangeSet(final String changeSetId) {
-        // TODO: test
         return getChangeSets().isPresent()
-                ? getChangeSets().get().stream().filter(e -> changeSetId.equals(e.getId())).findFirst()
-                : Optional.empty();
+               ? getChangeSets().get().stream().filter(e -> changeSetId.equals(e.getId())).findFirst()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -88,11 +94,9 @@ public class LiquibaseUtils {
      * @return All CreateTable in given ChangeSet if exists
      */
     public Optional<EList<CreateTable>> getCreateTables(final String changeSetId) {
-        // TODO: test
-        final EList<CreateTable> createTables = getChangeSet(changeSetId).get().getCreateTable();
-        return getChangeSet(changeSetId).isPresent() && !createTables.isEmpty()
-                ? Optional.of(createTables)
-                : Optional.empty();
+        return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getCreateTable().isEmpty()
+               ? Optional.of(getChangeSet(changeSetId).get().getCreateTable())
+               : Optional.empty();
     }
 
     /**
@@ -103,10 +107,9 @@ public class LiquibaseUtils {
      * @return certain CreateTable in given ChangeSet if exists
      */
     public Optional<CreateTable> getCreateTable(final String changeSetId, final String tableName) {
-        // TODO: test
         return getCreateTables(changeSetId).isPresent()
-                ? getCreateTables(changeSetId).get().stream().filter(e -> tableName.equals(e.getTableName())).findFirst()
-                : Optional.empty();
+               ? getCreateTables(changeSetId).get().stream().filter(e -> tableName.equals(e.getTableName())).findFirst()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -121,10 +124,9 @@ public class LiquibaseUtils {
      * @return all Columns in given ChangeSet's CreateTable
      */
     public Optional<EList<Column>> getColumns(final String changeSetId, final String createTableName) {
-        // TODO: test
         return getCreateTable(changeSetId, createTableName).isPresent() && !getCreateTable(changeSetId, createTableName).get().getColumn().isEmpty()
-                ? Optional.of(getCreateTable(changeSetId, createTableName).get().getColumn())
-                : Optional.empty();
+               ? Optional.of(getCreateTable(changeSetId, createTableName).get().getColumn())
+               : Optional.empty();
     }
 
     /**
@@ -136,10 +138,9 @@ public class LiquibaseUtils {
      * @return certain Columns in given ChangeSet's CreateTable
      */
     public Optional<Column> getColumn(final String changeSetId, final String createTableName, final String columnName) {
-        // TODO: test
         return getColumns(changeSetId, createTableName).isPresent()
-                ? getColumns(changeSetId, createTableName).get().stream().filter(e -> columnName.equals(e.getName())).findFirst()
-                : Optional.empty();
+               ? getColumns(changeSetId, createTableName).get().stream().filter(e -> columnName.equals(e.getName())).findFirst()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -150,27 +151,32 @@ public class LiquibaseUtils {
      * Get all AddPrimaryKey in certain ChangeSet
      *
      * @param changeSetId ChangeSet's id to search in
+     * @param tableName   Table's name to search primary key in
      * @return All AddPrimaryKey in given ChangeSet if exists
      */
-    public Optional<EList<AddPrimaryKey>> getAddPrimaryKeys(final String changeSetId) {
-        // TODO: test
-        return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddPrimaryKey().isEmpty()
-                ? Optional.of(getChangeSet(changeSetId).get().getAddPrimaryKey())
-                : Optional.empty();
+    public Optional<EList<AddPrimaryKey>> getAddPrimaryKeys(final String changeSetId, final String tableName) {
+        if (!getChangeSet(changeSetId).isPresent())
+            return Optional.empty();
+        final EList<AddPrimaryKey> addPrimaryKeys = new BasicEList<>();
+        getChangeSet(changeSetId).get().getAddPrimaryKey().stream().filter(e -> tableName.equals(e.getTableName()))
+                .forEach(addPrimaryKeys::add);
+        return !addPrimaryKeys.isEmpty()
+               ? Optional.of(addPrimaryKeys)
+               : Optional.empty();
     }
 
     /**
      * Get certain AddPrimaryKey in certain ChangeSet
      *
      * @param changeSetId ChangeSet's id to search in
+     * @param tableName   Table's name to search primary key in
      * @param columnName  AddPrimaryKey's columnName to search for
      * @return certain AddPrimaryKey in given ChangeSet if exists
      */
-    public Optional<AddPrimaryKey> getAddPrimaryKey(final String changeSetId, final String columnName) {
-        // TODO: test
-        return getAddPrimaryKeys(changeSetId).isPresent()
-                ? getAddPrimaryKeys(changeSetId).get().stream().filter(e -> columnName.equals(e.getColumnNames())).findFirst()
-                : Optional.empty();
+    public Optional<AddPrimaryKey> getAddPrimaryKey(final String changeSetId, final String tableName, final String columnName) {
+        return getAddPrimaryKeys(changeSetId, tableName).isPresent()
+               ? getAddPrimaryKeys(changeSetId, tableName).get().stream().filter(e -> columnName.equals(e.getColumnNames())).findFirst()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -180,28 +186,44 @@ public class LiquibaseUtils {
     /**
      * Get all AddForeignKeyConstraint in certain ChangeSet
      *
-     * @param changeSetId ChangeSet's id to search in
+     * @param changeSetId         ChangeSet's id to search in
+     * @param baseTableName
+     * @param referencedTableName
      * @return All AddForeignKeyConstraint in given ChangeSet if exists
      */
-    public Optional<EList<AddForeignKeyConstraint>> getAddForeignKeyConstraints(final String changeSetId) {
-        // TODO: test
-        return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddForeignKeyConstraint().isEmpty()
-                ? Optional.of(getChangeSet(changeSetId).get().getAddForeignKeyConstraint())
-                : Optional.empty();
+    public Optional<EList<AddForeignKeyConstraint>> getAddForeignKeyConstraints(
+            final String changeSetId,
+            final String baseTableName,
+            final String referencedTableName) {
+        EList<AddForeignKeyConstraint> addForeignKeyConstraints = new BasicEList<>();
+        if (!getChangeSet(changeSetId).isPresent())
+            return Optional.empty();
+        getChangeSet(changeSetId).get().getAddForeignKeyConstraint().stream()
+                .filter(e -> baseTableName.equals(e.getBaseTableName()) && referencedTableName.equals(e.getReferencedTableName()))
+                .forEach(addForeignKeyConstraints::add);
+        return !addForeignKeyConstraints.isEmpty()
+               ? Optional.of(addForeignKeyConstraints)
+               : Optional.empty();
     }
 
     /**
      * Get certain AddForeignKeyConstraint in certain ChangeSet
      *
-     * @param changeSetId    ChangeSet's id to search in
-     * @param constraintName AddForeignKeyConstraint's constraintName to search for
+     * @param changeSetId         ChangeSet's id to search in
+     * @param baseTableName
+     * @param referencedTableName
+     * @param constraintName      AddForeignKeyConstraint's constraintName to search for
      * @return certain AddForeignKeyConstraint in given ChangeSet if exists
      */
-    public Optional<AddForeignKeyConstraint> getAddForeignKeyConstraint(final String changeSetId, final String constraintName) {
-        // TODO: test
-        return getAddForeignKeyConstraints(changeSetId).isPresent()
-                ? getAddForeignKeyConstraints(changeSetId).get().stream().filter(e -> constraintName.equals(e.getConstraintName())).findFirst()
-                : Optional.empty();
+    public Optional<AddForeignKeyConstraint> getAddForeignKeyConstraint(
+            final String changeSetId,
+            final String baseTableName,
+            final String referencedTableName,
+            final String constraintName) {
+        return getAddForeignKeyConstraints(changeSetId, baseTableName, referencedTableName).isPresent()
+               ? getAddForeignKeyConstraints(changeSetId, baseTableName, referencedTableName)
+                       .get().stream().filter(e -> constraintName.equals(e.getConstraintName())).findFirst()
+               : Optional.empty();
     }
 
     //////////////////////////////////////////////////
@@ -214,11 +236,16 @@ public class LiquibaseUtils {
      * @param changeSetId ChangeSet's id to search in
      * @return All AddNotNullConstraint in given ChangeSet if exists
      */
-    public Optional<EList<AddNotNullConstraint>> getAddNotNullConstraints(final String changeSetId) {
-        // TODO: test
-        return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddNotNullConstraint().isEmpty()
-                ? Optional.of(getChangeSet(changeSetId).get().getAddNotNullConstraint())
-                : Optional.empty();
+    public Optional<EList<AddNotNullConstraint>> getAddNotNullConstraints(final String changeSetId, final String tableName) {
+        if(!getChangeSet(changeSetId).isPresent())
+            return Optional.empty();
+        EList<AddNotNullConstraint> addNotNullConstraints = new BasicEList<>();
+        getChangeSet(changeSetId).get().getAddNotNullConstraint().stream()
+                .filter(e -> tableName.equals(e.getTableName()))
+                .forEach(addNotNullConstraints::add);
+        return !addNotNullConstraints.isEmpty()
+               ? Optional.of(addNotNullConstraints)
+               : Optional.empty();
     }
 
     /**
@@ -228,11 +255,10 @@ public class LiquibaseUtils {
      * @param columnName  AddNotNullConstraint's columnName to search for
      * @return certain CreateAddNotNullConstraintTable in given ChangeSet if exists
      */
-    public Optional<AddNotNullConstraint> getAddNotNullConstraint(final String changeSetId, final String columnName) {
-        // TODO: test
-        return getAddNotNullConstraints(changeSetId).isPresent()
-                ? getAddNotNullConstraints(changeSetId).get().stream().filter(e -> columnName.equals(e.getColumnName())).findFirst()
-                : Optional.empty();
+    public Optional<AddNotNullConstraint> getAddNotNullConstraint(final String changeSetId, final String tableName, final String columnName) {
+        return getAddNotNullConstraints(changeSetId, tableName).isPresent()
+               ? getAddNotNullConstraints(changeSetId, tableName).get().stream().filter(e -> columnName.equals(e.getColumnName())).findFirst()
+               : Optional.empty();
     }
 
 }

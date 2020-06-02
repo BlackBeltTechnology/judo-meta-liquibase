@@ -112,27 +112,27 @@ public class LiquibaseUtils {
     /**
      * Get all Columns in certain ChangeSet's CreateTable
      *
-     * @param changeSetId ChangeSet's id to search CreateTable in
-     * @param tableName   CreateTable's name to search in
+     * @param changeSetId     ChangeSet's id to search CreateTable in
+     * @param createTableName CreateTable's name to search in
      * @return all Columns in given ChangeSet's CreateTable
      */
-    public Optional<EList<Column>> getColumns(final String changeSetId, final String tableName) {
-        return getCreateTable(changeSetId, tableName).isPresent() && !getCreateTable(changeSetId, tableName).get().getColumn().isEmpty()
-                ? Optional.of(getCreateTable(changeSetId, tableName).get().getColumn())
+    public Optional<EList<Column>> getColumns(final String changeSetId, final String createTableName) {
+        return getCreateTable(changeSetId, createTableName).isPresent() && !getCreateTable(changeSetId, createTableName).get().getColumn().isEmpty()
+                ? Optional.of(getCreateTable(changeSetId, createTableName).get().getColumn())
                 : Optional.empty();
     }
 
     /**
      * Get certain Column in certain ChangeSet's CreateTable
      *
-     * @param changeSetId ChangeSet's id to search CreateTable in
-     * @param tableName   CreateTable's name to search in
-     * @param column      Column's name to search for
+     * @param changeSetId     ChangeSet's id to search CreateTable in
+     * @param createTableName CreateTable's name to search in
+     * @param columnName      Column's name to search for
      * @return certain Columns in given ChangeSet's CreateTable
      */
-    public Optional<Column> getColumn(final String changeSetId, final String tableName, final String column) {
-        return getColumns(changeSetId, tableName).isPresent()
-                ? getColumns(changeSetId, tableName).get().stream().filter(e -> column.equals(e.getName())).findFirst()
+    public Optional<Column> getColumn(final String changeSetId, final String createTableName, final String columnName) {
+        return getColumns(changeSetId, createTableName).isPresent()
+                ? getColumns(changeSetId, createTableName).get().stream().filter(e -> columnName.equals(e.getName())).findFirst()
                 : Optional.empty();
     }
 
@@ -141,10 +141,10 @@ public class LiquibaseUtils {
     //////////////////////////////////////////////////
 
     /**
-     * Get all CreateTable in certain ChangeSet
+     * Get all AddPrimaryKey in certain ChangeSet
      *
      * @param changeSetId ChangeSet's id to search in
-     * @return All CreateTable in given ChangeSet if exists
+     * @return All AddPrimaryKey in given ChangeSet if exists
      */
     public Optional<EList<AddPrimaryKey>> getAddPrimaryKeys(final String changeSetId) {
         return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddPrimaryKey().isEmpty()
@@ -153,15 +153,15 @@ public class LiquibaseUtils {
     }
 
     /**
-     * Get certain CreateTable in certain ChangeSet
+     * Get certain AddPrimaryKey in certain ChangeSet
      *
      * @param changeSetId ChangeSet's id to search in
-     * @param tableName   CreateTable's tableName to search for
-     * @return certain CreateTable in given ChangeSet if exists
+     * @param columnName  AddPrimaryKey's columnName to search for
+     * @return certain AddPrimaryKey in given ChangeSet if exists
      */
-    public Optional<AddPrimaryKey> getAddPrimaryKey(final String changeSetId, final String tableName) {
+    public Optional<AddPrimaryKey> getAddPrimaryKey(final String changeSetId, final String columnName) {
         return getAddPrimaryKeys(changeSetId).isPresent()
-                ? getAddPrimaryKeys(changeSetId).get().stream().filter(e -> tableName.equals(e.getTableName())).findFirst()
+                ? getAddPrimaryKeys(changeSetId).get().stream().filter(e -> columnName.equals(e.getColumnNames())).findFirst()
                 : Optional.empty();
     }
 
@@ -170,10 +170,10 @@ public class LiquibaseUtils {
     //////////////////////////////////////////////////
 
     /**
-     * Get all CreateTable in certain ChangeSet
+     * Get all AddForeignKeyConstraint in certain ChangeSet
      *
      * @param changeSetId ChangeSet's id to search in
-     * @return All CreateTable in given ChangeSet if exists
+     * @return All AddForeignKeyConstraint in given ChangeSet if exists
      */
     public Optional<EList<AddForeignKeyConstraint>> getAddForeignKeyConstraints(final String changeSetId) {
         return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddForeignKeyConstraint().isEmpty()
@@ -182,11 +182,11 @@ public class LiquibaseUtils {
     }
 
     /**
-     * Get certain CreateTable in certain ChangeSet
+     * Get certain AddForeignKeyConstraint in certain ChangeSet
      *
      * @param changeSetId    ChangeSet's id to search in
-     * @param constraintName CreateTable's constraintName to search for
-     * @return certain CreateTable in given ChangeSet if exists
+     * @param constraintName AddForeignKeyConstraint's constraintName to search for
+     * @return certain AddForeignKeyConstraint in given ChangeSet if exists
      */
     public Optional<AddForeignKeyConstraint> getAddForeignKeyConstraint(final String changeSetId, final String constraintName) {
         return getAddForeignKeyConstraints(changeSetId).isPresent()
@@ -199,10 +199,10 @@ public class LiquibaseUtils {
     //////////////////////////////////////////////////
 
     /**
-     * Get all CreateTable in certain ChangeSet
+     * Get all AddNotNullConstraint in certain ChangeSet
      *
      * @param changeSetId ChangeSet's id to search in
-     * @return All CreateTable in given ChangeSet if exists
+     * @return All AddNotNullConstraint in given ChangeSet if exists
      */
     public Optional<EList<AddNotNullConstraint>> getAddNotNullConstraints(final String changeSetId) {
         return getChangeSet(changeSetId).isPresent() && !getChangeSet(changeSetId).get().getAddNotNullConstraint().isEmpty()
@@ -211,15 +211,15 @@ public class LiquibaseUtils {
     }
 
     /**
-     * Get certain CreateTable in certain ChangeSet
+     * Get certain AddNotNullConstraint in certain ChangeSet
      *
-     * @param changeSetId    ChangeSet's id to search in
-     * @param constraintName CreateTable's constraintName to search for
-     * @return certain CreateTable in given ChangeSet if exists
+     * @param changeSetId ChangeSet's id to search in
+     * @param columnName  AddNotNullConstraint's columnName to search for
+     * @return certain CreateAddNotNullConstraintTable in given ChangeSet if exists
      */
-    public Optional<AddNotNullConstraint> getAddNotNullConstraint(final String changeSetId, final String constraintName) {
+    public Optional<AddNotNullConstraint> getAddNotNullConstraint(final String changeSetId, final String columnName) {
         return getAddNotNullConstraints(changeSetId).isPresent()
-                ? getAddNotNullConstraints(changeSetId).get().stream().filter(e -> constraintName.equals(e.getColumnName())).findFirst()
+                ? getAddNotNullConstraints(changeSetId).get().stream().filter(e -> columnName.equals(e.getColumnName())).findFirst()
                 : Optional.empty();
     }
 

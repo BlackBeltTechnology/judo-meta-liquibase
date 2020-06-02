@@ -104,6 +104,7 @@ public class LiquibaseUtilsTest {
         final String TEST_TABLE_NAME = "TestTable";
         final String TEST_TABLE1_NAME = "TestTable1";
         final String CREATE_TABLE_NAME = "CreateTableName";
+        final String ID_NAME = "_id";
 
         // ASSERTIONS - check optional empty
         assertFalse(liquibaseUtils.getCreateTables(CHANGE_SET_ID).isPresent());
@@ -124,7 +125,7 @@ public class LiquibaseUtilsTest {
                 .withTableName(TEST_TABLE_NAME)
                 .withColumn(
                         newColumnBuilder()
-                                .withName("_id")
+                                .withName(ID_NAME)
                                 .withType("ID")
                 )
                 .build();
@@ -133,7 +134,7 @@ public class LiquibaseUtilsTest {
                 .withTableName(TEST_TABLE1_NAME)
                 .withColumn(
                         newColumnBuilder()
-                                .withName("_id")
+                                .withName(ID_NAME)
                                 .withType("ID")
                 )
                 .build();
@@ -384,7 +385,7 @@ public class LiquibaseUtilsTest {
         final ChangeSet changeSet = newChangeSetBuilder()
                 .withId(CHANGE_SET_ID)
                 .withAuthor("testGetAddNotNullConstraint")
-                .withAddNotNullConstraint(asList(addNotNullConstraint1))
+                .withAddNotNullConstraint(addNotNullConstraint1)
                 .build();
 
         addContent(changeSet);

@@ -398,6 +398,8 @@ public class LiquibaseUtilsTest {
 
         addContent(changeSet);
 
+        saveLiquibaseModel("testGetAddNotNullConstraint");
+
         // ASSERTION - check getAddNotNullConstraints
         assertEquals(
                 new BasicEList<AddNotNullConstraint>(asList(addNotNullConstraint)),

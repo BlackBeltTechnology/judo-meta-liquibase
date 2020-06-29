@@ -3,7 +3,7 @@
 <target includeMode="feature" name="hu.blackbelt.judo.meta.liquibase.target" sequenceNumber="1558342632">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/releases/2019-03"/>
+      <repository location="https://download.eclipse.org/releases/2019-03"/>
 	    <unit id="org.eclipse.emf.mwe2.language.sdk.feature.group" version="2.10.0"/>
 	    <unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="2.10.0"/>
 	    <unit id="org.eclipse.emf.sdk.feature.group" version="2.17.0.v20190301-1325"/>
@@ -34,7 +34,7 @@
 		  <unit id="org.eclipse.epsilon.simulink.feature.feature.group" version="1.5.1.201809302027"/>
 		  <unit id="org.eclipse.epsilon.uml.dt.feature.feature.group" version="1.5.1.201809302027"/>
 		  <unit id="org.eclipse.epsilon.uml.feature.feature.group" version="1.5.1.201809302027"/>
-		  <repository location="http://download.eclipse.org/epsilon/updates"/>
+		  <repository location="https://download.eclipse.org/epsilon/updates/1.5/"/>
 	  </location>
 	  
 	  <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">

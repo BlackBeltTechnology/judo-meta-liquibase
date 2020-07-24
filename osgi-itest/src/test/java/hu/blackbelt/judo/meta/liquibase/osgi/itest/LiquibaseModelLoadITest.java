@@ -1,6 +1,7 @@
 package hu.blackbelt.judo.meta.liquibase.osgi.itest;
 
 import static hu.blackbelt.judo.meta.liquibase.osgi.itest.LiquibaseKarafFeatureProvider.getRuntimeFeaturesForMetamodel;
+import static hu.blackbelt.judo.meta.liquibase.util.builder.LiquibaseBuilders.newdatabaseChangeLogBuilder;
 import static org.junit.Assert.assertFalse;
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
@@ -75,9 +76,12 @@ public class LiquibaseModelLoadITest {
     			.name(DEMO)
     			.uri(URI.createFileURI("test.model"))
     			.build();
-    	
-    	ByteArrayOutputStream os = new ByteArrayOutputStream();
-    	
+
+        liquibaseModel.addContent(
+                newdatabaseChangeLogBuilder().build());
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
     	liquibaseModel.saveLiquibaseModel(SaveArguments.liquibaseSaveArgumentsBuilder().outputStream(os));
         return bundle()
                 .add( "model/" + DEMO + ".judo-meta-liquibase",

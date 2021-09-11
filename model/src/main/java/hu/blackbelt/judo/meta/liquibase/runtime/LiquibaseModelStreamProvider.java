@@ -15,7 +15,7 @@ public class LiquibaseModelStreamProvider {
 
     static Logger log = LoggerFactory.getLogger(LiquibaseModelStreamProvider.class);
 
-    static InputStream getStreamFromLiquibaseModel(LiquibaseModel liquibaseModel) {
+    public static InputStream getStreamFromLiquibaseModel(LiquibaseModel liquibaseModel) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             liquibaseModel.saveLiquibaseModel(liquibaseSaveArgumentsBuilder()

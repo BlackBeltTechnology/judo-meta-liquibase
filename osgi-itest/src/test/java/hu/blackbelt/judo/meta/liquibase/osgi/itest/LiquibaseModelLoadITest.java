@@ -1,6 +1,6 @@
 package hu.blackbelt.judo.meta.liquibase.osgi.itest;
 
-import static hu.blackbelt.judo.meta.liquibase.osgi.itest.LiquibaseKarafFeatureProvider.getRuntimeFeaturesForMetamodel;
+import static hu.blackbelt.judo.meta.liquibase.osgi.itest.KarafFeatureProvider.*;
 import static hu.blackbelt.judo.meta.liquibase.util.builder.LiquibaseBuilders.newdatabaseChangeLogBuilder;
 import static org.junit.Assert.assertFalse;
 import static org.ops4j.pax.exam.CoreOptions.maven;
@@ -57,7 +57,7 @@ public class LiquibaseModelLoadITest {
     @Configuration
     public Option[] config() throws IOException, LiquibaseValidationException {
 
-        return combine(getRuntimeFeaturesForMetamodel(this.getClass()),
+        return combine(karafConfig(this.getClass()),
                 mavenBundle(maven()
                         .groupId("hu.blackbelt.judo.meta")
                         .artifactId("hu.blackbelt.judo.meta.liquibase.osgi")
@@ -72,20 +72,20 @@ public class LiquibaseModelLoadITest {
     }
 
     private InputStream getLiquibaseModelBundle() throws IOException, LiquibaseValidationException {
-    	LiquibaseModel liquibaseModel = LiquibaseModel.buildLiquibaseModel()
-    			.name(DEMO)
-    			.uri(URI.createFileURI("test.model"))
-    			.build();
+        LiquibaseModel liquibaseModel = LiquibaseModel.buildLiquibaseModel()
+                .name(DEMO)
+                .uri(URI.createFileURI("test.model"))
+                .build();
 
         liquibaseModel.addContent(
                 newdatabaseChangeLogBuilder().build());
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-    	liquibaseModel.saveLiquibaseModel(SaveArguments.liquibaseSaveArgumentsBuilder().outputStream(os));
+        liquibaseModel.saveLiquibaseModel(SaveArguments.liquibaseSaveArgumentsBuilder().outputStream(os));
         return bundle()
                 .add( "model/" + DEMO + ".judo-meta-liquibase",
-                		new ByteArrayInputStream(os.toByteArray()))
+                        new ByteArrayInputStream(os.toByteArray()))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
                 .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-liquibase" )
                 .set( "Liquibase-Models", "file=model/" + DEMO + ".judo-meta-liquibase;version=1.0.0;name=" + DEMO + ";checksum=notset;meta-version-range=\"[1.0.0,2)\"")

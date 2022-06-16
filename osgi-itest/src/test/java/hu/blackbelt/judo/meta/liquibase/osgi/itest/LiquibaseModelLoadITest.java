@@ -1,22 +1,12 @@
 package hu.blackbelt.judo.meta.liquibase.osgi.itest;
 
-import static hu.blackbelt.judo.meta.liquibase.osgi.itest.KarafFeatureProvider.*;
-import static hu.blackbelt.judo.meta.liquibase.util.builder.LiquibaseBuilders.newdatabaseChangeLogBuilder;
-import static org.junit.Assert.assertFalse;
-import static org.ops4j.pax.exam.CoreOptions.maven;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.CoreOptions.provision;
-import static org.ops4j.pax.exam.OptionUtils.combine;
-import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
-import static org.ops4j.pax.tinybundles.core.TinyBundles.withBnd;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.inject.Inject;
-
+import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
+import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel;
+import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.LiquibaseValidationException;
+import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.SaveArguments;
+import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.URI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,23 +17,25 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.service.log.LogService;
 
-import hu.blackbelt.epsilon.runtime.execution.impl.StringBuilderLogger;
-import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseEpsilonValidator;
-import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel;
-import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.LiquibaseValidationException;
-import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.SaveArguments;
-import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
+import javax.inject.Inject;
+import java.io.*;
+
+import static hu.blackbelt.judo.meta.liquibase.osgi.itest.KarafFeatureProvider.karafConfig;
+import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseEpsilonValidator.calculateLiquibaseValidationScriptURI;
+import static hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseEpsilonValidator.validateLiquibase;
+import static hu.blackbelt.judo.meta.liquibase.util.builder.LiquibaseBuilders.newdatabaseChangeLogBuilder;
+import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.ops4j.pax.exam.OptionUtils.combine;
+import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
+import static org.ops4j.pax.tinybundles.core.TinyBundles.withBnd;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
+@Slf4j
 public class LiquibaseModelLoadITest {
 
     private static final String DEMO = "northwind-liquibase";
-
-    @Inject
-    LogService log;
 
     @Inject
     protected BundleTrackerManager bundleTrackerManager;
@@ -93,16 +85,9 @@ public class LiquibaseModelLoadITest {
     }
 
     @Test
-    public void testModelValidation() {
-        StringBuilderLogger logger = new StringBuilderLogger(StringBuilderLogger.LogLevel.DEBUG);
-        try {
-            LiquibaseEpsilonValidator.validateLiquibase(logger,
-                    liquibaseModel,
-                    LiquibaseEpsilonValidator.calculateLiquibaseValidationScriptURI());
-
-        } catch (Exception e) {
-            log.log(LogService.LOG_ERROR, logger.getBuffer());
-            assertFalse(true);
+    public void testModelValidation() throws Exception {
+        try (Log bufferedLogger = new BufferedSlf4jLogger(log)) {
+            validateLiquibase(bufferedLogger, liquibaseModel, calculateLiquibaseValidationScriptURI());
         }
     }
 }

@@ -1,6 +1,5 @@
 package hu.blackbelt.judo.meta.liquibase.runtime;
 
-import hu.blackbelt.epsilon.runtime.execution.impl.Slf4jLog;
 import hu.blackbelt.judo.meta.liquibase.*;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.emf.common.util.BasicEList;
@@ -20,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LiquibaseUtilsTest {
 
     private static final String TARGET_TEST_CLASSES = "target/test-classes";
-    private static final Slf4jLog logger = new Slf4jLog(log);
 
     private LiquibaseModel liquibaseModel;
     private LiquibaseUtils liquibaseUtils;
@@ -44,7 +42,7 @@ public class LiquibaseUtilsTest {
                     .file(new File(TARGET_TEST_CLASSES, format("%s-liquibase.xml", testName)))
                     .build());
         } catch (IOException e) {
-            logger.warn("Unable to save liquibase model");
+            log.warn("Unable to save liquibase model");
         } catch (LiquibaseModel.LiquibaseValidationException e) {
             fail("Liquibase model is not valid", e);
         }

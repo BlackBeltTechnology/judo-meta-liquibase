@@ -7,8 +7,7 @@
 	<parent>
 		<groupId>hu.blackbelt.judo.meta</groupId>
 		<artifactId>hu.blackbelt.judo.meta.liquibase</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<version>${revision}</version>
 	</parent>
 	<artifactId>hu.blackbelt.judo.meta.liquibase.model.test</artifactId>
 	<name>Judo :: Liquibase :: Model :: Test</name>
@@ -18,79 +17,27 @@
 		<dependency>
 			<groupId>hu.blackbelt.judo.meta</groupId>
 			<artifactId>hu.blackbelt.judo.meta.liquibase.model</artifactId>
-			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.eclipse.epsilon</groupId>
-			<artifactId>epsilon-core</artifactId>
-			<version>${epsilon-version}</version>
+			<groupId>hu.blackbelt.epsilon</groupId>
+			<artifactId>epsilon-runtime-execution</artifactId>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.eclipse.epsilon</groupId>
-			<artifactId>epsilon-emf</artifactId>
-			<version>${epsilon-version}</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>27.1-jre</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<executions>
-					<execution>
-						<id>generate-full-demo</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>java</goal>
-						</goals>
-						<configuration>
-							<mainClass>hu.blackbelt.model.northwind.Demo</mainClass>
-							<arguments>
-								<argument>${basedir}/target/test-classes/model/northwind-psm.model</argument>
-							</arguments>
-							<includeProjectDependencies>true</includeProjectDependencies>
-							<includePluginDependencies>true</includePluginDependencies>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-                    <dependency>
-                        <groupId>hu.blackbelt.judo.meta</groupId>
-                        <artifactId>hu.blackbelt.judo.meta.psm.model.northwind</artifactId>
-                        <version>${judo-meta-psm-version}</version>
-                    </dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>hu.blackbelt.judo.tatami</groupId>
-				<artifactId>judo-tatami-workflow-maven-plugin</artifactId>
-				<version>${judo-tatami-maven-plugin-version}</version>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>psm-default-workflow</goal>
-						</goals>
-						<configuration>
-							<psmModelFile>${basedir}/target/test-classes/model/northwind-psm.model</psmModelFile>
-							<destination>${basedir}/target/test-classes/model</destination>
-							<modelName>northwind</modelName>
-							<ignorePsm2Measure>true</ignorePsm2Measure>
-							<ignoreAsm2sdk>true</ignoreAsm2sdk>
-							<ignoreAsm2jaxrsapi>true</ignoreAsm2jaxrsapi>
-							<ignoreAsm2Openapi>true</ignoreAsm2Openapi>
-							<dialectList>hsqldb</dialectList>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

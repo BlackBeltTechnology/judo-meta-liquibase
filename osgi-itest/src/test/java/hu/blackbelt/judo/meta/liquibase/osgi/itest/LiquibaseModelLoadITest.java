@@ -96,11 +96,11 @@ public class LiquibaseModelLoadITest {
 
         liquibaseModel.saveLiquibaseModel(SaveArguments.liquibaseSaveArgumentsBuilder().outputStream(os));
         return bundle()
-                .add( "model/" + DEMO + ".judo-meta-liquibase",
+                .add( "model/" + liquibaseModel.getName() + "-liquibase.model",
                         new ByteArrayInputStream(os.toByteArray()))
                 .set( Constants.BUNDLE_MANIFESTVERSION, "2")
-                .set( Constants.BUNDLE_SYMBOLICNAME, DEMO + "-liquibase" )
-                .set( "Liquibase-Models", "file=model/" + DEMO + ".judo-meta-liquibase;version=1.0.0;name=" + DEMO + ";checksum=notset;meta-version-range=\"[1.0.0,2)\"")
+                .set( Constants.BUNDLE_SYMBOLICNAME, liquibaseModel.getName() + "-liquibase" )
+                .set( "Liquibase-Models", "name=" + liquibaseModel.getName() + ";file=model/" + liquibaseModel.getName() + "-liquibase.model")
                 .build( withBnd());
     }
 

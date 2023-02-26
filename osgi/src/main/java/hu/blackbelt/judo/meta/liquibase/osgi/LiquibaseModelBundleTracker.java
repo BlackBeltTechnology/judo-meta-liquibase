@@ -118,7 +118,7 @@ public class LiquibaseModelBundleTracker {
                         liquibaseModelRegistrations.put(key, modelServiceRegistration);
 
                     } catch (IOException | LiquibaseModel.LiquibaseValidationException e) {
-                        log.error("Could not load Psm model: " + params.get(LiquibaseModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
+                        log.error("Could not load Liquibase model: " + params.get(LiquibaseModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
                     }
                 }
             }

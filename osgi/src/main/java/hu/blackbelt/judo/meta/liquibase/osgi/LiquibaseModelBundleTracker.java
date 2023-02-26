@@ -54,19 +54,9 @@ import static java.util.Optional.ofNullable;
 
 @Component(immediate = true)
 @Slf4j
-@Designate(ocd = LiquibaseModelBundleTracker.TrackerConfig.class)
 public class LiquibaseModelBundleTracker {
 
     public static final String LIQUIBASE_MODELS = "Liquibase-Models";
-
-    @ObjectClassDefinition(name="Liquibase Model Bundle TTracker")
-    public @interface TrackerConfig {
-        @AttributeDefinition(
-                name = "Tags",
-                description = "Which tags are on the loaded model when there is no one defined in bundle"
-        )
-        String tags() default "";
-    }
 
     @Reference
     BundleTrackerManager bundleTrackerManager;
@@ -75,11 +65,8 @@ public class LiquibaseModelBundleTracker {
 
     Map<String, LiquibaseModel> liquibaseModels = new HashMap<>();
 
-    TrackerConfig config;
-
     @Activate
-    public void activate(final ComponentContext componentContext, final TrackerConfig trackerConfig) {
-        this.config = trackerConfig;
+    public void activate(final ComponentContext componentContext) {
         bundleTrackerManager.registerBundleCallback(this.getClass().getName(),
                 new LiquibaseRegisterCallback(componentContext.getBundleContext()),
                 new LiquibaseUnregisterCallback(),
@@ -117,29 +104,21 @@ public class LiquibaseModelBundleTracker {
                 if (liquibaseModelRegistrations.containsKey(key)) {
                     log.error("Liquibase model already loaded: " + key);
                 } else {
-                    if (params.containsKey(LiquibaseModel.META_VERSION_RANGE)) {
-                        VersionRange versionRange = new VersionRange(params.get(LiquibaseModel.META_VERSION_RANGE).replaceAll("\"", ""));
-                        if (versionRange.includes(bundleContext.getBundle().getVersion())) {
-                            // Unpack model
-                            try {
-                                LiquibaseModel liquibaseModel = loadLiquibaseModel(liquibaseLoadArgumentsBuilder()
-                                        .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
-                                        .name(params.get(LiquibaseModel.NAME))
-                                        .version(trackedBundle.getVersion().toString())
-                                        .checksum(Optional.ofNullable(params.get(LiquibaseModel.CHECKSUM)).orElse("notset"))
-                                        .tags(Stream.of(ofNullable(params.get(LiquibaseModel.TAGS)).orElse(config.tags()).split(",")).collect(Collectors.toSet()))
-                                        .acceptedMetaVersionRange(Optional.of(versionRange.toString()).orElse("[0,99)")));
+                    // Unpack model
+                    try {
+                        LiquibaseModel liquibaseModel = loadLiquibaseModel(liquibaseLoadArgumentsBuilder()
+                                .inputStream(trackedBundle.getEntry(params.get("file")).openStream())
+                                .name(params.get(LiquibaseModel.NAME))
+                                .version(trackedBundle.getVersion().toString()));
 
-                                log.info("Registering Liquibase model: " + liquibaseModel);
+                        log.info("Registering Liquibase model: " + liquibaseModel);
 
-                                ServiceRegistration<LiquibaseModel> modelServiceRegistration = bundleContext.registerService(LiquibaseModel.class, liquibaseModel, liquibaseModel.toDictionary());
-                                liquibaseModels.put(key, liquibaseModel);
-                                liquibaseModelRegistrations.put(key, modelServiceRegistration);
+                        ServiceRegistration<LiquibaseModel> modelServiceRegistration = bundleContext.registerService(LiquibaseModel.class, liquibaseModel, liquibaseModel.toDictionary());
+                        liquibaseModels.put(key, liquibaseModel);
+                        liquibaseModelRegistrations.put(key, modelServiceRegistration);
 
-                            } catch (IOException | LiquibaseModel.LiquibaseValidationException e) {
-                                log.error("Could not load Psm model: " + params.get(LiquibaseModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
-                            }
-                        }
+                    } catch (IOException | LiquibaseModel.LiquibaseValidationException e) {
+                        log.error("Could not load Liquibase model: " + params.get(LiquibaseModel.NAME) + " from bundle: " + trackedBundle.getBundleId(), e);
                     }
                 }
             }

@@ -96,7 +96,7 @@ public class LiquibaseNamespaceFixUriHandler extends URIHandlerImpl {
                     "    </xsl:template>\n"+
                     "\n"+
                     "    <xsl:template match=\"*\">\n"+
-                    "        <xsl:element name=\"{local-name()}\">\n"+
+                    "        <xsl:element name=\"{local-name()}\" namespace=\"http://www.liquibase.org/xml/ns/dbchangelog\">\n"+
                     "            <xsl:apply-templates select=\"@*|node()\"/>\n"+
                     "        </xsl:element>\n"+
                     "    </xsl:template>\n"+

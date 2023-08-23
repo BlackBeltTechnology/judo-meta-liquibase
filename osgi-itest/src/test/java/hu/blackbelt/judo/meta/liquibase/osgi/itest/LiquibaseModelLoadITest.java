@@ -20,7 +20,7 @@ package hu.blackbelt.judo.meta.liquibase.osgi.itest;
  * #L%
  */
 
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel;
 import hu.blackbelt.judo.meta.liquibase.runtime.LiquibaseModel.LiquibaseValidationException;
@@ -106,7 +106,7 @@ public class LiquibaseModelLoadITest {
 
     @Test
     public void testModelValidation() throws Exception {
-        try (Log bufferedLogger = new BufferedSlf4jLogger(log)) {
+        try (BufferedSlf4jLogger bufferedLogger = new BufferedSlf4jLogger(log)) {
             validateLiquibase(bufferedLogger, liquibaseModel, calculateLiquibaseValidationScriptURI());
         }
     }

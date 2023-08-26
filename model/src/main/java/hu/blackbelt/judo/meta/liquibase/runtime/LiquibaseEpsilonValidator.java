@@ -34,18 +34,18 @@ import java.util.Collection;
 import org.eclipse.epsilon.common.util.UriUtil;
 
 import hu.blackbelt.epsilon.runtime.execution.ExecutionContext;
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.exceptions.ScriptExecutionException;
 
 public class LiquibaseEpsilonValidator {
 
-    public static void validateLiquibase(Log log,
+    public static void validateLiquibase(Logger log,
             LiquibaseModel liquibaseModel,
             URI scriptRoot) throws ScriptExecutionException, URISyntaxException {
         validateLiquibase(log, liquibaseModel, scriptRoot, emptyList(), emptyList());
     }
 
-    public static void validateLiquibase(Log log,
+    public static void validateLiquibase(Logger log,
             LiquibaseModel liquibaseModel,
             URI scriptRoot,
             Collection<String> expectedErrors,

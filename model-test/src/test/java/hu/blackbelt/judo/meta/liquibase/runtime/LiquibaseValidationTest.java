@@ -20,7 +20,7 @@ package hu.blackbelt.judo.meta.liquibase.runtime;
  * #L%
  */
 
-import hu.blackbelt.epsilon.runtime.execution.api.Log;
+import org.slf4j.Logger;
 import hu.blackbelt.epsilon.runtime.execution.exceptions.EvlScriptExecutionException;
 import hu.blackbelt.epsilon.runtime.execution.impl.BufferedSlf4jLogger;
 import hu.blackbelt.judo.meta.liquibase.support.LiquibaseModelResourceSupport;
@@ -55,7 +55,7 @@ public class LiquibaseValidationTest {
     }
 
     private void runEpsilon (Collection<String> expectedErrors, Collection<String> expectedWarnings) throws Exception {
-        try (Log bufferedLogger = new BufferedSlf4jLogger(log)) {
+        try (BufferedSlf4jLogger bufferedLogger = new BufferedSlf4jLogger(log)) {
             LiquibaseEpsilonValidator.validateLiquibase(bufferedLogger,
                     liquibaseModel,
                     LiquibaseEpsilonValidator.calculateLiquibaseValidationScriptURI(),

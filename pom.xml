@@ -75,10 +75,12 @@
 		<xtext-version>2.29.0</xtext-version>
 		<emf-mwe2-launch-version>2.13.0</emf-mwe2-launch-version>
 		<slf4j-version>2.0.16</slf4j-version>
+		<jackson-version>2.17.2</jackson-version>
 		<surefire-version>3.5.1</surefire-version>
 		<!--suppress UnresolvedMavenProperty -->
 		<logback-test-config>${maven.multiModuleProjectDirectory}/logback-test.xml</logback-test-config>
 		<logback-version>1.5.12</logback-version>
+		<lombok-version>1.18.34</lombok-version>
 
 		<!-- Pax exam dependencies -->
 		<karaf-version>4.4.5</karaf-version>
@@ -784,7 +786,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>${lombok-version}</version>
         </dependency>
 
 		<dependency>

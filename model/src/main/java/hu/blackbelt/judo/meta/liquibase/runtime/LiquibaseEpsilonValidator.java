@@ -59,6 +59,7 @@ public class LiquibaseEpsilonValidator {
                                 .log(log)
                                 .name("Liquibase")
                                 .validateModel(false)
+                                .useCache(true)
                                 .resource(liquibaseModel.getResource())
                                 .build()))
                 .injectContexts(singletonMap("liquibaseUtils", new LiquibaseUtils(liquibaseModel.getResourceSet())))

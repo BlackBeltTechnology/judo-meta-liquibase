@@ -46,10 +46,18 @@ public class LiquibaseEpsilonValidator {
     }
 
     public static void validateLiquibase(Logger log,
+                                         LiquibaseModel liquibaseModel,
+                                         URI scriptRoot,
+                                         Collection<String> expectedErrors,
+                                         Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException {
+        validateLiquibase(log, liquibaseModel, scriptRoot, expectedErrors, expectedWarnings, false);
+    }
+
+    public static void validateLiquibase(Logger log,
             LiquibaseModel liquibaseModel,
             URI scriptRoot,
             Collection<String> expectedErrors,
-            Collection<String> expectedWarnings) throws ScriptExecutionException, URISyntaxException {
+            Collection<String> expectedWarnings, Boolean useCache) throws ScriptExecutionException, URISyntaxException {
         ExecutionContext executionContext = executionContextBuilder()
                 .log(log)
                 .resourceSet(liquibaseModel.getResourceSet())
@@ -59,6 +67,7 @@ public class LiquibaseEpsilonValidator {
                                 .log(log)
                                 .name("Liquibase")
                                 .validateModel(false)
+                                .useCache(useCache)
                                 .resource(liquibaseModel.getResource())
                                 .build()))
                 .injectContexts(singletonMap("liquibaseUtils", new LiquibaseUtils(liquibaseModel.getResourceSet())))
@@ -74,6 +83,7 @@ public class LiquibaseEpsilonValidator {
                                 .source(UriUtil.resolve("liquibase.evl", scriptRoot))
                                 .expectedErrors(expectedErrors)
                                 .expectedWarnings(expectedWarnings)
+                                .parallel(true)
                                 .build());
 
             } finally {

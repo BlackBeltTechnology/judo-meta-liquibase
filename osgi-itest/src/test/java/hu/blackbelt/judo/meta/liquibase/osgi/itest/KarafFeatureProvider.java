@@ -48,6 +48,12 @@ public class KarafFeatureProvider {
     public static final String SERVICEMIX_BUNDLES_GROUPID = "org.apache.servicemix.bundles";
     public static final String HAMCREST = "org.apache.servicemix.bundles.hamcrest";
 
+    // Zeta Validation Framework
+    public static final String ZETA_GROUPID = "hu.blackbelt.judo.zeta";
+    public static final String ZETA_VALIDATION_CORE = "hu.blackbelt.judo.zeta.validation-core";
+    public static final String ZETA_ANNOTATIONS = "hu.blackbelt.judo.zeta.annotations";
+    public static final String ZETA_COMMON = "hu.blackbelt.judo.zeta.common";
+
     public static final Integer SERVICE_TIMEOUT = 30000;
     public static final String KARAF_VERSION = "4.3.3";
 
@@ -120,6 +126,19 @@ public class KarafFeatureProvider {
                         mavenBundle()
                                 .groupId(SERVICEMIX_BUNDLES_GROUPID)
                                 .artifactId(HAMCREST)
+                                .versionAsInProject().start(),
+                        // Zeta Validation Framework bundles
+                        mavenBundle()
+                                .groupId(ZETA_GROUPID)
+                                .artifactId(ZETA_COMMON)
+                                .versionAsInProject().start(),
+                        mavenBundle()
+                                .groupId(ZETA_GROUPID)
+                                .artifactId(ZETA_ANNOTATIONS)
+                                .versionAsInProject().start(),
+                        mavenBundle()
+                                .groupId(ZETA_GROUPID)
+                                .artifactId(ZETA_VALIDATION_CORE)
                                 .versionAsInProject().start()
                 ));
     }

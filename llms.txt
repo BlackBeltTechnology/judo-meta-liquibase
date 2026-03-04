@@ -29,6 +29,25 @@ Key facts:
 - [feature/feature.xml](feature/feature.xml): Eclipse feature definition grouping the model plugin for installation
 - [site/pom.xml](site/pom.xml): Eclipse P2 update site for distribution
 
+## Depends on
+
+- [osgi-utils](../../runtime/osgi-utils): runtime/osgi-utils
+- [epsilon-runtime](../../tools/epsilon-runtime): tools/epsilon-runtime
+
+## Used by
+
+- [judo-platform](../../runtime/judo-platform): runtime/judo-platform
+- [judo-rdbms-schema](../../runtime/judo-rdbms-schema): runtime/judo-rdbms-schema
+- [judo-runtime-core](../../runtime/judo-runtime-core): runtime/judo-runtime-core
+- [judo-runtime-core-esm-itest](../../runtime/judo-runtime-core-esm-itest): runtime/judo-runtime-core-esm-itest
+- [judo-runtime-core-jsl](../../runtime/judo-runtime-core-jsl): runtime/judo-runtime-core-jsl
+- [judo-services](../../runtime/judo-services): runtime/judo-services
+- [judo-tatami](../../runtime/judo-tatami): runtime/judo-tatami
+- [judo-tatami-base](../../runtime/judo-tatami-base): runtime/judo-tatami-base
+- [judo-tatami-jsl](../../runtime/judo-tatami-jsl): runtime/judo-tatami-jsl
+- [judo-jsl-springboot-parent](../../spring/judo-jsl-springboot-parent): spring/judo-jsl-springboot-parent
+- [judo-jsl-springboot-starter](../../spring/judo-jsl-springboot-starter): spring/judo-jsl-springboot-starter
+
 ## Optional
 
 - [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD pipeline (build, test, deploy, tag, release)

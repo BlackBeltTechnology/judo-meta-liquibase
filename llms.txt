@@ -1,0 +1,56 @@
+# judo-meta-liquibase
+
+> EMF (Eclipse Modeling Framework) metamodel for Liquibase database change management, part of the JUDO platform's model-to-database transformation pipeline.
+
+Key facts:
+- Java 21, Maven 3.9.4+ with Tycho 4.0.13 (Eclipse plugin packaging)
+- Multi-module Maven build with 6 modules
+- Ecore metamodel derived from the Liquibase XML Schema, with generated Java APIs via MWE2
+- Deploys as both an Eclipse plugin and a standalone OSGi bundle
+- Epsilon EVL for model validation, Pax Exam + Karaf for OSGi integration testing
+- License: Eclipse Public License 2.0 (EPL-2.0)
+
+## Docs
+
+- [README.md](README.md): Project overview, module diagram, quick start, and runtime API examples
+- [AGENTS.md](AGENTS.md): Developer guide with build commands, directory structure, and coding conventions
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development setup, code structure, and submission guidelines
+- [.github/CIFLOW.md](.github/CIFLOW.md): Branching strategy and GitHub Actions pipeline documentation
+
+## Modules — Metamodel
+
+- [model/pom.xml](model/pom.xml): Core Eclipse plugin with Ecore metamodel, EMF-generated classes, hand-written runtime API (LiquibaseModel, LiquibaseUtils, LiquibaseEpsilonValidator), and MWE2 code generation workflow
+- [model-test/pom.xml](model-test/pom.xml): JUnit 5 tests for model builders, query helpers, and Epsilon validation
+
+## Modules — Packaging
+
+- [osgi/pom.xml](osgi/pom.xml): Standalone OSGi bundle repackaging with LiquibaseModelBundleTracker for automatic model loading
+- [osgi-itest/pom.xml](osgi-itest/pom.xml): OSGi integration tests using Pax Exam with Apache Karaf container
+- [feature/feature.xml](feature/feature.xml): Eclipse feature definition grouping the model plugin for installation
+- [site/pom.xml](site/pom.xml): Eclipse P2 update site for distribution
+
+## Depends on
+
+- [osgi-utils](../../runtime/osgi-utils): OSGi utility library — lifecycle tracking, config monitoring, ranked services
+- [epsilon-runtime](../../tools/epsilon-runtime): Eclipse Epsilon runtime for Maven and OSGi environments
+
+## Used by
+
+- [judo-platform](../../runtime/judo-platform): Model-driven OSGi runtime platform with REST APIs and Karaf deployment
+- [judo-rdbms-schema](../../runtime/judo-rdbms-schema): Incremental database schema migration via RDBMS model comparison
+- [judo-runtime-core](../../runtime/judo-runtime-core): Multi-module runtime engine — data access, business logic, REST, and security
+- [judo-runtime-core-esm-itest](../../runtime/judo-runtime-core-esm-itest): Integration tests for ESM-to-RDBMS transformation pipeline
+- [judo-runtime-core-jsl](../../runtime/judo-runtime-core-jsl): JSL support for runtime core — model parsing through to DAOs and schema
+- [judo-services](../../runtime/judo-services): OSGi runtime services enabling multiple data models in a single Karaf container
+- [judo-tatami](../../runtime/judo-tatami): Model transformation pipeline — ESM/PSM to deployable application artifacts
+- [judo-tatami-base](../../runtime/judo-tatami-base): PSM transformation pipeline — models to schemas, expressions, and configurations
+- [judo-tatami-jsl](../../runtime/judo-tatami-jsl): JSL-to-runtime model transformation engine (PSM, ASM, UI, RDBMS, etc.)
+- [judo-jsl-springboot-parent](../../spring/judo-jsl-springboot-parent): Parent POM for JUDO JSL Spring Boot applications
+- [judo-jsl-springboot-starter](../../spring/judo-jsl-springboot-starter): Spring Boot starter aggregating the entire JUDO runtime stack
+
+## Optional
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD pipeline (build, test, deploy, tag, release)
+- [LICENSE.txt](LICENSE.txt): Eclipse Public License 2.0 text
+- [model/model/liquibase.ecore](model/model/liquibase.ecore): Source-of-truth Ecore metamodel definition
+- [model/model/liquibase.genmodel](model/model/liquibase.genmodel): EMF code generation configuration

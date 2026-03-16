@@ -107,7 +107,7 @@
 		<additionalTestArguments />
 
 		<!-- Zeta Validation Framework -->
-		<judo-zeta-version>1.0.0.20251215_001216_39824811_feature_JNG_6349_AddZetaValidatiob</judo-zeta-version>
+		<judo-zeta-version>1.0.0-SNAPSHOT</judo-zeta-version>
 
 		<!-- Code Quality-->
 		<sonar-maven-plugin-version>3.9.1.2184</sonar-maven-plugin-version>

@@ -1,151 +1,209 @@
-# Contributing to JUDO
+# Contributing to judo-meta-liquibase
 
-## Installing the correct versions of Java, Maven and necessary dependencies
+## Development Environment
 
-Please make sure your development environment complies with the requirements discussed under the relevant section of the parent
-project's [CONTRIBUTING](https://github.com/BlackBeltTechnology/judo-community/blob/develop/CONTRIBUTING.adoc) guide.
+### Prerequisites
+
+| Tool | Version | Notes |
+|------|---------|-------|
+| **JDK** | 21 | Required by both Maven and Tycho |
+| **Maven** | 3.9.4+ | A Maven wrapper (`./mvnw`) is included in the repository |
+
+For full details on environment setup, see the parent project's [judo-community CONTRIBUTING guide](https://github.com/BlackBeltTechnology/judo-community/blob/develop/CONTRIBUTING.adoc).
 
 ## Code Structure
 
-This project follows a standard Java project structure, governed by Maven, with potential Maven submodules.
+This project follows a standard Maven multi-module layout with special handling for Eclipse/Tycho packaging.
 
-**Eclipse-related submodules:**
+### Eclipse-Related Modules
 
-* `/feature`: Eclipse feature repository - allows us to use this as a feature for eclipse installation
-* `/site`: Eclipse Update Site - all built versions are compiled as an update site.
-The site definition contains the required referenced repositories required by plugins.
-* `/targetdefinition`: Eclipse target definition defines the P2 repositories for all the required MANIFEST features.
+These modules handle Eclipse IDE integration and distribution:
 
-The Judo update sites are based on versions, therefore all versions have their own update sites. This results in versions
-being coded in the URL. The category definition in tycho is loaded as an extension, because there is no way to replace
-the version numbers before tycho is activated.
+| Module | Purpose |
+|--------|---------|
+| `feature/` | Eclipse feature definition — allows installing this metamodel as an Eclipse feature |
+| `site/` | Eclipse Update Site — every built version is compiled as a P2 update site with all required referenced repositories |
 
-For this reason, a profile is created which can replace the versions with the dependency versions defined in the parent.
+> **Note:** JUDO update sites are version-based (version numbers are encoded in the URL). The site's category definition is loaded as a Tycho extension because version numbers must be resolved before Tycho activates.
 
-The following command can be used to update the versions:
+### Model Modules
 
-```sh
-mvn clean install -P update-category-versions -f site/pom.xml
+| Module | Purpose |
+|--------|---------|
+| `model/` | Eclipse plugin containing the Ecore metamodel, EMF-generated Java classes, plus hand-written builders and helpers added via MWE2 workflow |
+| `model-test/` | Unit tests for the model, builders, and utilities |
+
+### OSGi Wrapper Modules
+
+| Module | Purpose |
+|--------|---------|
+| `osgi/` | OSGi bundle that repackages the model and adds extra services for consumers in transformation pipelines on non-Eclipse platforms |
+| `osgi-itest/` | Integration tests for the OSGi wrapper, run inside an Apache Karaf container |
+
+## Build Commands
+
+```bash
+# Full build
+./mvnw clean install
+
+# Run all tests
+./mvnw clean test
+
+# Skip tests
+./mvnw clean install -DskipTests
+
+# Regenerate model code after editing liquibase.ecore/genmodel
+./mvnw -f model/pom.xml clean install
 ```
 
-**Model modules:**
+## Code Generation
 
-* `/model`: Eclipse plugin. It contains the model and ecore generated java classes. Builder and Helpers added with MWE2 workflow.
-* `/model-test`: Module containing model tests
+The EMF model classes are generated from the Ecore metamodel using an MWE2 workflow. The generation pipeline runs four steps:
 
-**OSGI wrapper:**
+```mermaid
+flowchart LR
+    ECORE[liquibase.ecore<br/>+ liquibase.genmodel] --> ECG[EcoreGenerator<br/>EMF model classes]
+    ECG --> HGW[HelperGeneratorWorkflow<br/>Navigation helpers]
+    HGW --> BGW[BuilderGeneratorWorkflow<br/>Builder pattern classes]
+    BGW --> RGW[RuntimeModelGeneratorWorkflow<br/>LiquibaseModel wrapper]
+    RGW --> OUT[src-gen/]
+```
 
-* `/osgi`: OSGi bundle. It repackages the model and adds extra information / services for consumers to be able to use
-it in transformation pipelines in other platforms.
-* `/osgi-itest`: Wrapper module tests
+Generated code goes to `model/src-gen/` and is regenerated on every build. **Do not edit files in `src-gen/` manually.**
 
-## Working with Eclipse
+### Running Generation in Eclipse
 
-### Plugin requirements
+**Required Eclipse features:**
+- XTend, XText, MWE, MWE2
 
-- m2e
-- epsilon
-- modeling tools
-
-### Installation
-
-In Eclipse, we can install the plugin via P2 sites.
-
-Go to "Install new software" and add the URL of the site listed on github or the uncompressed ZIP folder. The plugin
-contains the metamodel and UI provided for the default editor.
-
-### Code generation in Eclipse
-
-Required features to be installed:
-
-* XTend
-* XText
-* MWE
-* MWE2
-
-There are predefined launchers which can be used to regenerate the language model and corresponding model helpers.
-
-Execute the following command in Eclipse
+Use the predefined launcher to regenerate:
 
 ```
 Generate JSL.launch
 ```
 
-Alternatively, run as MWE2 Workflow: `hu.blackbelt.judo.meta.liquibase.model project src/workflow/generateModel.mwe2`
+Or run directly as an MWE2 Workflow:
+
+```
+hu.blackbelt.judo.meta.liquibase.model project src/workflow/generateModel.mwe2
+```
+
+## Working with Eclipse
+
+### Plugin Requirements
+
+- m2e (Maven Integration)
+- Epsilon
+- Modeling Tools
+
+### Installation
+
+Install the plugin via P2 sites: go to **Install New Software** and add the URL of the update site listed on GitHub (or point to an uncompressed ZIP folder). The plugin contains the metamodel and the default editor UI.
+
+## Architecture
+
+### Class Relationships
+
+```mermaid
+classDiagram
+    class LiquibaseModel {
+        +buildLiquibaseModel() Builder
+        +loadLiquibaseModel(LoadArguments) LiquibaseModel
+        +saveLiquibaseModel(SaveArguments)
+        +getResourceSet() ResourceSet
+        +getResource() Resource
+    }
+
+    class LiquibaseUtils {
+        +getDatabaseChangeLog() Optional
+        +getChangeSets() Optional~EList~
+        +getChangeSet(String) Optional
+        +getCreateTable(String, String) Optional
+        +getColumn(String, String, String) Optional
+        +getAddPrimaryKey(String, String, String) Optional
+        +getAddForeignKeyConstraint(...) Optional
+    }
+
+    class LiquibaseEpsilonValidator {
+        +validateLiquibase(Logger, LiquibaseModel, URI)$
+        +calculateLiquibaseValidationScriptURI()$ URI
+    }
+
+    class LiquibaseModelResourceSupport {
+        +getStreamOfLiquibasedatabaseChangeLog() Stream
+        +getStreamOfLiquibaseChangeSet() Stream
+    }
+
+    class LiquibaseModelBundleTracker {
+        +activate(ComponentContext)
+        +deactivate(ComponentContext)
+    }
+
+    LiquibaseUtils --> LiquibaseModelResourceSupport : uses
+    LiquibaseEpsilonValidator --> LiquibaseModel : validates
+    LiquibaseModelBundleTracker --> LiquibaseModel : loads from OSGi bundles
+```
+
+### Runtime Flow: Model Loading in OSGi
+
+```mermaid
+sequenceDiagram
+    participant Bundle as OSGi Bundle
+    participant Tracker as LiquibaseModelBundleTracker
+    participant Model as LiquibaseModel
+    participant Registry as OSGi Service Registry
+
+    Bundle->>Tracker: Bundle installed (with Liquibase-Models header)
+    Tracker->>Model: loadLiquibaseModel(inputStream, name, version)
+    Model-->>Tracker: LiquibaseModel instance
+    Tracker->>Registry: registerService(LiquibaseModel.class, model)
+    Note over Registry: Model available as OSGi service
+```
 
 ## Troubleshooting
 
-### Running JUnit tests in Eclipse
+### JUnit Tests in Eclipse
 
-There is a problem with Eclipse and Tycho. The classpath does not contain JUnit.
+There is a known issue where Eclipse + Tycho doesn't include JUnit on the classpath. A `Required-Bundle` entry has been added to the OSGi Manifest as a workaround. If tests still fail, ensure the following is in your `.classpath`:
 
 ```xml
 <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 ```
 
-Now a `Required-Bundle` has been added to the OSGi Manifest which is not the Tycho recommended way.
+See: [Eclipse Bug 534587](https://bugs.eclipse.org/bugs/show_bug.cgi?id=534587)
 
-See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=534587
+### Lombok
 
-### Problems with Lombok
+Tycho does not support Lombok generation directly ([lombok#285](https://github.com/rzwitserloot/lombok/issues/285)). For this reason, **Lombok is not used in Eclipse plugin code** — all source code in the `model/` Eclipse plugin is either hand-written without Lombok or generated by EMF. Lombok is used in the `osgi/` module which is built with standard Maven.
 
-Tycho does not support Lombok generation directly as mentioned in https://github.com/rzwitserloot/lombok/issues/285.
-This will be fixed in a later version. No lombok is used in the eclipse projects, every source code file is generated.
+### Tycho Repository References
 
-### Problems with Tycho
-
-Tycho 1.4.0 and below does not handle repository references inside site definitions, so all the referenced plugin
-sites have to be added manually. https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708
+Tycho 1.4.0 and below does not handle repository references inside site definitions, so all referenced plugin sites must be added manually. See: [Eclipse Bug 453708](https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708)
 
 ## Version Policy
 
-Two worlds collide in this project. Maven and Eclipse have a different view about versions. While Maven is using `SNAPSHOT`
-versions, Eclipse is using `.qualifier` in the qualifier part of semantic version.
+Maven and Eclipse have different version conventions:
 
-Which means that: `1.0.0.qualifier` is the equivalent of Maven's `1.0.0-SNAPSHOT` notation.
+| Convention | Example | Used By |
+|-----------|---------|---------|
+| SNAPSHOT | `1.0.2-SNAPSHOT` | Maven |
+| qualifier | `1.0.2.qualifier` | Eclipse/OSGi (MANIFEST.MF) |
 
-To address this, the Tycho Versions Plugin is used to replace the qualifier and Maven versions for a technical version
-number in every build.
+These are equivalent — `1.0.2.qualifier` is the Eclipse notation for Maven's `1.0.2-SNAPSHOT`. The Tycho Versions Plugin replaces qualifiers and Maven versions with technical version numbers during each build.
 
-## Submission Guidelines
+## Submitting Issues
 
-### Submitting an Issue
+Before submitting, search the [issue tracker](https://github.com/BlackBeltTechnology/judo-meta-liquibase/issues) — your problem may already be resolved.
 
-Before you submit an issue, please search the issue tracker. An issue for your problem may already exist and has been
-resolved, or the discussion might inform you of workarounds readily available.
+To help us reproduce and fix bugs quickly, please include:
+- Output of `java -version` and `mvn -version`
+- Relevant `pom.xml` or `.flattened-pom.xml`
+- A minimal reproducible use case
 
-We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. Having a
-reproducible scenario gives us wealth of important information without going back and forth with you requiring
-additional information, such as:
+File new issues using the [issue form](https://github.com/BlackBeltTechnology/judo-meta-liquibase/issues/new/choose).
 
-- the output of `java -version`, `mvn -version`
-- `pom.xml` or `.flattened-pom.xml` (when applicable)
-- and most importantly - a use-case that fails
+## Submitting Pull Requests
 
-A minimal reproduction allows us to quickly confirm a bug (or point out a coding problem) as well as confirm that we are
-fixing the right problem.
+This project follows [GitHub's standard forking model](https://guides.github.com/activities/forking/). Fork the project and submit pull requests from your fork.
 
-We will be insisting on a minimal reproduction in order to save maintainers' time and ultimately be able to fix more
-bugs. We understand that sometimes it might be hard to extract essentials bits of code from a larger codebase, but we
-really need to isolate the problem before we can fix it.
-
-You can file new issues by filling out our [issue form](https://github.com/BlackBeltTechnology/judo-meta-liquibase/issues/new/choose).
-
-### Submitting a PR
-
-This project follows [GitHub's standard forking model](https://guides.github.com/activities/forking/). Please fork the
-project to submit pull requests.
-
-## Commands
-
-### Run Tests
-
-```sh
-mvn clean test
-```
-
-### Run Full build
-
-```sh
-mvn clean install
-```
+> **Important:** Every commit and PR must include a JIRA ticket number (e.g., `JNG-1234`).

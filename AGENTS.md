@@ -1,191 +1,196 @@
-<!-- OPENSPEC:START -->
-# OpenSpec Instructions
-
-These instructions are for AI assistants working in this project.
-
-Always open `@/openspec/AGENTS.md` when the request:
-- Mentions planning or proposals (words like proposal, spec, change, plan)
-- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
-- Sounds ambiguous and you need the authoritative spec before coding
-
-Use `@/openspec/AGENTS.md` to learn:
-- How to create and apply change proposals
-- Spec format and conventions
-- Project structure and guidelines
-
-Keep this managed block so 'openspec update' can refresh the instructions.
-
-<!-- OPENSPEC:END -->
-
-# Judo Liquibase Meta - Project Documentation
+# judo-meta-liquibase - Project Documentation
 
 ## Project Overview
+
 
 **Repository:** BlackBeltTechnology/judo-meta-liquibase
 **License:** Eclipse Public License 2.0 (EPL-2.0)
 **Java Version:** 21
-**Build System:** Maven 3.9.4+ with Tycho (Eclipse build tooling)
+**Build System:** Maven 3.9.4+ with Tycho 4.0.13 (Eclipse plugin packaging)
 
-This is an Eclipse/Tycho-based metamodel project that:
-1. **Defines** the Liquibase metamodel (extended from Liquibase first-party model) via EMF/Ecore
-2. **Generates** Java code from the model using MWE2 workflows
-3. **Provides** both Eclipse plugin and OSGi standalone runtime
-4. **Distributes** via both Maven Central and Eclipse P2 repositories
+1. Provides an EMF (Eclipse Modeling Framework) metamodel for Liquibase database change management, defined in Ecore format and derived from the Liquibase XML Schema
+2. Generates Java model classes, builder patterns, navigation helpers, and a runtime wrapper (`LiquibaseModel`) via an MWE2 code generation pipeline
+3. Offers a hand-written runtime API for programmatic model building, querying (`LiquibaseUtils`), and Epsilon-based validation (`LiquibaseEpsilonValidator`)
+4. Packages the metamodel as both an Eclipse plugin (with feature/update site) and a standalone OSGi bundle for use in non-Eclipse transformation pipelines
+5. Part of the JUDO platform's metamodel family, used in model-to-database transformation pipelines alongside judo-meta-psm, judo-meta-asm, and judo-meta-rdbms
+
+## Code Instructions
+
+1. First think through the problem, read the codebase for relevant files.
+2. Before you make any major changes, check in with me and I will verify the plan.
+3. Please every step of the way just give me a high level explanation of what changes you made.
+4. Make every task and code change you do as simple as possible. We want to avoid making any massive or complex changes. Every change should impact as little code as possible. Everything is about simplicity.
+5. Maintain a documentation file that describes how the architecture of the app works inside and out.
+6. Never speculate about code you have not opened. If the user references a specific file, you MUST read the file before answering. Make sure to investigate and read relevant files BEFORE answering questions about the codebase. Never make any claims about code before investigating unless you are certain of the correct answer - give grounded and hallucination-free answers.
+7. For implementation use TDD (Test-Driven Development): write or update tests first to define the expected behaviour, verify they fail, then write the minimal implementation to make them pass.
+8. Use DRY (Don't Repeat Yourself): extract reusable logic into separate classes, utilities, or components. If the same pattern appears in multiple places, refactor it into a shared helper.
 
 ## Directory Structure
 
 ```
 judo-meta-liquibase/
-├── model/                          # Core Liquibase metamodel (Ecore)
-├── model-test/                     # Unit tests for metamodel
-├── osgi/                           # OSGi bundle repackaging
-├── osgi-itest/                     # OSGi integration tests (Pax Exam)
-├── feature/                        # Eclipse feature (model)
-├── site/                           # Eclipse P2 update site
-└── openspec/                       # OpenSpec change management
+├── model/                  # Core Eclipse plugin: Ecore metamodel + generated code + runtime API
+│   ├── model/              # liquibase.ecore, liquibase.genmodel, liquibase.xsd
+│   ├── src/main/java/      # Hand-written runtime classes
+│   ├── src/main/epsilon/   # Epsilon EVL validation rules
+│   ├── src/workflow/        # MWE2 code generation workflow
+│   ├── src-gen/            # Generated EMF classes (not in git, regenerated on build)
+│   └── META-INF/           # OSGi MANIFEST.MF
+├── model-test/             # JUnit 5 unit tests for model
+├── osgi/                   # OSGi bundle repackaging (Felix maven-bundle-plugin)
+├── osgi-itest/             # OSGi integration tests (Pax Exam + Karaf)
+├── feature/                # Eclipse feature definition
+├── site/                   # Eclipse P2 update site
+├── .github/workflows/      # CI/CD pipelines
+├── openspec/               # OpenSpec configuration and specs
+└── .claude/                # Claude Code configuration
 ```
 
 ## Core Modules
 
-### Model Definition Layer
+### Metamodel Layer
 
 | Module | Type | Purpose |
 |--------|------|---------|
-| `model/` | eclipse-plugin | Core Liquibase metamodel via Ecore (`liquibase.ecore`). Generates EMF code, builders, helpers. Contains Epsilon validation rules. |
-| `model-test/` | test | Unit tests for Liquibase metamodel using JUnit 5 and Epsilon runtime |
+| `model/` | eclipse-plugin | Core Ecore metamodel (`liquibase.ecore`), EMF-generated Java classes in `src-gen/`, hand-written runtime utilities in `src/main/java/`, Epsilon EVL validation rules, and MWE2 generation workflow |
+| `model-test/` | jar | JUnit 5 tests for model builders, LiquibaseUtils query helpers, and Epsilon validation |
 
-### Runtime/OSGi Layer
-
-| Module | Type | Purpose |
-|--------|------|---------|
-| `osgi/` | bundle | Repackages model for OSGi environments using Apache Felix Bundle Plugin |
-| `osgi-itest/` | test | Pax Exam integration tests for Karaf container (4.4.7) |
-
-### Distribution Layer
+### Packaging Layer
 
 | Module | Type | Purpose |
 |--------|------|---------|
-| `feature/` | eclipse-feature | Bundles model and plugins |
-| `site/` | eclipse-repository | P2 update site for Eclipse distribution |
-
-## Liquibase Metamodel Structure
-
-The core metamodel (`model/model/liquibase.ecore`) defines Liquibase database changelog elements:
-- Database change operations (AddColumn, CreateTable, DropTable, etc.)
-- Constraint definitions (PrimaryKey, ForeignKey, UniqueConstraint, etc.)
-- Data types and column definitions
-- Changelog and changeset structures
-
-This is an extended version of the Liquibase first-party model.
-
-**Validation Rules:**
-- **EVL (Epsilon):** Located in `model/src/main/epsilon/validations/` using Epsilon Validation Language (currently minimal)
-- **Java Validation Framework:** Located in `model/src/main/java/hu/blackbelt/judo/meta/liquibase/validation/` using Zeta validation framework
+| `osgi/` | bundle | Repackages the model as a standalone OSGi bundle with `LiquibaseModelBundleTracker` for automatic model loading from bundle headers |
+| `osgi-itest/` | test jar | Integration tests using Pax Exam with Apache Karaf 4.4.7 container |
+| `feature/` | eclipse-feature | Eclipse feature definition grouping the model plugin for installation |
+| `site/` | eclipse-repository | P2 update site generation for Eclipse distribution |
 
 ## Technology Stack
 
 ### Core Technologies
-- **Java 21** - Primary language
-- **Eclipse Modeling Framework (EMF)** 2.38.0+ - Metamodel foundation
-- **Ecore** - Model definition language
-- **MWE2** (Model Workflow Engine) 2.13.0 - Code generation workflows
-- **Epsilon** 2.8.0 - Model validation (EVL)
-- **Tycho** 4.0.13 - Eclipse plugin build
 
-### Validation Technologies
-- **Zeta Validation Framework** - Native Java validation with annotations
-- **Epsilon EVL** - Epsilon Validation Language for model validation
-
-### Runtime
-- **Apache Karaf** 4.4.7 - OSGi container
-- **Apache Felix** 6.0.0 - OSGi bundle plugin
-- **Pax Exam** 4.13.5 - OSGi testing
+- **Eclipse Modeling Framework (EMF)** 2.38.0 — Ecore metamodel definition, model code generation
+- **Tycho** 4.0.13 — Eclipse plugin build system, handles MANIFEST.MF dependency resolution
+- **Epsilon** 2.8.0 — EVL (Epsilon Validation Language) for model validation rules
+- **OSGi** 7.0.0 — Module system for both Eclipse and standalone deployment
+- **MWE2** (Modeling Workflow Engine 2) — Orchestrates code generation pipeline
 
 ### Build & Quality
-- **Maven** 3.9.4+ with wrapper
-- **JUnit 5** - Unit testing
-- **JaCoCo** 0.8.12 - Code coverage
-- **Lombok** 1.18.34 - Annotation processing
+
+- **Maven** 3.9.4+ with wrapper (`./mvnw`)
+- **JUnit Jupiter** 5.9.1 for unit testing
+- **Pax Exam** 4.13.5 + **Apache Karaf** 4.4.7 for OSGi integration testing
+- **JaCoCo** 0.8.12 for code coverage
+- **SonarQube** for static analysis (develop branch only)
+- **Lombok** 1.18.34 (used only in non-Eclipse modules; Tycho does not support Lombok)
+
+### Key Dependencies
+
+- `org.eclipse.emf:org.eclipse.emf.ecore` (2.38.0)
+- `org.eclipse.emf:org.eclipse.emf.common` (2.41.0)
+- `hu.blackbelt.epsilon:epsilon-runtime-execution` — Epsilon validation runtime
+- `hu.blackbelt.epsilon:epsilon-runtime-osgi` — Epsilon OSGi integration
+- `hu.blackbelt.osgi.utils:osgi-api` — OSGi bundle tracking utilities
+- `hu.blackbelt.judo:judo-genmodel-generator` — JUDO-specific EMF code generators
 
 ## Build Commands
 
 ```bash
-# Standard build
-mvn clean install
-# or with wrapper
+# Full build (all modules)
 ./mvnw clean install
 
-# Memory requirements (configured in .mvn/jvm.config)
-# -Xms1024m -Xmx2048m
+# Run all tests
+./mvnw clean test
+
+# Build a single module
+./mvnw -f model/pom.xml clean install
+./mvnw -f model-test/pom.xml clean test
+./mvnw -f osgi-itest/pom.xml clean test
+
+# Skip tests
+./mvnw clean install -DskipTests
+
+# Skip test compilation entirely
+./mvnw clean install -Dmaven.test.skip=true
+
+# Regenerate model code (after editing .ecore or .genmodel)
+./mvnw -f model/pom.xml clean install
+
+# Set project version across all modules
+./mvnw -DnewVersion=X.Y.Z -DgenerateBackupPoms=false versions:set
+./mvnw tycho-versions:update-eclipse-metadata
 ```
 
 ### Maven Profiles
 
 | Profile | Purpose |
 |---------|---------|
-| `modules` | Includes all submodules (default) |
-| `sign-artifacts` | GPG signing for release |
-| `release-central` | Maven Central deployment |
-| `release-judong` | Internal Judo repository |
-
-## Code Generation Flow
-
-1. **MWE2 Workflow** (`model/src/workflow/generateModel.mwe2`)
-   - Generates EMF code from `liquibase.ecore`
-   - Produces GenModel-based Java classes
-   - Generates builders and helpers
-
-2. **Model Compilation**
-   - Tycho compiles eclipse-plugin modules
-   - OSGi bundle compilation with Felix
-
-3. **Feature/Site Building**
-   - P2 metadata generation
-   - Feature packaging
-   - Update site assembly
+| `modules` | Build all submodules (active by default, skip with `-DskipModules=true`) |
+| `sign-artifacts` | GPG-sign artifacts for release builds |
+| `release-judong` | Deploy to internal JUDO Nexus repository |
+| `release-central` | Deploy to Maven Central via Sonatype OSSRH |
+| `release-dummy` | Local file-based deployment for testing |
+| `generate-github-asciidoc-diagrams` | Generate documentation with PlantUML diagrams |
+| `update-source-code-license` | Update EPL-2.0 license headers across all source files |
 
 ## Key Configuration Files
 
 | File | Purpose |
 |------|---------|
-| `pom.xml` | Parent POM with module definitions and plugin management |
-| `.mvn/jvm.config` | JVM arguments for Maven build |
-| `.mvn/extensions.xml` | Maven extensions |
-| `model/model/liquibase.ecore` | Core metamodel definition |
-| `model/model/liquibase.genmodel` | EMF code generation model |
+| `pom.xml` | Root POM: module aggregation, dependency management, profiles, plugin configuration |
+| `model/model/liquibase.ecore` | **Source of truth** — Ecore metamodel definition derived from Liquibase XSD |
+| `model/model/liquibase.genmodel` | EMF code generation configuration (file extension: `.changelog.xml`, resource type: XML) |
+| `model/src/workflow/generateModel.mwe2` | MWE2 workflow running 4 generators: Ecore, Helper, Builder, RuntimeModel |
+| `model/META-INF/MANIFEST.MF` | OSGi bundle manifest with Export-Package and Require-Bundle declarations |
+| `model/src/main/epsilon/validations/liquibase.evl` | Epsilon EVL validation constraints |
+| `.github/workflows/build.yml` | Main CI/CD pipeline (build, test, deploy, tag, release) |
+| `.mvn/extensions.xml` | Maven Wagon extensions for repository access |
+| `logback-test.xml` | Logback test logging configuration (INFO level) |
 
 ## Development Environment
 
 **Required:**
 - Java 21 JDK
-- Maven 3.9.4+
-- Eclipse IDE with:
-  - m2e (Maven integration)
-  - Epsilon plugin
-  - Modeling tools
+- Maven 3.9.4+ (wrapper included)
+
+**For Eclipse IDE:**
+- m2e (Maven Integration)
+- Epsilon
+- Modeling Tools
+- XTend, XText, MWE, MWE2 (for code generation)
+
+**Generated Code:**
+- `model/src-gen/` is auto-generated and not in version control
+- Regenerated on every `model/` module build via MWE2 workflow
+- **Never edit files in `src-gen/` manually**
+
+**Hand-Written Code (safe to edit):**
+- `model/src/main/java/` — Runtime API (LiquibaseModel, LiquibaseUtils, LiquibaseEpsilonValidator, etc.)
+- `model/src/main/epsilon/` — Validation rules
+- `osgi/src/main/java/` — OSGi bundle tracker
 
 ## Git Workflow
 
 - **Main Branch:** `develop`
-- **Versioning:** SNAPSHOT-based development (currently 1.0.2-SNAPSHOT)
-- **Version Placeholder:** `$VERSION_PLACEHOLDER$` in model metadata
-- **Release Process:** CI/CD with Maven Central and P2 deployment
+- **Release Branch:** `master` (latest released version)
+- **Versioning:** `1.0.2-SNAPSHOT` (Maven) / `1.0.2.qualifier` (Eclipse)
+- **Branching Model:** GitFlow — `feature/JNG-*`, `release/*`, `bugfix/JNG-*`, `support/JNG-*`, `hotfix/JNG-*`
+- **Commit Convention:** Every commit and PR must include a JIRA ticket number (`JNG-XXXX`)
+- **CI/CD:** GitHub Actions with chained workflows (build → merge-pr-tagged → create-release-on-master)
 
 ## Important Notes
 
-1. **Understand EMF/Ecore patterns** before modifying model code
-2. **Respect Tycho build constraints** when modifying Eclipse plugins
-3. **Validation rules** - Two implementations available:
-   - **EVL (Epsilon):** Located in `model/src/main/epsilon/validations/` (currently minimal)
-   - **Java Validation Framework:** Located in `model/src/main/java/hu/blackbelt/judo/meta/liquibase/validation/`
-4. **Use OpenSpec for significant changes** - See `openspec/AGENTS.md` for proposal workflow
+1. The Ecore metamodel (`model/model/liquibase.ecore`) is the single source of truth — all generated code derives from it
+2. The MWE2 workflow generates four categories of code: EMF model classes, navigation helpers, builder patterns, and the LiquibaseModel runtime wrapper
+3. `src-gen/` is not version-controlled and is cleaned + regenerated on every build of the `model/` module
+4. Lombok is **not used** in Eclipse plugin code due to Tycho incompatibility — only in the `osgi/` module
+5. The project builds with both Tycho (for Eclipse plugin modules) and standard Maven (for osgi/osgi-itest modules) — they have different dependency resolution mechanisms
+6. Epsilon validation rules in `liquibase.evl` are currently empty — constraints can be added as needed
+7. The OSGi bundle (`osgi/` module) includes an automatic `LiquibaseModelBundleTracker` that discovers and registers `LiquibaseModel` instances from bundle MANIFEST headers (`Liquibase-Models`)
+8. Version numbers must be updated in both Maven (`pom.xml`) and Eclipse (`MANIFEST.MF`) using `versions:set` followed by `tycho-versions:update-eclipse-metadata`
 
 ## Related Documentation
 
-- `README.md` - Project overview
-- `CONTRIBUTING.md` - Contribution guidelines
-- `AGENTS.md` - Detailed project documentation for AI assistants
-- `docs/validation/README.md` - Validation framework documentation
-- `openspec/AGENTS.md` - OpenSpec workflow for spec-driven development
-- `openspec/project.md` - Project conventions for OpenSpec
-- **Zeta Validation Framework:** Reference at `hu.blackbelt.judo.zeta` (do not copy docs)
+- [README](README.md) — Project overview and quick start
+- [Contributing Guide](CONTRIBUTING.md) — Development setup, code structure, and submission guidelines
+- [CI/CD Flow](/.github/CIFLOW.md) — Detailed branching strategy and GitHub Actions pipeline documentation
+- [JUDO Community](https://github.com/BlackBeltTechnology/judo-community) — Parent aggregator project

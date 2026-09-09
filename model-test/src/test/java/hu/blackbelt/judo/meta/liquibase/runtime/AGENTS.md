@@ -1,0 +1,7 @@
+# `model-test/src/test/java/hu/blackbelt/judo/meta/liquibase/runtime` — tests exercising the hand-written runtime API
+
+| File | Purpose |
+|---|---|
+| `LiquibaseExecutionContextTest.java` | Single test `testLiquibaseReflectiveCreated` asserting `liquibaseModelResourceSupportBuilder().uri(URI.createFileURI("urn:liquibase.judo-meta-liquibase"))` builds without throwing. Body ends at a `// Build model here` stub — no assertion follows, so it only guards builder/classpath wiring and must not be read as coverage of model construction. |
+| `LiquibaseUtilsTest.java` | Round-trip coverage of every `LiquibaseUtils` lookup pair over a `databaseChangeLog` built in `@BeforeEach`: `getChangeSets`/`getChangeSet`, `getCreateTables`/`getCreateTable`, `getColumns`/`getColumn`, `getAddPrimaryKeys`/`getAddPrimaryKey`, `getAddForeignKeyConstraints`/`getAddForeignKeyConstraint`, `getAddNotNullConstraints`/`getAddNotNullConstraint`. Each test asserts `Optional.empty()` before content is added, then equality after. Every test also writes `target/test-classes/<testName>-liquibase.xml`; a `LiquibaseValidationException` on save fails the test, an `IOException` only warns. |
+| `LiquibaseValidationTest.java` | Extends `AbstractLiquibaseValidationTest`; `@EnumSource(ValidatorType.class)` runs `testEmptyModelValidation` once per engine and asserts an empty model yields zero errors and zero warnings. This is the EVL-vs-Java parity floor: a new constraint that fires on an empty model breaks it. |

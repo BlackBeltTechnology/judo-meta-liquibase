@@ -1,101 +1,87 @@
-# judo-meta-liquibase - Project Documentation
+# judo-meta-liquibase — module agent doctrine
 
-## Project Overview
+## Module purpose
 
+`judo-meta-liquibase` is the estate's typed representation of *a database
+migration script before it is a file*. It owns the `liquibase` Ecore metamodel
+(`nsURI http://www.liquibase.org/xml/ns/dbchangelog`, ~208 classifiers derived
+mechanically from the Liquibase XSD: root `databaseChangeLog`, `ChangeSet`, and
+one classifier per Liquibase change — `CreateTable`, `Column`, `AddPrimaryKey`,
+`AddForeignKeyConstraint`, `AddNotNullConstraint`, `AddAutoIncrement`, …), so a
+changelog is an EMF object graph that a transformation can construct, diff and
+query instead of a string of XML a template must get syntactically right.
 
-**Repository:** BlackBeltTechnology/judo-meta-liquibase
-**License:** Eclipse Public License 2.0 (EPL-2.0)
-**Java Version:** 21
-**Build System:** Maven 3.9.4+ with Tycho 4.0.13 (Eclipse plugin packaging)
+Who produces an instance: `judo-tatami-rdbms2liquibase`, the ETL/EGL step of
+the JUDO tatami pipeline (PSM → ASM → RDBMS → **Liquibase**). It compares the
+freshly derived RDBMS schema model against the previously deployed one and
+emits the difference as a `databaseChangeLog` graph — tables, columns, keys and
+constraints expressed as `ChangeSet` children.
 
-1. Provides an EMF (Eclipse Modeling Framework) metamodel for Liquibase database change management, defined in Ecore format and derived from the Liquibase XML Schema
-2. Generates Java model classes, builder patterns, navigation helpers, and a runtime wrapper (`LiquibaseModel`) via an MWE2 code generation pipeline
-3. Offers a hand-written runtime API for programmatic model building, querying (`LiquibaseUtils`), and Epsilon-based validation (`LiquibaseEpsilonValidator`)
-4. Packages the metamodel as both an Eclipse plugin (with feature/update site) and a standalone OSGi bundle for use in non-Eclipse transformation pipelines
-5. Part of the JUDO platform's metamodel family, used in model-to-database transformation pipelines alongside judo-meta-psm, judo-meta-asm, and judo-meta-rdbms
+What is emitted from it: `LiquibaseModelStreamProvider.getStreamFromLiquibaseModel`
+serialises the graph back through the EMF XML resource (genmodel `resource="XML"`,
+`fileExtensions="changelog.xml"`) into a real Liquibase changelog XML stream.
+`LiquibaseNamespaceFixUriHandler` is a `URIHandlerImpl` that pipes the document
+through an XSLT on load/save because EMF's XML resource and Liquibase disagree
+on namespace declarations; without it round-tripped changelogs are rejected by
+Liquibase itself.
 
-## Code Instructions
+How it reaches an actual database: the emitted changelog stream is handed to
+`runtime/osgi-liquibase`, which feeds changelogs to the Liquibase engine from an
+in-memory `Map<String, InputStream>`, and to `judo-rdbms-schema`
+(`IncrementalLiquibaseExecutor`, `LiquibaseVersionUpdate`) which runs it against
+the live JDBC connection and advances the recorded schema version. Nothing in
+this repository touches a database — this module ends at the byte stream; the
+runtime modules above own the JDBC side.
 
-1. First think through the problem, read the codebase for relevant files.
-2. Before you make any major changes, check in with me and I will verify the plan.
-3. Please every step of the way just give me a high level explanation of what changes you made.
-4. Make every task and code change you do as simple as possible. We want to avoid making any massive or complex changes. Every change should impact as little code as possible. Everything is about simplicity.
-5. Maintain a documentation file that describes how the architecture of the app works inside and out.
-6. Never speculate about code you have not opened. If the user references a specific file, you MUST read the file before answering. Make sure to investigate and read relevant files BEFORE answering questions about the codebase. Never make any claims about code before investigating unless you are certain of the correct answer - give grounded and hallucination-free answers.
-7. For implementation use TDD (Test-Driven Development): write or update tests first to define the expected behaviour, verify they fail, then write the minimal implementation to make them pass.
-8. Use DRY (Don't Repeat Yourself): extract reusable logic into separate classes, utilities, or components. If the same pattern appears in multiple places, refactor it into a shared helper.
+Reading and asserting on such a graph is `LiquibaseUtils` (constructed over a
+`ResourceSet`, `failOnError` toggle, `Optional`-returning navigation:
+`getDatabaseChangeLog`, `getChangeSets`, `getChangeSet(id)`,
+`getCreateTable(changeSetId, tableName)`, `getColumn(...)`,
+`getAddForeignKeyConstraint(...)`). Validation exists in two shapes:
+`LiquibaseEpsilonValidator` over `model/src/main/epsilon/validations/liquibase.evl`
+— currently an empty rule file, a deliberate placeholder — and the Zeta Java
+validation path (`LiquibaseValidator`, `LiquibaseModelProvider`,
+`LiquibaseValidationConstants`, `LiquibaseValidationException`, and
+`@ValidationContext(ChangeSet.class) ChangeSetValidations`, whose `@Constraint`
+rules are presently commented out). Treat "validation passes" as "no rules are
+armed yet", not as "the changelog is proven correct".
 
-## Directory Structure
+**Repository:** BlackBeltTechnology/judo-meta-liquibase ·
+**Artifact:** `hu.blackbelt.judo.meta:hu.blackbelt.judo.meta.liquibase` ·
+**License:** EPL-2.0 · **Java:** 21 ·
+**Build:** Maven 3.9.4+ / Eclipse Tycho 4.0.13 ·
+**Version:** `1.0.2-SNAPSHOT` (Maven) / `1.0.2.qualifier` (Eclipse).
 
-```
-judo-meta-liquibase/
-├── model/                  # Core Eclipse plugin: Ecore metamodel + generated code + runtime API
-│   ├── model/              # liquibase.ecore, liquibase.genmodel, liquibase.xsd
-│   ├── src/main/java/      # Hand-written runtime classes
-│   ├── src/main/epsilon/   # Epsilon EVL validation rules
-│   ├── src/workflow/        # MWE2 code generation workflow
-│   ├── src-gen/            # Generated EMF classes (not in git, regenerated on build)
-│   └── META-INF/           # OSGi MANIFEST.MF
-├── model-test/             # JUnit 5 unit tests for model
-├── osgi/                   # OSGi bundle repackaging (Felix maven-bundle-plugin)
-├── osgi-itest/             # OSGi integration tests (Pax Exam + Karaf)
-├── feature/                # Eclipse feature definition
-├── site/                   # Eclipse P2 update site
-├── .github/workflows/      # CI/CD pipelines
-├── openspec/               # OpenSpec configuration and specs
-└── .claude/                # Claude Code configuration
-```
+## Reactor map
 
-## Core Modules
+The root `pom.xml` declares its `<modules>` inside the `modules` profile, active
+unless `-DskipModules=true` is passed. Build order is the declared order —
+`model` produces the artifact every other module consumes.
 
-### Metamodel Layer
+<modules>
+  <module>model</module>
+  <module>model-test</module>
+  <module>osgi</module>
+  <module>osgi-itest</module>
+  <module>feature</module>
+  <module>site</module>
+</modules>
 
-| Module | Type | Purpose |
-|--------|------|---------|
-| `model/` | eclipse-plugin | Core Ecore metamodel (`liquibase.ecore`), EMF-generated Java classes in `src-gen/`, hand-written runtime utilities in `src/main/java/`, Epsilon EVL validation rules, and MWE2 generation workflow |
-| `model-test/` | jar | JUnit 5 tests for model builders, LiquibaseUtils query helpers, and Epsilon validation |
+| Module | Artifact / packaging | What it contributes |
+|---|---|---|
+| `model` | `…liquibase.model`, `eclipse-plugin` | The metamodel and everything derived from it: `model/model/liquibase.ecore` (single source of truth, derived from `liquibase.xsd`), `liquibase.genmodel` (EMF generation parameters — `modelName="Liquibase"`, XML resource, `.changelog.xml` extension), the MWE2 workflow `src/workflow/generateModel.mwe2` running four generators (Ecore model classes, navigation helpers, builders, the `LiquibaseModel` runtime wrapper) into `src-gen/`, the EVL rule file, and the hand-written runtime under `src/main/java` (`LiquibaseUtils`, `LiquibaseModelStreamProvider`, `LiquibaseNamespaceFixUriHandler`, `LiquibaseEpsilonValidator`, the `validation` package, and the Eclipse `Activator`). `META-INF/MANIFEST.MF` carries the Eclipse plugin identity — `Export-Package` and `Require-Bundle` — and must move in lockstep with the POM version. |
+| `model-test` | `…liquibase.model.test`, `jar` | JUnit 5 proof that the runtime behaves: builder construction, `LiquibaseUtils` navigation, serialisation round-trip, and validation wiring. Depends on `model`, so it exercises the published API surface rather than internals. Test logging comes from the repo-root `logback-test.xml` (INFO). |
+| `osgi` | `…liquibase.osgi`, `bundle` (Felix) | Repackages `model` for non-Eclipse OSGi containers. `maven-bundle-plugin` `<instructions>` embed `../model/model` as `meta/liquibase` and `../model/src/main/epsilon/validations` as `validations`, export `hu.blackbelt.judo.meta.liquibase*`, and mark every Epsilon / Zeta import `resolution:=optional` so the bundle resolves without a validation stack present. Ships `LiquibaseModelBundleTracker`, the only Lombok-using code in the repo. |
+| `osgi-itest` | `…liquibase.osgi.itest`, `jar` | Pax Exam 4.13.5 integration tests booting an Apache Karaf 4.4.7 container (with `tinybundles`) to assert the bundle really resolves there: model loading, OSGi service registration, manifest-driven discovery — the check unit tests structurally cannot make. |
+| `feature` | `…liquibase.feature`, `eclipse-feature` | The installable Eclipse feature grouping the model plugin, so the metamodel is consumable from an IDE workspace. Pure descriptor module — no sources. |
+| `site` | `…liquibase.site`, `eclipse-repository` | Builds the P2 update site for "Install New Software" and for downstream Tycho builds that consume it as a P2 repository. |
 
-### Packaging Layer
+## Build commands
 
-| Module | Type | Purpose |
-|--------|------|---------|
-| `osgi/` | bundle | Repackages the model as a standalone OSGi bundle with `LiquibaseModelBundleTracker` for automatic model loading from bundle headers |
-| `osgi-itest/` | test jar | Integration tests using Pax Exam with Apache Karaf 4.4.7 container |
-| `feature/` | eclipse-feature | Eclipse feature definition grouping the model plugin for installation |
-| `site/` | eclipse-repository | P2 update site generation for Eclipse distribution |
-
-## Technology Stack
-
-### Core Technologies
-
-- **Eclipse Modeling Framework (EMF)** 2.38.0 — Ecore metamodel definition, model code generation
-- **Tycho** 4.0.13 — Eclipse plugin build system, handles MANIFEST.MF dependency resolution
-- **Epsilon** 2.8.0 — EVL (Epsilon Validation Language) for model validation rules
-- **OSGi** 7.0.0 — Module system for both Eclipse and standalone deployment
-- **MWE2** (Modeling Workflow Engine 2) — Orchestrates code generation pipeline
-
-### Build & Quality
-
-- **Maven** 3.9.4+ with wrapper (`./mvnw`)
-- **JUnit Jupiter** 5.9.1 for unit testing
-- **Pax Exam** 4.13.5 + **Apache Karaf** 4.4.7 for OSGi integration testing
-- **JaCoCo** 0.8.12 for code coverage
-- **SonarQube** for static analysis (develop branch only)
-- **Lombok** 1.18.34 (used only in non-Eclipse modules; Tycho does not support Lombok)
-
-### Key Dependencies
-
-- `org.eclipse.emf:org.eclipse.emf.ecore` (2.38.0)
-- `org.eclipse.emf:org.eclipse.emf.common` (2.41.0)
-- `hu.blackbelt.epsilon:epsilon-runtime-execution` — Epsilon validation runtime
-- `hu.blackbelt.epsilon:epsilon-runtime-osgi` — Epsilon OSGi integration
-- `hu.blackbelt.osgi.utils:osgi-api` — OSGi bundle tracking utilities
-- `hu.blackbelt.judo:judo-genmodel-generator` — JUDO-specific EMF code generators
-
-## Build Commands
+Use the bundled Maven wrapper (`./mvnw`), never a repo-root `mvn`.
 
 ```bash
-# Full build (all modules)
+# Full build (all modules: code generation + compile + test)
 ./mvnw clean install
 
 # Run all tests
@@ -115,82 +101,152 @@ judo-meta-liquibase/
 # Regenerate model code (after editing .ecore or .genmodel)
 ./mvnw -f model/pom.xml clean install
 
-# Set project version across all modules
+# Set project version across all modules (Maven first, then Eclipse metadata)
 ./mvnw -DnewVersion=X.Y.Z -DgenerateBackupPoms=false versions:set
 ./mvnw tycho-versions:update-eclipse-metadata
 ```
 
-### Maven Profiles
+### Maven profiles
 
 | Profile | Purpose |
 |---------|---------|
-| `modules` | Build all submodules (active by default, skip with `-DskipModules=true`) |
-| `sign-artifacts` | GPG-sign artifacts for release builds |
-| `release-judong` | Deploy to internal JUDO Nexus repository |
-| `release-central` | Deploy to Maven Central via Sonatype OSSRH |
-| `release-dummy` | Local file-based deployment for testing |
-| `generate-github-asciidoc-diagrams` | Generate documentation with PlantUML diagrams |
-| `update-source-code-license` | Update EPL-2.0 license headers across all source files |
+| `modules` | Build all six submodules. Active by default; skip with `-DskipModules=true`. |
+| `sign-artifacts` | GPG-sign artifacts for release builds. |
+| `release-judong` | Deploy to the internal JUDO Nexus repository. |
+| `release-central` | Deploy to Maven Central via Sonatype OSSRH. |
+| `release-dummy` | Local file-based deployment for testing. |
+| `generate-github-asciidoc-diagrams` | Generate documentation with PlantUML diagrams. |
+| `update-source-code-license` | Update EPL-2.0 license headers across all source files. |
 
-## Key Configuration Files
+## Technology stack
 
-| File | Purpose |
-|------|---------|
-| `pom.xml` | Root POM: module aggregation, dependency management, profiles, plugin configuration |
-| `model/model/liquibase.ecore` | **Source of truth** — Ecore metamodel definition derived from Liquibase XSD |
-| `model/model/liquibase.genmodel` | EMF code generation configuration (file extension: `.changelog.xml`, resource type: XML) |
-| `model/src/workflow/generateModel.mwe2` | MWE2 workflow running 4 generators: Ecore, Helper, Builder, RuntimeModel |
-| `model/META-INF/MANIFEST.MF` | OSGi bundle manifest with Export-Package and Require-Bundle declarations |
-| `model/src/main/epsilon/validations/liquibase.evl` | Epsilon EVL validation constraints |
-| `.github/workflows/build.yml` | Main CI/CD pipeline (build, test, deploy, tag, release) |
-| `.mvn/extensions.xml` | Maven Wagon extensions for repository access |
-| `logback-test.xml` | Logback test logging configuration (INFO level) |
+- **Eclipse EMF** 2.38.0 (`org.eclipse.emf.ecore`), `org.eclipse.emf.common` 2.41.0 — Ecore metamodel definition and code generation
+- **Eclipse Tycho** 4.0.13 — Eclipse plugin build; resolves dependencies from `MANIFEST.MF`
+- **Epsilon** 2.8.0 — EVL validation (`hu.blackbelt.epsilon:epsilon-runtime-execution`, `epsilon-runtime-osgi`)
+- **MWE2** — orchestrates the code generation pipeline (`hu.blackbelt.judo:judo-genmodel-generator` supplies the JUDO-specific generators)
+- **OSGi** 7.0.0 — module system for both Eclipse and standalone deployment; `hu.blackbelt.osgi.utils:osgi-api` for bundle tracking
+- **JUnit Jupiter** 5.9.1, **Pax Exam** 4.13.5 + **Apache Karaf** 4.4.7, **JaCoCo** 0.8.12, **SonarQube** (develop branch only)
+- **Lombok** 1.18.34 — non-Eclipse modules only; Tycho does not support Lombok annotation processing
 
-## Development Environment
+## Architecture pointers
 
-**Required:**
-- Java 21 JDK
-- Maven 3.9.4+ (wrapper included)
+- The root `pom.xml` is the parent POM: module aggregation, dependency management, plugin configuration, and every profile above.
+- `model/model/liquibase.ecore` is the single source of truth; every generated class derives from it. Edit the Ecore, then rebuild `model` — never patch generated output.
+- `.mvn/extensions.xml` wires the Maven Wagon extensions needed to reach the BlackBelt repositories; a build that cannot resolve private artifacts usually starts here.
+- `.github/workflows/build.yml` is the main CI/CD pipeline (build → test → deploy → tag → release), chained into `merge-pr-tagged` and `create-release-on-master`.
+- [README.md](README.md) — project overview and quick start.
+- [CONTRIBUTING.md](CONTRIBUTING.md) — development setup, code structure, submission guidelines.
+- [.github/CIFLOW.md](.github/CIFLOW.md) — branching strategy and GitHub Actions pipeline detail.
+- [JUDO Community](https://github.com/BlackBeltTechnology/judo-community) — parent aggregator project.
+- Sibling metamodels in the same pipeline: `judo-meta-psm`, `judo-meta-asm`, `judo-meta-rdbms`.
 
-**For Eclipse IDE:**
-- m2e (Maven Integration)
-- Epsilon
-- Modeling Tools
-- XTend, XText, MWE, MWE2 (for code generation)
+## Development environment
 
-**Generated Code:**
-- `model/src-gen/` is auto-generated and not in version control
-- Regenerated on every `model/` module build via MWE2 workflow
-- **Never edit files in `src-gen/` manually**
+**Required:** Java 21 JDK · Maven 3.9.4+ (or `./mvnw`).
 
-**Hand-Written Code (safe to edit):**
-- `model/src/main/java/` — Runtime API (LiquibaseModel, LiquibaseUtils, LiquibaseEpsilonValidator, etc.)
-- `model/src/main/epsilon/` — Validation rules
-- `osgi/src/main/java/` — OSGi bundle tracker
+**For Eclipse IDE development:** m2e, Epsilon, Modeling Tools, XTend / XText /
+MWE / MWE2. Code generation from the IDE: right-click
+`model/src/workflow/generateModel.mwe2` → Run As → MWE2 Workflow.
 
-## Git Workflow
+**Generated vs. hand-written.** `model/src-gen/` is auto-generated, is **not**
+version-controlled, and is cleaned and regenerated on every `model` build.
+Safe to edit: `model/src/main/java/` (runtime API),
+`model/src/main/epsilon/` (validation rules), `osgi/src/main/java/`
+(bundle tracker).
 
-- **Main Branch:** `develop`
-- **Release Branch:** `master` (latest released version)
+## Git workflow
+
+- **Main branch:** `develop` · **Release branch:** `master` (latest released version)
 - **Versioning:** `1.0.2-SNAPSHOT` (Maven) / `1.0.2.qualifier` (Eclipse)
-- **Branching Model:** GitFlow — `feature/JNG-*`, `release/*`, `bugfix/JNG-*`, `support/JNG-*`, `hotfix/JNG-*`
-- **Commit Convention:** Every commit and PR must include a JIRA ticket number (`JNG-XXXX`)
+- **Branching model:** GitFlow — `feature/JNG-*`, `release/*`, `bugfix/JNG-*`, `support/JNG-*`, `hotfix/JNG-*`
+- **Rule:** every commit and PR must reference a JIRA ticket (`JNG-XXXX`)
 - **CI/CD:** GitHub Actions with chained workflows (build → merge-pr-tagged → create-release-on-master)
 
-## Important Notes
+## Scope guard — invariants an edit must not break
 
-1. The Ecore metamodel (`model/model/liquibase.ecore`) is the single source of truth — all generated code derives from it
-2. The MWE2 workflow generates four categories of code: EMF model classes, navigation helpers, builder patterns, and the LiquibaseModel runtime wrapper
-3. `src-gen/` is not version-controlled and is cleaned + regenerated on every build of the `model/` module
-4. Lombok is **not used** in Eclipse plugin code due to Tycho incompatibility — only in the `osgi/` module
-5. The project builds with both Tycho (for Eclipse plugin modules) and standard Maven (for osgi/osgi-itest modules) — they have different dependency resolution mechanisms
-6. Epsilon validation rules in `liquibase.evl` are currently empty — constraints can be added as needed
-7. The OSGi bundle (`osgi/` module) includes an automatic `LiquibaseModelBundleTracker` that discovers and registers `LiquibaseModel` instances from bundle MANIFEST headers (`Liquibase-Models`)
-8. Version numbers must be updated in both Maven (`pom.xml`) and Eclipse (`MANIFEST.MF`) using `versions:set` followed by `tycho-versions:update-eclipse-metadata`
+1. **Never edit `src-gen/`** — cleaned and regenerated by the MWE2 workflow on every `model` build. Hand-written code belongs in `src/main/java/`.
+2. **The Ecore is the source of truth** — `model/model/liquibase.ecore` (derived from the Liquibase XSD). Behaviour changes start there, not in generated Java.
+3. **Lombok is banned in Eclipse plugin modules** — Tycho does not support Lombok annotation processing. It is confined to `osgi/`.
+4. **Two build systems coexist** — Tycho resolves `model`/`feature`/`site` from `MANIFEST.MF`; plain Maven resolves `osgi`/`osgi-itest` from POM dependencies. A dependency added to one is not visible to the other.
+5. **Version duality is hand-driven here** — the Maven version and the Eclipse `MANIFEST.MF` version must both move: `versions:set` followed by `tycho-versions:update-eclipse-metadata`. Changing only one produces a build that resolves nothing.
+6. **The namespace fix handler is load-bearing** — dropping `LiquibaseNamespaceFixUriHandler` from the resource wiring produces changelog XML that Liquibase refuses.
+7. **`Liquibase-Models` is a contract** — bundles carrying that manifest header are discovered by `LiquibaseModelBundleTracker` and registered as OSGi services. Renaming it silently breaks every downstream bundle.
+8. **Validation is a placeholder, not a guarantee** — `liquibase.evl` is empty and the `ChangeSetValidations` `@Constraint` rules are commented out. Do not cite "validation passed" as evidence of a correct changelog.
 
-## Related Documentation
+## Code instructions
 
-- [README](README.md) — Project overview and quick start
-- [Contributing Guide](CONTRIBUTING.md) — Development setup, code structure, and submission guidelines
-- [CI/CD Flow](/.github/CIFLOW.md) — Detailed branching strategy and GitHub Actions pipeline documentation
-- [JUDO Community](https://github.com/BlackBeltTechnology/judo-community) — Parent aggregator project
+1. First think through the problem, read the codebase for relevant files.
+2. Before you make any major changes, check in with me and I will verify the plan.
+3. Please every step of the way just give me a high level explanation of what changes you made.
+4. Make every task and code change you do as simple as possible. We want to avoid making any massive or complex changes. Every change should impact as little code as possible. Everything is about simplicity.
+5. Maintain a documentation file that describes how the architecture of the app works inside and out.
+6. Never speculate about code you have not opened. If the user references a specific file, you MUST read the file before answering. Make sure to investigate and read relevant files BEFORE answering questions about the codebase. Never make any claims about code before investigating unless you are certain of the correct answer - give grounded and hallucination-free answers.
+7. For implementation use TDD (Test-Driven Development): write or update tests first to define the expected behaviour, verify they fail, then write the minimal implementation to make them pass.
+8. Use DRY (Don't Repeat Yourself): extract reusable logic into separate classes, utilities, or components. If the same pattern appears in multiple places, refactor it into a shared helper.
+
+<!-- dox-doctrine -->
+## Documentation Update Protocol (WRITE discipline)
+
+Per-directory `AGENTS.md` files form a tree. Each directory `AGENTS.md` is the
+per-file record for the files in that directory. This module-root `AGENTS.md`
+holds doctrine + architecture pointers only — never a per-file index.
+
+**Keep the root lean.** This file loads into every agent turn — every byte costs
+tokens on every turn. A verbose root file buries the rules the model must follow
+(signal dilution) and measurably degrades adherence; a lean file keeps doctrine
+salient. Default assumption: your update does NOT belong in the root — route it
+by the table below.
+
+**Route every doc update by kind:**
+
+| Kind of update | Goes in |
+|---|---|
+| New file in a directory, or its per-file detail / change history | Nearest directory `AGENTS.md`. Add a `` | `<basename>` | <purpose> | `` row, path-alphabetical. |
+| Data flow, protocol, architecture rationale | `docs/architecture.md` or a `docs/<topic>.md` |
+| End-user / developer setup | `README.md` |
+| Cross-cutting rule every agent needs every turn (rare) | this module-root `AGENTS.md` |
+
+**Read before editing (chain walk).** Before editing a file, read the nearest
+`AGENTS.md` chain root→leaf so you know the file's recorded purpose, contracts,
+and change history. Do not edit blind.
+
+**Update after editing (closeout pass).** After changing a file, update its row
+in the nearest directory `AGENTS.md`: find the file's row, update its purpose in
+place; if absent, add it in path-alphabetical order. New directory → scaffold
+its `AGENTS.md`. One row per file. The purpose carries a one-line summary, key
+exported symbols, contracts/invariants, and `See change: <id>` history.
+
+**Row style (caveman).** Short declarative fragments. Drop articles. Subject →
+verb → object, present tense. One fact per row. Prefer concrete tokens (paths,
+symbols, env vars) over prose. Keep identifiers verbatim.
+
+**Size rule — split an over-large directory `AGENTS.md` file-based.** pi
+auto-injects a directory `AGENTS.md` on every turn when cwd sits at/below it, so
+an over-large directory `AGENTS.md` is not supported. Split it file-based: a row
+exceeding the length threshold promotes to a per-file `<File>.AGENTS.md`
+sidecar carrying that file's full detail (including every `See change:`). The
+sidecar is pull-only — its name is not `AGENTS.md`, so pi never auto-injects it
+— yet it stays search-indexed (`agents` doc_type). The directory `AGENTS.md`
+keeps a one-line summary plus a `→ see `<File>.AGENTS.md`` pointer. Rows within
+the threshold stay verbatim (lossless).
+
+## Finding docs (READ discipline)
+
+`kb_*` tools are faster and cheaper than raw search — they return a one-line
+purpose + key exports per file, not raw bytes. **This fires on the ACTION, not
+the intent** — before you `grep`/`rg` for a symbol, `cat`/read a file to learn
+what it does, or chase an import, the kb call goes first. It fires **even
+mid-task when you already know the file**; knowing the file does not exempt you.
+When your reflex is the left column, run the right column instead:
+
+| You're about to… | Do this FIRST instead |
+|---|---|
+| `grep -rn "SymbolName" src/` — find where a fn / type / const lives | `kb_search --doc-type agents "SymbolName"` — tree indexes key exports per file |
+| `grep -rn "feature\|topic" src/` — how does X work / where's X handled | `kb_search "feature topic"` |
+| `cat` / read a file just to learn its purpose before editing | `kb agents <path>` — one-line purpose + exports + change history |
+| chase imports / callers across files | `kb_neighbors <path\|heading>` |
+| read one doc section in full | `kb_get <path> <section>` |
+
+**Fall-through (explicit):** if the kb call returns nothing relevant, `rg` /
+source read is allowed — then add the missing directory `AGENTS.md` row per the
+WRITE discipline. kb does NOT replace grep; it goes first.

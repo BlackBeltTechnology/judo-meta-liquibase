@@ -135,6 +135,23 @@
             <artifactId>osgi-api</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Zeta Validation Framework for OSGi -->
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.common</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.emf</groupId>
             <artifactId>org.eclipse.emf.common</artifactId>

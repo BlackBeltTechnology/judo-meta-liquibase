@@ -33,6 +33,9 @@
                             hu.blackbelt.epsilon.runtime.execution.impl;resolution:=optional,
                             hu.blackbelt.epsilon.runtime.execution.model.emf;resolution:=optional,
                             org.eclipse.epsilon.common.util;resolution:=optional,
+                            hu.blackbelt.judo.zeta.annotation;resolution:=optional,
+                            hu.blackbelt.judo.zeta.common;resolution:=optional,
+                            hu.blackbelt.judo.zeta.validation.core;resolution:=optional,
 							*
 						</Import-Package>
 						<Export-Package>
@@ -64,6 +67,23 @@
         <dependency>
             <groupId>hu.blackbelt.osgi.utils</groupId>
             <artifactId>osgi-api</artifactId>
+        </dependency>
+
+        <!-- Zeta Validation Framework -->
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>hu.blackbelt.judo.zeta</groupId>
+            <artifactId>hu.blackbelt.judo.zeta.common</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

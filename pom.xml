@@ -106,6 +106,9 @@
 		<systemProperties />
 		<additionalTestArguments />
 
+		<!-- Zeta Validation Framework -->
+		<judo-zeta-version>1.0.0-SNAPSHOT</judo-zeta-version>
+
 		<!-- Code Quality-->
 		<sonar-maven-plugin-version>3.9.1.2184</sonar-maven-plugin-version>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -117,6 +120,17 @@
 	</properties>
 
 	<repositories>
+		<repository>
+			<id>judong-nexus-snapshots</id>
+			<url>https://nexus.judo.technology/repository/maven-judong-snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+
 		<repository>
 			<id>judo-epp-commons</id>
 			<url>mvn:hu.blackbelt.judo.eclipse.epp:hu.blackbelt.judo.eclipse.epp.package.common.site:${judo-epp-common-version}:zip</url>
@@ -757,6 +771,23 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>${logback-version}</version>
+			</dependency>
+
+			<!-- Zeta Validation Framework -->
+			<dependency>
+				<groupId>hu.blackbelt.judo.zeta</groupId>
+				<artifactId>hu.blackbelt.judo.zeta.validation-core</artifactId>
+				<version>${judo-zeta-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.blackbelt.judo.zeta</groupId>
+				<artifactId>hu.blackbelt.judo.zeta.annotations</artifactId>
+				<version>${judo-zeta-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.blackbelt.judo.zeta</groupId>
+				<artifactId>hu.blackbelt.judo.zeta.common</artifactId>
+				<version>${judo-zeta-version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
